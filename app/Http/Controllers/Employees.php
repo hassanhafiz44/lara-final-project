@@ -4,12 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use Illuminate\Support\Facades\DB;
 
 class Employees extends Controller
 {
 
 	function loginaction(Request $r){
-		
+		$table = 'emp_users';
+
+		// hash the password
+
+		$sql = "SELECT * FROM `$table` WHERE `email` = '$r->email' AND `password` 
+			= '$r->password'";
+
+		$user = DB::select($sql);
+
+		if(sizeof($user) === 0){
+			return response()->json(['message' => 'Email or password is incorrect'], 404);
+		}
+
+		return response()->json($user, 200);
 	}
 
 
