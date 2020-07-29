@@ -54,6 +54,18 @@
                             <a class="nav-link" href="{{ route('pages.contact') }}">Contact Us</a>
                         </li>
                     </ul>
+                    @else
+                        @if(Auth::user())
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item {{ url()->current() === route('dashboard.index') ? 'active' : ''}}">
+                                    <a class="nav-link" href="{{ route('dashboard.index') }}">Dashboard</a>
+                                </li>
+                                <li class="nav-item {{ url()->current() === route('employees.index') ? 'active' : ''}}">
+                                    <a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                </li>
+                            </ul>
+                        @endif
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
