@@ -38,3 +38,7 @@ Route::get('dashboard','Employees@dashboard');
 Route::get('orders','Employees@orders');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
