@@ -52,6 +52,13 @@ class EmployeesController extends Controller
 		$user->password = Hash::make('123123123');
 		$user->save();
 
+		$employee = new Employee;
+		$employee->id = $user->id;
+		$employee->name = $request->name;
+		$employee->phone = $request->phone;
+		$employee->cnic = $request->cnic;
+		$employee->address = $request->address;
+		$employee->save();
     }
 
     /**
