@@ -1,4 +1,4 @@
-@extends('dashboardlayout')
+@extends('layouts.app')
 	@section('content')
 		<div class="text-white p-3" style="background-color: rgba(248,70,129,0.6)">
 		<h1>&nbsp; &nbsp;<i class="fa fa-chart-bar"></i> Dashboard</h1>
