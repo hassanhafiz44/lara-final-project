@@ -26,16 +26,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('profile','Employees@profile');
-Route::post('loginsubmit','Employees@loginaction');
-Route::get('contact','Employees@contact');
-Route::get('home','Employees@home');
-Route::get('products','Employees@products');
-Route::get('services','Employees@services');
-Route::get('login','Employees@adminlogin');
-Route::get('inventory','Employees@inventory');
-Route::get('dashboard','Employees@dashboard');
-Route::get('orders','Employees@orders');
+Route::get('/','PagesController@index')->name('pages.index');
+Route::get('contact','PagesController@contact')->name('pages.contact');
+Route::get('products','PagesController@products')->name('pages.products');
+Route::get('services','PagesController@services')->name('pages.services');
+Route::get('about','PagesController@about')->name('pages.about');
+// Route::get('profile','Employees@profile');
+// Route::post('loginsubmit','Employees@loginaction');
+// Route::get('login','Employees@adminlogin');
+// Route::get('inventory','Employees@inventory');
+// Route::get('dashboard','Employees@dashboard');
+// Route::get('orders','Employees@orders');
 
 
 
