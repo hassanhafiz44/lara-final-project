@@ -40,6 +40,12 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
         //
+		$validatedData = $request->validate([
+			'name' => 'required',
+			'cnic' => 'required|min:13',
+			'email' => 'required'
+		]);
+
     }
 
     /**
