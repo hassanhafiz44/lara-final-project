@@ -16,9 +16,11 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    @yield('stylesheets')
 </head>
 <body>
     <div id="app">
@@ -34,7 +36,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item {{ url()->current() === route('pages.index') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{ route('pages.index') }}">Home</a>
+                        </li>
+                        <li class="nav-item {{ url()->current() === route('pages.products') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{ route('pages.products') }}">Products</a>
+                        </li>
+                        <li class="nav-item {{ url()->current() === route('pages.services') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{ route('pages.services') }}">Services</a>
+                        </li>
+                        <li class="nav-item {{ url()->current() === route('pages.about') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
+                        </li>
+                        <li class="nav-item {{ url()->current() === route('pages.contact') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{ route('pages.contact') }}">Contact Us</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
