@@ -1,4 +1,9 @@
-@extends('layout')
+@extends('layouts.app')
+
+  @section('stylesheets')
+  <link rel="stylesheet" href="{{ asset('css/products.css') }}">
+  @endsection
+
 	@section('content')
 	<div class="container">
 		<h1 class="text-center">Our Products</h1>

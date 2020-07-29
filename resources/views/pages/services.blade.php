@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 	@section('content')
 		<section class="services">
 		<div class="container text-center py-5">
