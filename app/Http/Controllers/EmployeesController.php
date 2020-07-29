@@ -46,6 +46,12 @@ class EmployeesController extends Controller
 			'email' => 'required'
 		]);
 
+		$user = new User;
+		$user->name = $request->name;
+		$user->email = $request->email;
+		$user->password = Hash::make('123123123');
+		$user->save();
+
     }
 
     /**
