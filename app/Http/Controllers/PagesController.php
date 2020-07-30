@@ -8,26 +8,31 @@ class PagesController extends Controller
 {
 	public function index()
 	{
-		return view('pages.home');
+		$data = array('title' => 'Home');
+		return view('pages.home')->with($data);
 	}
 
 	function contact()
     {
-    	return view('pages.contactus');
+		$data = array('title' => 'Contract Us');
+    	return view('pages.contactus')->with($data);
     }
 
     function products()
     {
-    	return view('pages.products');
+		$data = array('title' => 'Products');
+    	return view('pages.products')->with($data);
     }
 
     function services()
     {
-        return view('pages.services');
+		$data = array('title' => 'Services');
+        return view('pages.services')->with($data);
     }
 
     function about() 
     {
-    	return view('pages.about');
+		$data = array('title' => 'About Us');
+    	return view('pages.about')->with($data);
     }
 }
