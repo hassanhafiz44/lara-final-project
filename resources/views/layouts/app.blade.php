@@ -10,8 +10,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.4.1.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('js/datatables.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,6 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
     @yield('stylesheets')
 </head>
 <body>
