@@ -17,7 +17,9 @@ class EmployeesController extends Controller
     public function index()
     {
         //
-        return view('employees.index');
+		$data = array('title' => 'Employees');
+		$data['employees'] = Employee::all();
+        return view('employees.index')->with($data);
     }
 
     /**
