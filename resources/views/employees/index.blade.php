@@ -1,6 +1,7 @@
 @extends('layouts.app') @section('content')
 <div>
     <div class="container">
+		<a href="{{ route('employees.create') }}" class="float-right btn btn-primary btn-sm">Add</a>
         <table id="employees-table" class="table table-striped">
 			<thead>
             <tr>
@@ -9,6 +10,7 @@
                 <th>CNIC</th>
                 <th>Phone</th>
                 <th>Address</th>
+                <th></th>
             </tr>
 			</thead>
 			<tbody>
@@ -19,6 +21,10 @@
                 <td>{{ $employee->cnic }}</td>
                 <td>{{ $employee->phone }}</td>
                 <td>{{ $employee->address }}</td>
+				<td>
+					<a class="btn btn-sm btn-secondary" href="{{ route('employees.edit', $employee->id) }}"><i class="fa fa-edit"></i></a>
+					<a class="btn btn-sm btn-secondary" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a>
+				</td>
             </tr>
             @endforeach
 			</tbody>
