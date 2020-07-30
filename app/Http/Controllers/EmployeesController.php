@@ -126,7 +126,29 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		//
+		$validatedData = $request->validate([
+			'name' => 'required',
+			'phone' => 'required|min:11|max:11',
+			'address' => 'required|max:100',
+			'cnic' => 'required|min:13',
+			'email' => 'required'
+		]);
+
+		$user = User::find($id);
+		$user->name = $request->name;
+		$user->email = $request->email;
+		$user->password = Hash::make('123123123');
+		$user->save();
+
+		$employee = Employee::find($id);
+		$employee->name = $request->name;
+		$employee->phone = $request->phone;
+		$employee->cnic = $request->cnic;
+		$employee->address = $request->address;
+		$employee->save();
+
+		return redirect(route('employees.index'))->with('success', 'Employee updated');
     }
 
     /**
