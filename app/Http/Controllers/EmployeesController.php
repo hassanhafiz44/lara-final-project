@@ -45,15 +45,19 @@ class EmployeesController extends Controller
         //
 		$validatedData = $request->validate([
 			'name' => 'required',
+			'phone' => 'required|min:11|max:11',
+			'address' => 'required|max:100',
 			'cnic' => 'required|min:13',
 			'email' => 'required'
 		]);
+
+		//DB::beginTransaction();
 
 		$user = new User;
 		$user->name = $request->name;
 		$user->email = $request->email;
 		$user->password = Hash::make('123123123');
-		$user->save();
+		$is_user_saved = $user->save();
 
 		$employee = new Employee;
 		$employee->id = $user->id;
@@ -61,7 +65,21 @@ class EmployeesController extends Controller
 		$employee->phone = $request->phone;
 		$employee->cnic = $request->cnic;
 		$employee->address = $request->address;
-		$employee->save();
+		$is_employee_saved = $employee->save();
+
+		return redirect(route('employees.index'))->with('success', 'Employee saved');
+
+
+//		$transaction_ok = ($is_employee_saved && $is_user_saved) ? TRUE : FALSE;
+//
+//		if($transaction_ok === FALSE){
+//			DB::rollBack();
+//			return redirect()->with('error', 'Failure');
+//		}
+//		else {
+//			DB::commit();
+//			return redirect(route('employees.index'))->with('success', 'Hahaha');
+//		}
     }
 
     /**
