@@ -91,6 +91,13 @@ class EmployeesController extends Controller
     public function show($id)
     {
         //
+		$employee = Employee::find($id);
+		$data = array(
+			'title' => 'Employee',
+			'employee' => $employee
+		);
+
+		return view('employees.show')->with($data);
     }
 
     /**
