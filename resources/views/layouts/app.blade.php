@@ -103,7 +103,10 @@
             </div>
         </nav>
 
-        <main>
+        <main class="container-fluid">
+			<div class="jumbotron">
+				<h1>{{ $title }}</h1>
+			</div>
             @yield('content')
         </main>
     </div>
