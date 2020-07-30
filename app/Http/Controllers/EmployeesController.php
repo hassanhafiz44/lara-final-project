@@ -30,7 +30,8 @@ class EmployeesController extends Controller
     public function create()
     {
         //
-		return view('employees.create');
+		$data = array('title' => 'Create Employee');
+		return view('employees.create')->with($data);
     }
 
     /**
