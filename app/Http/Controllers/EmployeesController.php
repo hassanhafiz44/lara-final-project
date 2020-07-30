@@ -109,6 +109,12 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         //
+		$data = array(
+			'title' => 'Edit Employee'
+		);
+		$data['employee'] = Employee::find($id);
+		$data['user'] = $data['employee']->user;
+		return view('employees.edit')->with($data);
     }
 
     /**
