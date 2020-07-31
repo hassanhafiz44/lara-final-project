@@ -107,7 +107,7 @@
 
         <main class="container-fluid">
 			<div class="jumbotron">
-				<h1>{{ $title }}</h1>
+				<h1>{{ $title ?? config('app.name', 'Laravel') }}</h1>
 			</div>
             @yield('content')
         </main>
