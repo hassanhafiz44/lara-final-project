@@ -1,29 +1,9 @@
 @extends('layouts.app')
 	@section('content')
-		<div class="text-white p-3" style="background-color: rgba(248,70,129,0.6)">
-		<h1>&nbsp; &nbsp;<i class="fa fa-chart-bar"></i> Dashboard</h1>
-	</div>
-	<div class="bg-light">
-		<div class="row py-3">
-			<div class="col-md-4">
-				<a href="#" class="btn btn-primary d-block" data-toggle="modal" data-target="#newuser"><i class="pr-1 fa fa-plus"></i>Add new user</a>
-			</div>
-			<div class="col-md-4">
-				<a href="#" class="btn btn-success d-block" data-toggle="modal" data-target="#deletuser"><i class="pr-1 fa fa-minus"></i>Delet user</a>
-			</div>
-			<div class="col-md-4">
-				<a href="home" class="btn btn-secondary d-block"><i class="pr-1 fa fa-eye"></i>Visit website</a>
-			</div>
-		</div>
-	</div>
-
-
-		<!-- Dashboard content -->
-
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-8">
-				<h2 class="text-white" style="background-color: rgba(248,70,129,0.6)">Orders History</h2>
+				<h2 class="text-white" style="background-color: rgba(248,70,129,0.6)">Latest Oders</h2>
 				<div class="container d-block">
 					<table class="table mt-3">
 						<thead class="table-dark">
