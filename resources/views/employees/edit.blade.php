@@ -2,7 +2,9 @@
 
 
 @section('content')
-
+<div class="container pb-4">
+	<div class="row">
+		<div class="col-lg-12 m-auto">
 <form method="POST" action="{{ route('employees.update', $employee->id) }}">
 	@csrf
 	<div class="form-group">
@@ -28,4 +30,7 @@
 	<input class="btn btn-primary" type="submit" name="submit" id="submit" />
 	<input type="hidden" name="_method" value="PUT">
 </form>
+</div>
+</div>
+</div>
 @endsection
