@@ -43,5 +43,6 @@ Route::get('about','PagesController@about')->name('pages.about');
 Auth::routes();
 
 Route::resource('employees', 'EmployeesController');
+Route::resource('product_categories', 'ProductCategoriesController');
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
