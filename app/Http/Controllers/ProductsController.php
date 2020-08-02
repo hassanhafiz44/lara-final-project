@@ -24,6 +24,12 @@ class ProductsController extends Controller
     public function create()
     {
         //
+		$data = array(
+			"title" => 'Add Product',
+			"product_categories" => ProductCategory::all()
+		);
+
+		return view('products.create')->with($data);
     }
 
     /**
