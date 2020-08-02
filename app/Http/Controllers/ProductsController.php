@@ -92,6 +92,11 @@ class ProductsController extends Controller
     public function edit($id)
     {
         //
+		$data = array(
+			'title' => "Edit Product",
+			'product' => Product::find($id)
+		);
+		return view('products.edit')->with($data);
     }
 
     /**
