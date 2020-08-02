@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
+use App\ProductCategory;
+use App\ProductImage;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
