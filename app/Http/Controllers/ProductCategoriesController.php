@@ -43,7 +43,12 @@ class ProductCategoriesController extends Controller
 			$category->title = $request->title;
 			$is_saved = $category->save();
 
-			return redirect(route('product_categories.index'));
+			if($is_saved) {
+				return response($category);
+			} else {
+				return response('not done', 500);
+			}
+
     }
 
     /**
