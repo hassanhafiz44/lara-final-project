@@ -44,5 +44,6 @@ Auth::routes();
 
 Route::resource('employees', 'EmployeesController');
 Route::resource('product_categories', 'ProductCategoriesController');
+Route::resource('products', 'ProductsController');
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
