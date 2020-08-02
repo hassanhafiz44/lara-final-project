@@ -41,6 +41,32 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
+		$validated_data = $request->validate([
+			'title' => 'required',
+			'model' => 'required',
+			'price' => 'required',
+			'quantity' => 'required',
+			'description' => 'required',
+			'category_id' => 'required',
+			'image_uri' => 'required'
+		]);
+
+		$product = new Product;
+		$product->category_id = $request->category_id;
+		$product->title = $request->title;
+		$product->model = $request->model;
+		$product->description = $request->description;
+		$product->price = $request->price;
+		$product->quantity = $request->quantity;
+		$product->save();
+
+		$product_image = new ProductImage;
+		$product_image->product_id = $product->id;
+		$product_image->image_uri = $request->image_uri;
+
+		$product_image->save();
+
+		return redirect(route('products.index'));
     }
 
     /**
