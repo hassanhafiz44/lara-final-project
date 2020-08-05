@@ -11,7 +11,7 @@
 				<div class="row">
 				@foreach($products as $product)
 						<!-- Product  -->
-						<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-name="{{ $product->title }}" data-price="{{ $product->price }}">
+						<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
 								<div class="image">
 										<a href="#" class="product-link" data-toggle="modal" data-target="#myModal1">
 												<img src="{{ asset('images/apple-watch.jpg') }}" class="w-100">
@@ -41,7 +41,7 @@
 																</div>
 																<div class="col-lg-8">
 																		<h2 class="text-center">Details</h2>
-																		<p class="font-weight-bold">Name:<span id="name"></span><br>Price:<span id="price"></span><br>Other Specs:</p>
+																		<p class="font-weight-bold">Name: <span id="name"></span><br>Price: <span id="price"></span><br>Description: <span id="description"></span><br></p>
 																</div>
 														</div>
 												</div>
