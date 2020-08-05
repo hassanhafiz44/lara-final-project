@@ -153,4 +153,14 @@
 		<footer style="margin-top: 50px">
 
 		</footer>
+		<script>
+			$(function() {
+				$(".product-link").on('click', function(event) {
+					const product = $(event.target).closest('.product');
+					$("#name").text(product.data('name'));
+					$("#price").text(product.data('price'));
+					$("#description").text(product.data('description'));
+				});
+			});
+		</script>
 @endsection
