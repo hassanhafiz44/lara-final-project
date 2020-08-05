@@ -37,7 +37,7 @@
 												<div class="container">
 														<div class="row">
 																<div class="col-lg-4">
-																		<img src="images/apple-watch.jpg" class="w-100">
+																		<img src="{{ asset('images/apple-watch.jpg') }}" class="w-100">
 																</div>
 																<div class="col-lg-8">
 																		<h2 class="text-center">Details</h2>
