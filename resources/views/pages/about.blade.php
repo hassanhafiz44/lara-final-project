@@ -20,9 +20,9 @@
 				[Mr. Bilal Dar]
             </p>
             <div class="skills">
-                <span>	</span>
-                <span>Photoshop & Illustrator</span>
-                <span>Coding</span>
+                <span>Anything</span>
+                <span>Anything</span>
+                <span>Anything</span>
             </div>
         </div>
     </div>
