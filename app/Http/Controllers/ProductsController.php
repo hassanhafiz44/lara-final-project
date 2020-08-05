@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\ProductCategory;
+use App\ProductImage;
 use Illuminate\Http\Request;
 
-class ProductCategoriesController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,6 +27,12 @@ class ProductCategoriesController extends Controller
     public function create()
     {
         //
+		$data = array(
+			"title" => 'Add Product',
+			"product_categories" => ProductCategory::all()
+		);
+
+		return view('products.create')->with($data);
     }
 
     /**
@@ -35,20 +43,33 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-			$validated_data = $request->validate([
-				'title' => 'required'
-			]);
+        //
+		$validated_data = $request->validate([
+			'title' => 'required',
+			'model' => 'required',
+			'price' => 'required',
+			'quantity' => 'required',
+			'description' => 'required',
+			'category_id' => 'required',
+			'image_uri' => 'required'
+		]);
 
-			$category = new ProductCategory;
-			$category->title = $request->title;
-			$is_saved = $category->save();
+		$product = new Product;
+		$product->category_id = $request->category_id;
+		$product->title = $request->title;
+		$product->model = $request->model;
+		$product->description = $request->description;
+		$product->price = $request->price;
+		$product->quantity = $request->quantity;
+		$product->save();
 
-			if($is_saved) {
-				return response($category);
-			} else {
-				return response('not done', 500);
-			}
+		$product_image = new ProductImage;
+		$product_image->product_id = $product->id;
+		$product_image->image_uri = $request->image_uri;
 
+		$product_image->save();
+
+		return redirect(route('products.index'));
     }
 
     /**
@@ -71,6 +92,11 @@ class ProductCategoriesController extends Controller
     public function edit($id)
     {
         //
+		$data = array(
+			'title' => "Edit Product",
+			'product' => Product::find($id)
+		);
+		return view('products.edit')->with($data);
     }
 
     /**

@@ -9,6 +9,10 @@
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
+                                <div class="d-flex justify-content-start">
+                                <div class="image-container mb-2">
+                                    <img  src="http://placehold.it/150x150" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                </div>
                                 <div class="userData ml-3">
                                     <h2 class="d-block" style="font-size: 1.5rem;font-weight: bold">Name</h2>
                                     <h6 class="d-block">{{ ucwords($employee->name) }}</h6>
@@ -66,7 +70,7 @@
                                             </div>
                                             <div class="col-md-8 col-6">{{ $employee->address }}</div>
                                         </div>
-                                        <hr />
+                                        <hr/>
 
                                     </div>
                                     <div class="tab-pane fade" id="order-details">
