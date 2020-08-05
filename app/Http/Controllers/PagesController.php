@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -21,6 +22,7 @@ class PagesController extends Controller
     function products()
     {
 		$data = array('title' => 'Products');
+		$data['products'] = Product::all();
     	return view('pages.products')->with($data);
     }
 
