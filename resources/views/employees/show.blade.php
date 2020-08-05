@@ -38,7 +38,17 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Full Name</label>
                                             </div>
+<<<<<<< HEAD
                                             <div class="col-md-8 col-6">{{ ucwords($employee->name) }}</div>
+=======
+<<<<<<< HEAD
+                                            <div class="col-md-8 col-6">{{ ucwords($employee->name) }}</div>
+=======
+                                            <div class="col-md-8 col-6">
+                                                Katrina Kaif
+                                            </div>
+>>>>>>> c29a452cb79a15134878691b46f65b5be2905fd7
+>>>>>>> a0e05f042f5a3f40f77a12e791d76937c9ff4a27
                                         </div>
                                         <hr />
 
