@@ -27,10 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/','PagesController@index')->name('pages.index');
-Route::get('contact','PagesController@contact')->name('pages.contact');
-Route::get('products','PagesController@products')->name('pages.products');
-Route::get('services','PagesController@services')->name('pages.services');
-Route::get('about','PagesController@about')->name('pages.about');
+Route::get('pages/contact','PagesController@contact')->name('pages.contact');
+Route::get('pages/products','PagesController@products')->name('pages.products');
+Route::get('pages/services','PagesController@services')->name('pages.services');
+Route::get('pages/about','PagesController@about')->name('pages.about');
 // Route::get('profile','Employees@profile');
 // Route::post('loginsubmit','Employees@loginaction');
 // Route::get('login','Employees@adminlogin');
@@ -44,5 +44,6 @@ Auth::routes();
 
 Route::resource('employees', 'EmployeesController');
 Route::resource('product_categories', 'ProductCategoriesController');
+Route::resource('products', 'ProductsController');
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');

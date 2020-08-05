@@ -16,20 +16,20 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label for="password">Password:</label>
-			<input class="form-control" name="password" id="name"/>
+			<input type="password" class="form-control" name="password" id="password"/>
 		</div>
 		<div class="form-group col-md-6">
 			<label for="confirm-password">Confrirm Password::</label>
-			<input type="email" class="form-control" name="confirm-password" id="email"/>
+			<input type="password" class="form-control" name="confirm-password" id="confirm-password"/>
 		</div>
 
 		<div class="form-group col-lg-12">
 			<label for="address">Address:</label>
-			<input class="form-control" name="address" id="phone"/>
+			<input class="form-control" name="address" id="address"/>
 		</div>
 		<div class="form-group col-md-4">
 			<label for="phone">Phone:</label>
-			<input class="form-control" name="phone" id="address"/>
+			<input class="form-control" name="phone" id="phone"/>
 		</div>
 		<div class="form-group col-md-4">
 			<label for="cnic">CNIC:</label>
