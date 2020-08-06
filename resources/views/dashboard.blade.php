@@ -34,11 +34,11 @@
 			<div class="card">
 				<div class="bg-primary text-white p-4">
 					<i class="fa fa-list-ul "></i>
-					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">0
+					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">{{ $products_count }}
 					<span class="d-block">Products</span></h2>
 				</div>
 				<div class="card-footer text-primary">
-					<h6 class="text-center"><a href="adminproducts.html">View Details</a></h6>
+					<h6 class="text-center"><a href="{{ route('products.index') }}">View Details</a></h6>
 				</div>
 			</div>
 
