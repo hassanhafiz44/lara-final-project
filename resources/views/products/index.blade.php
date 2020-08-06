@@ -36,28 +36,6 @@
 	<script>
 		$(function () {
 			$("#products-table").DataTable();
-			$("#products-table").on('click', '.delete-product', function(event) {
-				const product_id = $(event.target).closest('tr').data('pid');
-				console.log(product_id);
-				const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-				$.ajax({
-					url: `products/${product_id}`,
-					method: 'DELETE',
-					data: {
-						_token:CSRF_TOKEN,
-					},
-					success: function(response) {
-						if(response.message) {
-							$(event.target).closest('tr').remove();
-						} else {
-							console.log(response);
-						}
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
-			});
 		});
 	</script>
 @endsection
