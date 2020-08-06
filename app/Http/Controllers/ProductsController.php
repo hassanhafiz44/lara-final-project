@@ -99,8 +99,10 @@ class ProductsController extends Controller
         //
 		$data = array(
 			'title' => "Edit Product",
-			'product' => Product::find($id)
+			'product' => Product::find($id),
+			'product_categories' => ProductCategory::all()
 		);
+		//return $data['product']->images[0]->image_uri;
 		return view('products.edit')->with($data);
     }
 
