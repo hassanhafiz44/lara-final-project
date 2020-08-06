@@ -15,8 +15,7 @@
                                 </div>
                                 <div class="userData ml-3">
                                     <h2 class="d-block" style="font-size: 1.5rem;font-weight: bold">Name</h2>
-                                    <h6 class="d-block"> Anything</h6>
-                                    <h6 class="d-block">Anything</h6>
+                                    <h6 class="d-block">{{ ucwords($employee->name) }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -39,9 +38,7 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Full Name</label>
                                             </div>
-                                            <div class="col-md-8 col-6">
-                                                Katrina Kaif
-                                            </div>
+                                            <div class="col-md-8 col-6">{{ ucwords($employee->name) }}</div>
                                         </div>
                                         <hr />
 
@@ -49,27 +46,21 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Contact no</label>
                                             </div>
-                                            <div class="col-md-8 col-6">
-                                                
-                                            </div>
+                                            <div class="col-md-8 col-6">{{ $employee->phone }}</div>
                                         </div>
                                         <hr />
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Joined Date</label>
                                             </div>
-                                            <div class="col-md-8 col-6">
-                                                Something
-                                            </div>
+                                            <div class="col-md-8 col-6">{{ $employee->created_at->format('d-m-Y') }}</div>
                                         </div>
                                         <hr />
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Email</label>
                                             </div>
-                                            <div class="col-md-8 col-6">
-                                                admin@admin.com
-                                            </div>
+                                            <div class="col-md-8 col-6">{{ $employee->user->email }}</div>
                                         </div>
                                         <hr />
 
@@ -77,9 +68,7 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Address</label>
                                             </div>
-                                            <div class="col-md-8 col-6">
-                                                Something
-                                            </div>
+                                            <div class="col-md-8 col-6">{{ $employee->address }}</div>
                                         </div>
                                         <hr/>
 
