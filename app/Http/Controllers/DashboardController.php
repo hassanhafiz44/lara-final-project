@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Product;
+
 class DashboardController extends Controller
 {
     /**
@@ -24,6 +26,8 @@ class DashboardController extends Controller
     public function index()
     {
 		$data = array('title' => 'Dashboard');
-        return view('dashboard')->with($data);
+		$products = Product::all();
+		$data['products_count'] = count($products);
+      return view('dashboard')->with($data);
     }
 }
