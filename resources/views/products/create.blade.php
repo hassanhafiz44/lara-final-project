@@ -42,6 +42,7 @@
 	<input class="btn btn-primary" type="submit" name="submit" id="submit" />
 	<a href="#" id="add-category" data-toggle="modal" data-target="#add-category-modal" class="btn btn-secondary">Add Category</a>
 	</form>
+	@include('includes/addCategoryModal')
 
 	<script>
 // Todo
