@@ -11,19 +11,19 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label for="model">Model</label>
-			<input type="text" class="form-control" name="model" id="model" required/>
+			<input type="text" class="form-control" name="model" id="model" value="{{ $product->model }}" required/>
 		</div>
 		<div class="form-group col-lg-6">
 			<label for="price">Price</label>
-			<input type="number" class="form-control" name="price" id="price" required/>
+			<input type="number" class="form-control" name="price" id="price" value="{{ $product->price }}" required/>
 		</div>
 		<div class="form-group col-md-6">
 			<label for="quantity">Quantity</label>
-			<input type="number" class="form-control" name="quantity" id="quantity" required/>
+			<input type="number" class="form-control" name="quantity" id="quantity" value="{{ $product->quantity}}" required/>
 		</div>
 		<div class="form-group col-md-12">
 			<label for="description">Description</label>
-			<textarea type="text" class="form-control" name="description" id="description" required></textarea>
+			<textarea type="text" class="form-control" name="description" id="description" required>{{ $product->description }}</textarea>
 		</div>
 		<div class="form-group col-md-6">
 			<label for="category_id">Category</label>
@@ -36,11 +36,12 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label for="image_uri">Product Image</label>
-			<input class="form-control" type="file" name="image_uri" id="image_uri" required>
+			<input class="form-control" type="file" name="image_uri" id="image_uri">
 		</div>
 	</div>
 	<input class="btn btn-primary" type="submit" name="submit" id="submit" />
 	<a href="#" id="add-category" data-toggle="modal" data-target="#add-category-modal" class="btn btn-secondary">Add Category</a>
+	<input type="hidden" name="_method" value="PUT">
 	</form>
 
 	<script>
