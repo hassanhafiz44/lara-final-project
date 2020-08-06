@@ -17,6 +17,11 @@ class ProductsController extends Controller
     public function index()
     {
         //
+		 $data = array();
+		 $data['products'] = Product::all();
+		 $data['title'] = 'Products';
+
+		 return view('products.index')->with($data);
     }
 
     /**
