@@ -33,9 +33,14 @@
 		</div>
 	</div>
 
+
+@endsection
+
+@section('scripts')
 	<script>
 		$(function () {
 			$("#products-table").DataTable();
 		});
 	</script>
+	<script src="{{ asset('js/products/products.js')}}"></script>
 @endsection
