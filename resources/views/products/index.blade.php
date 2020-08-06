@@ -16,14 +16,15 @@
 				</thead>
 				<tbody>
 					@foreach($products as $product)
-					<tr>
+					<tr data-pid="{{ $product->id }}">
 						<td>{{ ucwords($product->title) }}</td>
 						<td>{{ $product->model }}</td>
 						<td>{{ $product->price }}</td>
 						<td>{{ $product->quantity }}</td>
 						<td>
 							<a class="btn btn-sm btn-secondary" href="{{ route('products.edit', $product->id) }}"><i class="fa fa-edit"></i></a>
-							<a class="btn btn-sm btn-secondary" href="{{ route('products.show', $product->id) }}"><i class="fa fa-eye"></i></a>
+							<a class="btn btn-sm btn-warning" href="{{ route('products.show', $product->id) }}"><i class="fa fa-eye"></i></a>
+							<button class="btn btn-sm btn-danger delete-product"><i class="fa fa-trash"></i></button>
 						</td>
 					</tr>
 					@endforeach
