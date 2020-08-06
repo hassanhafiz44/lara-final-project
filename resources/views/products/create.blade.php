@@ -44,72 +44,9 @@
 	</form>
 	@include('includes/addCategoryModal')
 
-	<script>
-// Todo
-		$(function() {
-			$("#add-category-form").on('submit',function(event) {
-				event.preventDefault();
 
-				const form=document.querySelector('#add-category-form');
-				const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-				const data = {
-					_token:CSRF_TOKEN,
-					title: $(form).find('[name="cat_title"]').val(),
-				}
-
-				const url = $(form).find('[name="action-url"]').val();
-				$("#add-category-modal").modal('hide');
-
-				$.ajax({
-					url: url,
-					method: 'POST',
-					data: data,
-					success: function(response){
-						title: $("#add-product-form").find('[name="category_id"]')
-							.append(`<option value='${response.id}'>${response.title}</option>`);
-						$(form).find('[name="cat_title"]').val("");
-					},
-					error: function(error){
-						console.log(error);
-					}
-				});
-			});
-		});
-	</script>
-
-
-<div class="modal fade" id="add-category-modal">
-  <div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-			<h3>Add New Category</h3>
-		</div>
-	
-	  <!-- Modal body -->
-	  <div class="modal-body">
-		<div class="container">
-			<form id="add-category-form" method="POST">
-				@csrf
-				<div class="form-group">
-					<label for="cat-title">Category Title</label>
-					<input type="text" class="form-control" id="cat-title" name="cat_title" required/>
-				</div>
-				<input class="btn btn-primary" type="submit" name="submit" id="submit" />
-				<input type="hidden" value="{{ route('product_categories.store') }}" name="action-url" />
-			</form>
-		</div>
-	  </div>
-	  
-	  <!-- Modal footer -->
-	  <div class="modal-footer">
-		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-	  </div>
-	  
-	</div>
-  </div>
-</div>
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('js/products/products.js') }}"></script>
 @endsection
