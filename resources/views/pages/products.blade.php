@@ -11,10 +11,10 @@
 				<div class="row">
 				@foreach($products as $product)
 						<!-- Product  -->
-						<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
+						<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-image="{{ asset('storage/product_images/' . $product->images[0]->image_uri ) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
 								<div class="image">
 										<a href="#" class="product-link" data-toggle="modal" data-target="#myModal1">
-												<img src="{{ asset('images/apple-watch.jpg') }}" class="w-100">
+												<img src="{{ asset('storage/product_images/' . $product->images[0]->image_uri) }}" class="w-100">
 												<div class="overlay">
 														<div class="detail">View Details</div>
 												</div>
