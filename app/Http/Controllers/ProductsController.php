@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+	 private $image_folder_path = 'product_images';
     /**
      * Display a listing of the resource.
      *
