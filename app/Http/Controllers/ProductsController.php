@@ -60,6 +60,20 @@ class ProductsController extends Controller
 			'image_uri' => 'image|required|max:1999'
 		]);
 
+		// Handle file upload
+		if($request->hasFile('image_uri')){
+			// Get filename with extension
+			$filenameWithExt = $request->file('image_uri')->getClientOriginalName();
+			// Get just file name
+			$filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+			// Get just extension
+			$extension = $request->file('image_uri')->getClientOriginalExtension();
+			// File name to store
+			$fileNameToStore = $filename . '_' . time() . '.' . $extension;
+			// Upload image
+			$request->file('image_uri')->storeAs('public/'.$this->image_folder_path, $fileNameToStore);
+		} 
+
 		$product = new Product;
 		$product->category_id = $request->category_id;
 		$product->title = $request->title;
@@ -71,7 +85,7 @@ class ProductsController extends Controller
 
 		$product_image = new ProductImage;
 		$product_image->product_id = $product->id;
-		$product_image->image_uri = $request->image_uri;
+		$product_image->image_uri = $fileNameToStore;
 
 		$product_image->save();
 
