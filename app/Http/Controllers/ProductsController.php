@@ -57,7 +57,7 @@ class ProductsController extends Controller
 			'quantity' => 'required',
 			'description' => 'required',
 			'category_id' => 'required',
-			'image_uri' => 'required'
+			'image_uri' => 'image|required|max:1999'
 		]);
 
 		$product = new Product;
