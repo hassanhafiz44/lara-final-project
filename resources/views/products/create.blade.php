@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<form method="POST" id="add-product-form" action="{{ route('products.store') }}">
+		<form method="POST" id="add-product-form" action="{{ route('products.store') }}" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
 		<div class="form-group col-md-6">
