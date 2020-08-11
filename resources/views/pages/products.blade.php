@@ -37,7 +37,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-4">
-								<img id="p-image" src="{{ asset('storage/product_images/' . $product->images[0]->image_uri) }}" class="w-100">
+								<img id="p-image" class="w-100">
 							</div>
 							<div class="col-lg-8">
 								<h2 class="text-center">Details</h2>
@@ -160,7 +160,7 @@
 			$("#name").text(product.data('name'));
 			$("#price").text(product.data('price'));
 			$("#description").text(product.data('description'));
-			$("#p-image").text(product.data('image'));
+			$("#p-image").attr('src', product.data('image'));
 		});
 	});
 </script>
