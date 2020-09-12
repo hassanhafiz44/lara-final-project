@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +22,8 @@ class EmployeesController extends Controller
     public function index()
     {
         //
-		$data = array('title' => 'Employees');
-		$data['employees'] = Employee::all();
+        $data = array('title' => 'Employees');
+        $data['employees'] = Employee::all();
         return view('employees.index')->with($data);
     }
 
@@ -31,8 +35,8 @@ class EmployeesController extends Controller
     public function create()
     {
         //
-		$data = array('title' => 'Create Employee');
-		return view('employees.create')->with($data);
+        $data = array('title' => 'Create Employee');
+        return view('employees.create')->with($data);
     }
 
     /**
@@ -44,43 +48,43 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
         //
-		$validatedData = $request->validate([
-			'name' => 'required',
-			'phone' => 'required|min:11|max:11',
-			'address' => 'required|max:100',
-			'cnic' => 'required|min:13',
-			'email' => 'required'
-		]);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required|min:11|max:11',
+            'address' => 'required|max:100',
+            'cnic' => 'required|min:13',
+            'email' => 'required'
+        ]);
 
-		//DB::beginTransaction();
+        //DB::beginTransaction();
 
-		$user = new User;
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = Hash::make('123123123');
-		$is_user_saved = $user->save();
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make('123123123');
+        $is_user_saved = $user->save();
 
-		$employee = new Employee;
-		$employee->id = $user->id;
-		$employee->name = $request->name;
-		$employee->phone = $request->phone;
-		$employee->cnic = $request->cnic;
-		$employee->address = $request->address;
-		$is_employee_saved = $employee->save();
+        $employee = new Employee;
+        $employee->id = $user->id;
+        $employee->name = $request->name;
+        $employee->phone = $request->phone;
+        $employee->cnic = $request->cnic;
+        $employee->address = $request->address;
+        $is_employee_saved = $employee->save();
 
-		return redirect(route('employees.index'))->with('success', 'Employee saved');
+        return redirect(route('employees.index'))->with('success', 'Employee saved');
 
 
-//		$transaction_ok = ($is_employee_saved && $is_user_saved) ? TRUE : FALSE;
-//
-//		if($transaction_ok === FALSE){
-//			DB::rollBack();
-//			return redirect()->with('error', 'Failure');
-//		}
-//		else {
-//			DB::commit();
-//			return redirect(route('employees.index'))->with('success', 'Hahaha');
-//		}
+        //		$transaction_ok = ($is_employee_saved && $is_user_saved) ? TRUE : FALSE;
+        //
+        //		if($transaction_ok === FALSE){
+        //			DB::rollBack();
+        //			return redirect()->with('error', 'Failure');
+        //		}
+        //		else {
+        //			DB::commit();
+        //			return redirect(route('employees.index'))->with('success', 'Hahaha');
+        //		}
     }
 
     /**
@@ -92,13 +96,13 @@ class EmployeesController extends Controller
     public function show($id)
     {
         //
-		$employee = Employee::find($id);
-		$data = array(
-			'title' => 'Employee',
-			'employee' => $employee
-		);
+        $employee = Employee::find($id);
+        $data = array(
+            'title' => 'Employee',
+            'employee' => $employee
+        );
 
-		return view('employees.show')->with($data);
+        return view('employees.show')->with($data);
     }
 
     /**
@@ -110,12 +114,12 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         //
-		$data = array(
-			'title' => 'Edit Employee'
-		);
-		$data['employee'] = Employee::find($id);
-		$data['user'] = $data['employee']->user;
-		return view('employees.edit')->with($data);
+        $data = array(
+            'title' => 'Edit Employee'
+        );
+        $data['employee'] = Employee::find($id);
+        $data['user'] = $data['employee']->user;
+        return view('employees.edit')->with($data);
     }
 
     /**
@@ -127,29 +131,29 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-		//
-		$validatedData = $request->validate([
-			'name' => 'required',
-			'phone' => 'required|min:11|max:11',
-			'address' => 'required|max:100',
-			'cnic' => 'required|min:13',
-			'email' => 'required'
-		]);
+        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required|min:11|max:11',
+            'address' => 'required|max:100',
+            'cnic' => 'required|min:13',
+            'email' => 'required'
+        ]);
 
-		$user = User::find($id);
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = Hash::make('123123123');
-		$user->save();
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make('123123123');
+        $user->save();
 
-		$employee = Employee::find($id);
-		$employee->name = $request->name;
-		$employee->phone = $request->phone;
-		$employee->cnic = $request->cnic;
-		$employee->address = $request->address;
-		$employee->save();
+        $employee = Employee::find($id);
+        $employee->name = $request->name;
+        $employee->phone = $request->phone;
+        $employee->cnic = $request->cnic;
+        $employee->address = $request->address;
+        $employee->save();
 
-		return redirect(route('employees.index'))->with('success', 'Employee updated');
+        return redirect(route('employees.index'))->with('success', 'Employee updated');
     }
 
     /**
