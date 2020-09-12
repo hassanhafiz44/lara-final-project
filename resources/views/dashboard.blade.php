@@ -19,12 +19,12 @@
 					</thead>
 					<tbody>
 						<tr>
-						<td>1</td>
-						<td>2391</td>
-						<td>Ali Hassan</td>
-						<td>HP laptop</td>
-						<td>12-07-2019</td>
-						<td><a href="#" class="btn btn-outline-secondary btn-sm">Details</a></td>
+							<td>1</td>
+							<td>2391</td>
+							<td>Ali Hassan</td>
+							<td>HP laptop</td>
+							<td>12-07-2019</td>
+							<td><a href="#" class="btn btn-outline-secondary btn-sm">Details</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -35,7 +35,7 @@
 				<div class="bg-primary text-white p-4">
 					<i class="fa fa-list-ul "></i>
 					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">{{ $products_count }}
-					<span class="d-block">Products</span></h2>
+						<span class="d-block">Products</span></h2>
 				</div>
 				<div class="card-footer text-primary">
 					<h6 class="text-center"><a href="{{ route('products.index') }}">View Details</a></h6>
@@ -46,7 +46,7 @@
 				<div class="bg-primary text-white p-4">
 					<i class="fa fa-list-ul"></i>
 					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">
-					<span class="d-block">Sales</span></h2>
+						<span class="d-block">Sales</span></h2>
 				</div>
 				<div class="card-footer text-primary">
 					<h6 class="text-center"><a href="#">View Details</a></h6>
@@ -57,7 +57,7 @@
 				<div class="bg-primary text-white p-4">
 					<i class="fa fa-list-ul "></i>
 					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">
-					<span class="d-block">Expenses</span></h2>
+						<span class="d-block">Expenses</span></h2>
 				</div>
 				<div class="card-footer text-primary">
 					<h6 class="text-center"><a href="#">View Details</a></h6>
@@ -77,11 +77,11 @@
 					<form>
 						<div class="form-group">
 							<label class="col-form-label">Full Name:</label>
-							<input type="text" class="form-control" >
+							<input type="text" class="form-control">
 							<label class="col-form-label">Username:</label>
-							<input type="text" class="form-control" >
-							<label  class="col-form-label">Password:</label>
-							<input type="password" class="form-control" >
+							<input type="text" class="form-control">
+							<label class="col-form-label">Password:</label>
+							<input type="password" class="form-control">
 							<label class="col-form-label">Confirm Password:</label>
 							<input type="password" class="form-control">
 						</div>
@@ -157,6 +157,6 @@
 			</div>
 		</div>
 	</div>
-</div>        
+</div>
 
 @endsection

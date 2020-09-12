@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Dashboard</title>
-	
+
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	  <style>
-    	#menu ul li a:hover{
-    		background-color: white;
-    		color: black;
-    		border-radius: 10px;
-    		transition: .5s ease;
-    	}
-    </style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		#menu ul li a:hover {
+			background-color: white;
+			color: black;
+			border-radius: 10px;
+			transition: .5s ease;
+		}
+	</style>
 </head>
+
 <body>
 
 	<div class="head">
@@ -77,14 +79,14 @@
 					<li class="nav-item">
 						<a href="login" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a>
 					</li>
-					
+
 				</ul>
 			</div>
 		</nav>
 
 		@show
 	</div>
-	
+
 
 	<div class="content">
 		@section('content')
@@ -96,7 +98,8 @@
 
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
