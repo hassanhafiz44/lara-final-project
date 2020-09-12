@@ -33,7 +33,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        return route('dashboard.index');
+        return route('pages.index');
     }
 
     /**

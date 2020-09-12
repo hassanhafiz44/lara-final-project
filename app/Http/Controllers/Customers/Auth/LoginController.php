@@ -80,7 +80,7 @@ class LoginController extends Controller
             //Authenticated, redirect to the intended route
             //if available else customers dashboard.
             return redirect()
-                ->intended(route('home'))
+                ->intended(route('pages.index'))
                 ->with('status', 'You are Logged in as Customers!');
         }
         //keep track of login attempts from the user.
@@ -98,7 +98,7 @@ class LoginController extends Controller
     {
         Auth::guard('customers')->logout();
         return redirect()
-            ->route('customers.login');
+            ->route('pages.index');
     }
 
     /**
