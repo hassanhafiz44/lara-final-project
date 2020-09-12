@@ -61,14 +61,14 @@
 					@else
 					@if(Auth::user())
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ url()->current() === route('dashboard.index') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('dashboard.index') }}">Dashboard</a>
+						<li class="nav-item {{ url()->current() === route('admin.dashboard.index') ? 'active' : ''}}">
+							<a class="nav-link" href="{{ route('admin.dashboard.index') }}">Dashboard</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('employees.index') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+						<li class="nav-item {{ url()->current() === route('admin.employees.index') ? 'active' : ''}}">
+							<a class="nav-link" href="{{ route('admin.employees.index') }}">Employees</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('products.index') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('products.index') }}">Products</a>
+						<li class="nav-item {{ url()->current() === route('admin.products.index') ? 'active' : ''}}">
+							<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
 						</li>
 					</ul>
 					@endif
@@ -77,7 +77,7 @@
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto">
 						<!-- Authentication Links -->
-						@guest
+						<!-- @guest
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
 						</li>
@@ -93,15 +93,55 @@
 							</a>
 
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+								<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
 											document.getElementById('logout-form').submit();">
 									{{ __('Logout') }}
 								</a>
 
-								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+								<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">@csrf</form>
 							</div>
 						</li>
-						@endguest
+						@endguest -->
+						@if(!Auth::guard('web')->check() && !Auth::guard('customers')->check())
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
+						</li>
+						@if (Route::has('customers.register'))
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
+						</li>
+						@endif
+						@elseif(Auth::guard('web')->check())
+						<li class="nav-item dropdown">
+							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+								{{ Auth::user()->name }} <span class="caret"></span>
+							</a>
+
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
+											document.getElementById('logout-form').submit();">
+									{{ __('Logout') }}
+								</a>
+
+								<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">@csrf</form>
+							</div>
+						</li>
+						@elseif(Auth::guard('customers')->check())
+						<li class="nav-item dropdown">
+							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+								{{ Auth::guard('customers')->user()->name }} <span class="caret"></span>
+							</a>
+
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
+											document.getElementById('logout-form').submit();">
+									{{ __('Logout') }}
+								</a>
+
+								<form id="logout-form" action="{{ route('customers.logout') }}" method="POST" style="display: none;">@csrf</form>
+							</div>
+						</li>
+						@endif
 					</ul>
 				</div>
 			</div>

@@ -12,10 +12,10 @@
 							@csrf<br>
 							<div class="form-group">
 								<label for="cat-title">Category Title</label>
-								<input type="text" class="form-control" id="cat-title" name="cat_title" required/>
+								<input type="text" class="form-control" id="cat-title" name="cat_title" required />
 							</div>
 							<input class="btn btn-primary" type="submit" name="submit" id="submit" />
-							<input type="hidden" value="{{ route('product_categories.store') }}" name="action-url" />
+							<input type="hidden" value="{{ route('admin.product_categories.store') }}" name="action-url" />
 						</form>
 					</div>
 				</div>

@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/customers')->name('customers.')->namespace('Customers\Auth')->group(function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
     Route::post('/login', 'LoginController@login')->name('login.attempt');
-    Route::get('/logout', 'LoginController@logout')->name('logout');
+    Route::post('/logout', 'LoginController@logout')->name('logout');
     Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
     Route::post('/register', 'RegisterController@register');
 });
@@ -40,6 +40,7 @@ Route::prefix('/users')->name('users.')->namespace('Auth')->group(function () {
     Route::post('/register', 'RegisterController@register');
 });
 
+// Pages Routes
 Route::prefix('/pages')->name('pages.')->group(function () {
     Route::get('/products', 'PagesController@products')->name('products');
     Route::get('/services', 'PagesController@services')->name('services');
@@ -48,6 +49,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
 });
 
 Route::get('/', 'PagesController@index')->name('pages.index');
+
 // Route::get('pages/contact', 'PagesController@contact')->name('pages.contact');
 // Route::get('pages/products', 'PagesController@products')->name('pages.products');
 // Route::get('pages/services', 'PagesController@services')->name('pages.services');
@@ -71,8 +73,10 @@ Route::get('/', 'PagesController@index')->name('pages.index');
 
 //Auth::routes();
 
-Route::resource('employees', 'EmployeesController');
-Route::resource('product_categories', 'ProductCategoriesController');
-Route::resource('products', 'ProductsController');
+Route::prefix('/admin')->name('admin.')->group(function () {
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+    Route::resource('employees', 'EmployeesController');
+    Route::resource('product_categories', 'ProductCategoriesController');
+    Route::resource('products', 'ProductsController');
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+});
