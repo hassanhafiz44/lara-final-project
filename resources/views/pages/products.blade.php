@@ -114,6 +114,8 @@
 
 <!-- View Order -->
 
+@include('includes/cartModal')
+
 <div class="modal fade " id="vieworder">
 	<div class="modal-dialog">
 		<div class="modal-content">
