@@ -46,6 +46,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
     Route::get('/services', 'PagesController@services')->name('services');
     Route::get('/about', 'PagesController@about')->name('about');
     Route::get('/contact', 'PagesController@contact')->name('contact');
+    Route::resource('invoices', 'InvoicesController');
 });
 
 Route::get('/', 'PagesController@index')->name('pages.index');
