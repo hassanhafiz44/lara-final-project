@@ -11,7 +11,7 @@
 	<div class="row">
 		@foreach($products as $product)
 		<!-- Product  -->
-		<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-image="{{ asset('storage/product_images/' . $product->images[0]->image_uri ) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
+		<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-id="{{$product->id}}" data-image="{{ asset('storage/product_images/' . $product->images[0]->image_uri ) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
 			<div class="image">
 				<a href="#" class="product-link" data-toggle="modal" data-target="#myModal1">
 					<img src="{{ asset('storage/product_images/' . $product->images[0]->image_uri) }}" class="w-100">
@@ -22,7 +22,8 @@
 			</div>
 			<h5 class="text-center">{{ $product->title }}</h5>
 			<h5 class="text-center">Price: ${{ $product->price }}</h5>
-			<a href="#" data-toggle="modal" data-target="#buymodal" class="btn buy"><i class="fa fa-shopping-cart"></i> BUY</a>
+			<button class="btn btn-primary buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
+			<button class="btn btn-danger remove d-none"><i class="fa fa-trash"></i></button>
 		</div>
 		<!-- ./Product -->
 		@endforeach
@@ -163,6 +164,41 @@
 			$("#price").text(product.data('price'));
 			$("#description").text(product.data('description'));
 			$("#p-image").attr('src', product.data('image'));
+		});
+
+		// Add product to the cart.
+		$(".product .buy").on("click", function(event) {
+			const product = $(event.target).closest(".product");
+			const buyBtn = product.children(".buy");
+			const removeBtn = product.children(".remove");
+
+			if (buyBtn.data().action === "buy") {
+				buyBtn.children("span").text("ADDED");
+				buyBtn.data("action", "bought");
+				removeBtn.removeClass("d-none");
+			} else {
+				console.log("Product already added.");
+			}
+			// } else {
+			// 	buyBtn.children("span").text("BUY");
+			// 	buyBtn.data("action", "buy");
+			// 	removeBtn.toggleClass("d-none");
+			// }
+		});
+
+		// Remove product from the cart.
+		$(".product .remove").on("click", function(event) {
+			const product = $(event.target).closest(".product");
+			const buyBtn = product.children(".buy");
+			const removeBtn = product.children(".remove");
+
+			if (buyBtn.data().action === "bought") {
+				buyBtn.children("span").text("BUY");
+				buyBtn.data("action", "buy");
+				removeBtn.addClass("d-none");
+			} else {
+				console.log("Product already removed.");
+			}
 		});
 	});
 </script>
