@@ -10,7 +10,7 @@
                 <div class="container">
                     <form id="cart-form" method="POST">
                         @csrf<br>
-                        <input type="hidden" value="{{ route('pages.invoices.store') }}" name="action-url" />
+                        <input type="hidden" value="{{ route('pages.invoices.store') }}" name="action_url" />
                     </form>
                 </div>
             </div>
