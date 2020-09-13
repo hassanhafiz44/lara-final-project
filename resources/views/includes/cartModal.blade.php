@@ -10,14 +10,14 @@
                 <div class="container">
                     <form id="cart-form" method="POST">
                         @csrf<br>
-
-                        <input type="hidden" value="" name="action-url" />
+                        <input type="hidden" value="{{ route('pages.invoices.store') }}" name="action-url" />
                     </form>
                 </div>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
+                <button type="button" id="submit-cart-form" class="btn btn-success">Confirm</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
