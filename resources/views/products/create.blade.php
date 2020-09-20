@@ -13,11 +13,15 @@
 				<label for="model">Model</label>
 				<input type="text" class="form-control" name="model" id="model" required />
 			</div>
-			<div class="form-group col-lg-6">
+			<div class="form-group col-lg-4">
 				<label for="price">Price</label>
 				<input type="number" class="form-control" name="price" id="price" required />
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-lg-4">
+				<label for="retail-price">Retail</label>
+				<input type="number" class="form-control" name="retail_price" id="retail-price" required />
+			</div>
+			<div class="form-group col-md-4">
 				<label for="quantity">Quantity</label>
 				<input type="number" class="form-control" name="quantity" id="quantity" required />
 			</div>
