@@ -15,8 +15,11 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee_id')->nullable(true);
+            $table->bigInteger('delivery_boy_id')->nullable(true);
             $table->bigInteger('customer_id');
+            $table->decimal('total');
+            $table->enum('payment_status', ['paid', 'due']);
+            $table->enum('invoice_status', ['ready', 'delivered', 'processing', 'canceled']);
             $table->timestamps();
         });
     }
