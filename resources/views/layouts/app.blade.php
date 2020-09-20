@@ -14,6 +14,7 @@
 	<script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
+	<script src="{{ asset('js/toastr.min.js') }}"></script>
 
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -23,6 +24,7 @@
 	<!-- Styles -->
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
 	@yield('stylesheets')
 </head>
 
