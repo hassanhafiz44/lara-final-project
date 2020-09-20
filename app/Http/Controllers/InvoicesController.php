@@ -48,19 +48,40 @@ class InvoicesController extends Controller
                 $count_products = sizeof($request->product_ids);
 
                 $products = [];
-                $total = 0;
+                $price_total = 0;
+                $retail_price_total = 0;
 
                 $quantity_errors = [];
 
+                // Make an invoice
+                if ($trans_success === TRUE)
+                    $trans_success = Invoice::insert([
+                        'customer_id' => auth('customers')->id(),
+                        'payment_status' => 'due',
+                        'invoice_status' => 'processing',
+                    ]);
+
+                if ($trans_success === TRUE)
+                    $invoice_id = DB::getPdo()->lastInsertId();
+
+                // Get products from database and prepare data to insert in invoice_products table
                 for ($i = 0; $i < $count_products; $i++) {
-                    $products[] = [
-                        'product_id' => $request->product_ids[$i],
-                        'quantity' => $request->product_quantities[$i]
-                    ];
 
                     $product = Product::find($request->product_ids[$i]);
-                    $total += $product->price;
 
+                    $products[] = [
+                        'product_id' => $product->id,
+                        'invoice_id' => $invoice_id,
+                        'quantity' => $request->product_quantities[$i],
+                        'price' => $product->price,
+                        'retail_price' => $product->retail_price
+                    ];
+
+                    // Prepare total prices to insert in invoices totals
+                    $price_total += ($product->price * $request->product_quantities[$i]);
+                    $retail_price_total += ($product->retail_price * $request->product_quantities[$i]);
+
+                    // over quantity errors
                     if ($product->quantity < $request->product_quantities[$i]) {
                         $quantity_errors[] = [
                             'product' => $product,
@@ -68,21 +89,25 @@ class InvoicesController extends Controller
                         ];
                         continue;
                     }
-                    $product->quantity = $product->quantity - $request->product_quantities[$i];
 
+                    // manage inventory
+                    $product->quantity = $product->quantity - $request->product_quantities[$i];
                     $product->save();
                 }
-                if (sizeof($quantity_errors) > 0)
-                    return response()->json(['errors' => $quantity_errors], 200);
 
-                $trans_success = InvoiceProduct::insert($products);
+                if (sizeof($quantity_errors) >  0) {
+                    DB::rollBack();
+                    return response()->json(['errors' => $quantity_errors], 200);
+                }
+
+                // add total prices to invoice
                 if ($trans_success === TRUE)
-                    $trans_success = Invoice::insert([
-                        'customer_id' => auth('customers')->id(),
-                        'payment_status' => 'due',
-                        'invoice_status' => 'processing',
-                        'total' => $total
-                    ]);
+                    Invoice::where('id', $invoice_id)->update(['price_total' => $price_total, 'retail_price_total' => $retail_price_total]);
+
+                // insert invoice products
+                if ($trans_success === TRUE)
+                    $trans_success = InvoiceProduct::insert($products);
+
                 if ($trans_success === TRUE) {
                     DB::commit();
                     return response()->json($request);
