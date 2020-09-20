@@ -134,7 +134,9 @@
 								{{ Auth::guard('customers')->user()->name }} <span class="caret"></span>
 							</a>
 
+
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<a href="{{ route('pages.invoices.index') }}" class="dropdown-item">Invoices</a>
 								<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
 											document.getElementById('logout-form').submit();">
 									{{ __('Logout') }}
