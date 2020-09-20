@@ -25,7 +25,7 @@
 			<h5 class="text-center">Price: ${{ $product->price }}</h5>
 			<button class="btn btn-primary buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
 			<button class="btn btn-danger remove d-none"><i class="fa fa-trash"></i></button>
-			<span class="badge badge-info">{{ $product->quantity }}</span>
+			<span class="badge badge-info product-quantity">{{ $product->quantity }}</span>
 		</div>
 		<!-- ./Product -->
 		@endforeach
@@ -160,8 +160,26 @@
 </footer>
 <script>
 	function addProductToCart(product) {
+		// const productInput = `
+		// 	<div class="row cart-products" id="product-input-${product.id}" data-id="${product.id}">
+		// 		<div class="form-group col-md-4">
+		// 			<label for="product-${product.id}-${product.name}">Name</label>
+		// 			<input type="hidden" type="number" name="product_ids[]" id="product-${product.id}" value="${product.id}">
+		// 			<input id="product-${product.id}-${product.name}" readonly type="text" name="product_names[]" class="form-control" value="${product.name}">
+		// 		</div>
+		// 		<div class="form-group col-md-6">
+		// 			<label for="product-${product.id}-quantity">Quantity</label>
+		// 			<input type="number" name="product_quantities[]" id="product-${product.id}-quantity" class="form-control" min="1" max="${product.quantity}" value="1">
+		// 		</div>
+		// 		<div class="form-group col-md-2">
+		// 			<label>Remove</label>
+		// 			<button type="button" class="btn btn-danger fa fa-trash remove"></button>
+		// 		</div>
+		// 	</div>
+		// `;
+
 		const productInput = `
-			<div class="row" id="product-input-${product.id}">
+			<div class="row cart-products" id="product-input-${product.id}" data-id="${product.id}">
 				<div class="form-group col-md-6">
 					<label for="product-${product.id}-${product.name}">Name</label>
 					<input type="hidden" type="number" name="product_ids[]" id="product-${product.id}" value="${product.id}">
@@ -177,8 +195,8 @@
 		$("#cart-form").append(productInput);
 	}
 
-	function removeProductFromCart(product) {
-		$(`#product-input-${product.id}`).remove();
+	function removeProductFromCart(id) {
+		$(`#product-input-${id}`).remove();
 	}
 </script>
 <script>
@@ -219,11 +237,15 @@
 				buyBtn.data("action", "buy");
 				removeBtn.addClass("d-none");
 
-				removeProductFromCart(product.data());
+				removeProductFromCart(product.data().id);
 			} else {
 				console.log("Product already removed.");
 			}
 		});
+
+		// $("#cart-form").on("click", ".cart-products .remove", function(event) {
+		// 	removeProductFromCart($(event.target).closest('.cart-products').data("id"));
+		// });
 
 		$("#submit-cart-form").on("click", function(event) {
 			const data = $("#cart-form").serialize();
@@ -233,10 +255,39 @@
 				method: 'POST',
 				data: data,
 				success: function(response) {
-					console.log(response);
+					if (response.errors !== undefined) {
+						toastr.error('Quantity error', 'Error', 2000);
+					}
+					// console.log(response);
+					if (response.product_ids !== undefined) {
+						// Success
+
+						toastr.success('Transaction successful.', 'Success', 2000);
+						$("button[data-dismiss=\"modal\"]").click();
+
+						$.each(response.product_ids, function(index, id) {
+							removeProductFromCart(id);
+							const product = $(`.product[data-id="${id}"]`);
+							const buyBtn = product.children('.buy');
+							const removeBtn = product.children('.remove');
+
+							// UI Specific
+							buyBtn.children("span").text("BUY");
+							buyBtn.data('action', 'buy');
+							removeBtn.addClass('d-none');
+
+							// Change the quantity
+							product.data('quantity', product.data("quantity") - response.product_quantities[index]);
+							product.children('.product-quantity').text(product.data('quantity'));
+						});
+					}
 				},
 				error: function(error) {
-					console.log(error);
+					if (error.status === 500) {
+						toastr.error('Server down', 'Error', 2000);
+					} else {
+						toastr.error(error.responseJSON.msg, 'Error', 2000);
+					}
 				}
 			});
 		});
