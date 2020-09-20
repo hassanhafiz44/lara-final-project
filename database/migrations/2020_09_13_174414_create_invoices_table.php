@@ -17,7 +17,8 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->bigInteger('delivery_boy_id')->nullable(true);
             $table->bigInteger('customer_id');
-            $table->decimal('total');
+            $table->decimal('price_total')->nullable(true);
+            $table->decimal('retail_price_total')->nullable(true);
             $table->enum('payment_status', ['paid', 'due']);
             $table->enum('invoice_status', ['ready', 'delivered', 'processing', 'canceled']);
             $table->timestamps();
