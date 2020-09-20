@@ -123,7 +123,7 @@ class ProductsController extends Controller
             'product_categories' => ProductCategory::all()
         );
         //return $data['product']->images[0]->image_uri;
-        return view('admin.products.edit')->with($data);
+        return view('products.edit')->with($data);
     }
 
     /**
