@@ -85,6 +85,7 @@ class ProductsController extends Controller
         $product->model = $request->model;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->retail_price = $request->retail_price;
         $product->quantity = $request->quantity;
         $product->save();
 
