@@ -10,4 +10,9 @@ class Invoice extends Model
     {
         return $this->hasMany('App\InvoiceProduct');
     }
+
+    public function customer()
+    {
+       return $this->belongsTo('App\Customer');
+    }
 }
