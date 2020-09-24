@@ -41,7 +41,8 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<!-- Showing only if PagesController is serving the request -->
-					@if( explode("\\", explode("@", Route::currentRouteAction())[0])[3] === 'PagesController')
+					@if( explode("\\", explode("@", Route::currentRouteAction())[0])[3] === 'PagesController'
+					OR explode("\\", explode("@", Route::currentRouteAction())[0])[3] === 'InvoicesController')
 					<!-- Left Side Of Navbar -->
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item {{ url()->current() === route('pages.index') ? 'active' : ''}}">
