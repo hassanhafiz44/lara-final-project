@@ -23,9 +23,11 @@
 			</div>
 			<h5 class="text-center">{{ $product->title }}</h5>
 			<h5 class="text-center">Price: ${{ $product->price }}</h5>
+         @if(Auth::guard('customers')->check())
 			<button class="btn btn-primary buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
+         @endif
 			<button class="btn btn-danger remove d-none"><i class="fa fa-trash"></i></button>
-			<span class="badge badge-info product-quantity">{{ $product->quantity }}</span>
+			<span class="badge badge-info product-quantity">{{ $product->quantity }} </span>
 		</div>
 		<!-- ./Product -->
 		@endforeach
