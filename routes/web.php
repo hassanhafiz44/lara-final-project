@@ -79,5 +79,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('employees', 'EmployeesController');
     Route::resource('product_categories', 'ProductCategoriesController');
     Route::resource('products', 'ProductsController');
+    Route::resource('invoices', 'AdminInvoicesController');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
 });
