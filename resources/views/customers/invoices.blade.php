@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 @foreach($invoices as $invoice)
-                <tr data-iid="{{ $invoice->id }}">
+                <tr data-id="{{ $invoice->id }}">
                     <td>{{ $invoice->retail_price_total }}</td>
                     <td>{{ $invoice->payment_status }}</td>
                     <td>{{ $invoice->invoice_status }}</td>
