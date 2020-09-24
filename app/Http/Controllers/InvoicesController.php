@@ -19,6 +19,13 @@ class InvoicesController extends Controller
     public function index()
     {
         //
+        $customer_id = auth('customers')->id();
+        $invoices = Invoice::where('customer_id', $customer_id)->get();
+        $data = [
+            'title' => 'Customer Invoices',
+            'invoices' => $invoices
+        ];
+        return view('customers.invoices')->with($data);
     }
 
     /**
