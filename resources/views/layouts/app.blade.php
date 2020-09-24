@@ -73,6 +73,9 @@
 						<li class="nav-item {{ url()->current() === route('admin.products.index') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
 						</li>
+						<li class="nav-item {{ url()->current() === route('admin.invoices.index') ? 'active' : ''}}">
+							<a class="nav-link" href="{{ route('admin.invoices.index') }}">Invoices</a>
+						</li>
 					</ul>
 					@endif
 					@endif
