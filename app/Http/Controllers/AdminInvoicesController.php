@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Invoice;
+use App\Transaction;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminInvoicesController extends Controller
 {
-   public function __construct()
-   {
-      $this->middleware('auth');
-   }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -93,5 +97,64 @@ class AdminInvoicesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function change_payment_status(Request $request)
+    {
+        try {
+            $invoice = Invoice::findOrFail($request->invoice_id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => [
+                    'message' => "Invoice not found"
+                ]
+            ]);
+        }
+
+        try {
+            if($invoice->invoice_status === "devlivered") {
+                if($request->payment_status === "due") {
+                    return response()->json([
+                        'error' => [
+                            'message' => "Cannot change status to due. Products are delivered."
+                        ]
+                    ], 400);
+                }
+            }
+
+            DB::beginTransaction();
+            // Change invoice payment status
+            $invoice->payment_status = $request->payment_status;
+            $invoice->save();
+
+            $transaction = new Transaction();
+            if($invoice->payment_status === "paid")
+            {
+                $transaction->type = 'income';
+                $transaction->description = 'customer_payment';
+                $transaction->invoice_id = $invoice->id;
+                $transaction->amount = $invoice->retail_price_total;
+                $transaction->save();
+            } else {
+                $transaction->type = 'expense';
+                $transaction->description = 'customer_payment';
+                $transaction->invoice_id = $invoice->id;
+                $transaction->amount = $invoice->retail_price_total;
+                $transaction->save();
+            }
+            DB::commit();
+
+            return response()->json([
+                'type' => $transaction->type,
+                'payment_status' => $invoice->payment_status
+            ], 200);
+        } catch(Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => [
+                    'message' => $e
+                ]
+            ],500);
+        }
     }
 }

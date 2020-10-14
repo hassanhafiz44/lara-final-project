@@ -81,4 +81,5 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('products', 'ProductsController');
     Route::resource('invoices', 'AdminInvoicesController');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+    Route::post('/invoices/change-payment-status', 'AdminInvoicesController@change_payment_status')->name('invoice.change.payment.status');
 });
