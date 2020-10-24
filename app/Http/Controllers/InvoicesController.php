@@ -66,22 +66,26 @@ class InvoicesController extends Controller
                         'customer_id' => auth('customers')->id(),
                         'payment_status' => 'due',
                         'invoice_status' => 'processing',
-                    ]);
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+                        
+                        if ($trans_success === TRUE)
+                        $invoice_id = DB::getPdo()->lastInsertId();
 
-                if ($trans_success === TRUE)
-                    $invoice_id = DB::getPdo()->lastInsertId();
+                        // Get products from database and prepare data to insert in invoice_products table
+                        for ($i = 0; $i < $count_products; $i++) {
+                    
+                            $product = Product::find($request->product_ids[$i]);
 
-                // Get products from database and prepare data to insert in invoice_products table
-                for ($i = 0; $i < $count_products; $i++) {
-
-                    $product = Product::find($request->product_ids[$i]);
-
-                    $products[] = [
+                            $products[] = [
                         'product_id' => $product->id,
                         'invoice_id' => $invoice_id,
                         'quantity' => $request->product_quantities[$i],
                         'price' => $product->price,
-                        'retail_price' => $product->retail_price
+                        'retail_price' => $product->retail_price,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
                     ];
 
                     // Prepare total prices to insert in invoices totals

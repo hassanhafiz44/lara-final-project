@@ -2,6 +2,37 @@
 
 @section('content')
 <div class="container-fluid">
+<div class="container-fluid">
+	<div class="row mb-2">
+		<div class="col-lg-3 mt-2 mb-2">
+			<div class="card bg-primary">
+				<div class="card-body">
+					<h5 class="card-title">Today Invoices <span class="pull-right">{{ $no_today_invoices }}</span></h5>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 mt-2 mb2">
+			<div class="card bg-warning">
+				<div class="card-body">
+					<h5 class="card-title">Today Sales <span class="pull-right">${{ $today_sales }}</span></h5>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 mt-2 mb2">
+			<div class="card bg-info">
+				<div class="card-body">
+					<h5 class="card-title">Month Invoices <span class="pull-right">{{ $no_month_invoices }}</span></h5>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 mt-2 mb2">
+			<div class="card bg-success">
+				<div class="card-body">
+					<h5 class="card-title">Month Sales <span class="pull-right">${{ $month_sales }}</span></h5>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-8">
 			<h2 class="text-white" style="background-color: rgba(248,70,129,0.6)">Latest Oders</h2>
