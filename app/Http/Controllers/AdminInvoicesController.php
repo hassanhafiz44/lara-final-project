@@ -108,11 +108,11 @@ class AdminInvoicesController extends Controller
                 'error' => [
                     'message' => "Invoice not found"
                 ]
-            ]);
+            ], 404);
         }
 
         try {
-            if($invoice->invoice_status === "devlivered") {
+            if($invoice->invoice_status === "delivered") {
                 if($request->payment_status === "due") {
                     return response()->json([
                         'error' => [
@@ -152,7 +152,43 @@ class AdminInvoicesController extends Controller
             DB::rollBack();
             return response()->json([
                 'error' => [
-                    'message' => $e
+                    'message' => "Something went wrong"
+                ]
+            ],500);
+        }
+    }
+
+    public function change_invoice_status(Request $request) 
+    {
+        try {
+            $invoice = Invoice::findOrFail($request->invoice_id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => [
+                    'message' => "Invoice not found"
+                ]
+            ], 404);
+        }
+
+        try {
+            if($invoice->payment_status === 'due') {
+                if($request->invoice_status === 'delivered')
+                    return response()->json([
+                        'error' => [
+                            'message' => "Cannot changed status to delivered. Make payment first"
+                        ]
+                    ], 400);
+            }
+
+            $invoice->invoice_status = $request->invoice_status;
+            $invoice->save();
+            return response()->json([
+                'invoice_status' => $invoice->invoice_status
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => [
+                    'message' => "Something went wrong"
                 ]
             ],500);
         }
