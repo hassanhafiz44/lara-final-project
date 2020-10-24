@@ -47,6 +47,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
     Route::get('/about', 'PagesController@about')->name('about');
     Route::get('/contact', 'PagesController@contact')->name('contact');
     Route::resource('invoices', 'InvoicesController');
+    Route::post('/submit-contact-us', 'PagesController@submit_contact_us')->name('submit.contact.us');
 });
 
 Route::get('/', 'PagesController@index')->name('pages.index');

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
+use App\CustomerFeedback;
 use App\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\VarDumper\VarDumper;
 
 class PagesController extends Controller
 {
@@ -50,7 +52,12 @@ class PagesController extends Controller
 
 	function contact()
     {
+		if(!Auth::guard("customers")->check()) {
+			return redirect(route('customers.login'));
+		}
+
 		$data = array('title' => 'Contract Us');
+		$data['customer'] = Auth::guard('customers')->user();
     	return view('pages.contactus')->with($data);
     }
 
@@ -71,5 +78,17 @@ class PagesController extends Controller
     {
 		$data = array('title' => 'About Us');
     	return view('pages.about')->with($data);
-    }
+	}
+	
+	function submit_contact_us(Request $request) 
+	{
+		$result = DB::table('customer_feedbacks')->insert([
+			'message' => $request->message,
+			'customer_id' => Auth::guard('customers')->id(),
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
+		]);
+
+		return redirect(route('pages.contact'))->with('message', 'Message sent to admin');
+	}
 }
