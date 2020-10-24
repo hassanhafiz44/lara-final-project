@@ -3,12 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PagesController extends Controller
 {
 	public function index()
 	{
 		$data = array('title' => 'Home');
+		if(Auth::guard('customers')->check()) {
+			$data['due_invoices'] = DB::table('invoices')
+				->where('customer_id', '=', Auth::guard('customers')->id())
+				->where('payment_status','=', 'due')->get();
+			$data['paid_invoices'] = DB::table('invoices')
+				->where('customer_id', '=', Auth::guard('customers')->id())
+				->where('payment_status', '=', 'paid')->get();
+
+			$data['no_canceled_invoices'] = DB::table('invoices')
+				->where('customer_id', '=', Auth::guard('customers')->id())
+				->where('invoice_status', '=', 'canceled')->count();
+				
+			$data['no_total_invoices'] = DB::table('invoices')
+				->where('customer_id', '=', Auth::guard('customers')->id())->count();
+
+			$data['no_due_invoices'] = count($data['due_invoices']);
+			$data['no_paid_invoices'] = count($data['paid_invoices']);
+
+			$paid_total = 0;
+			$due_total = 0;
+
+			foreach($data['paid_invoices'] as $invoice) {
+				$paid_total += $invoice->retail_price_total;
+			}
+			foreach($data['due_invoices'] as $invoice) {
+				$due_total += $invoice->retail_price_total;
+			}
+
+			$data['paid_total'] = $paid_total;
+			$data['due_total'] = $due_total;
+
+		}
+		// var_dump($data); die();
 		return view('pages.home')->with($data);
 	}
 
