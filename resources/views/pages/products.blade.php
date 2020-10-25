@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('stylesheets')
-<link rel="stylesheet" href="{{ asset('css/products.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/products.css') }}"> --}}
 @endsection
 
 @section('content')
@@ -12,22 +12,20 @@
 	<div class="row">
 		@foreach($products as $product)
 		<!-- Product  -->
-		<div class="col-lg-3 col-md-4 col-sm-6 product-grid product" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="{{ asset('storage/product_images/' . $product->images[0]->image_uri ) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
-			<div class="image">
-				<a href="#" class="product-link" data-toggle="modal" data-target="#myModal1">
-					<img src="{{ asset('storage/product_images/' . $product->images[0]->image_uri) }}" class="w-100">
-					<div class="overlay">
-						<div class="detail">View Details</div>
+		<div class="col-lg-3">
+			<div class="card">
+				<img src="https://placekitten.com/300/300" class="card-img-top">
+					<div class="product card-body" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="https://placekitten.com/300/300" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
+						<h5 class="card-title">{{ $product->title }}</h5>
+						<p class="card-text">Price: ${{ $product->price }}</p>
+						@if(Auth::guard('customers')->check())
+							<button class="btn btn-primary btn-block btn-sm mb-2 buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
+						@endif
+						<span class="badge badge-info product-quantity">{{ $product->quantity }} </span>
+						<a href="#" class="product-link btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal1">View Details</a>
+						<button class="btn btn-danger btn-sm remove d-none"><i class="fa fa-trash"></i></button>
 					</div>
-				</a>
 			</div>
-			<h5 class="text-center">{{ $product->title }}</h5>
-			<h5 class="text-center">Price: ${{ $product->price }}</h5>
-         @if(Auth::guard('customers')->check())
-			<button class="btn btn-primary buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
-         @endif
-			<button class="btn btn-danger remove d-none"><i class="fa fa-trash"></i></button>
-			<span class="badge badge-info product-quantity">{{ $product->quantity }} </span>
 		</div>
 		<!-- ./Product -->
 		@endforeach
