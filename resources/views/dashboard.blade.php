@@ -1,71 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()">
 <div class="container-fluid">
 	<div class="row mb-2">
 		<div class="col-lg-3 mt-2 mb-2">
 			<div class="card bg-primary">
 				<div class="card-body">
-					<h5 class="card-title">Today Invoices <span class="pull-right">{{ $no_today_invoices }}</span></h5>
+					<h5 class="card-title">Today Invoices </h5>
+					<span><%= no_today_invoices %></span>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-3 mt-2 mb2">
 			<div class="card bg-warning">
 				<div class="card-body">
-					<h5 class="card-title">Today Sales <span class="pull-right">${{ $today_sales }}</span></h5>
+					<h5 class="card-title">Today Sales </h5>
+					<span><%= today_sales | currency:"PKR"  %></span>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-3 mt-2 mb2">
 			<div class="card bg-info">
 				<div class="card-body">
-					<h5 class="card-title">Month Invoices <span class="pull-right">{{ $no_month_invoices }}</span></h5>
+					<h5 class="card-title">Month Invoices </h5>
+					<span><%= no_month_invoices %></span>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-3 mt-2 mb2">
 			<div class="card bg-success">
 				<div class="card-body">
-					<h5 class="card-title">Month Sales <span class="pull-right">${{ $month_sales }}</span></h5>
+					<h5 class="card-title">Month Sales </h5>
+					<span><%= month_sales | currency:"PKR" %></span>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-8">
-			<h2 class="text-white" style="background-color: rgba(248,70,129,0.6)">Latest Oders</h2>
-			<div class="container d-block">
-				<table class="table mt-3">
-					<thead class="table-dark">
-						<tr>
-							<th>#</th>
-							<th>ID</th>
-							<th>Customer'name</th>
-							<th>Product</th>
-							<th>Date</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>2391</td>
-							<td>Ali Hassan</td>
-							<td>HP laptop</td>
-							<td>12-07-2019</td>
-							<td><a href="#" class="btn btn-outline-secondary btn-sm">Details</a></td>
-						</tr>
-					</tbody>
-				</table>
+		<div class="card">
+			<div class="card-body">
+				<div id="products-by-cat-chart"></div>
 			</div>
+		</div>
 		</div>
 		<div class="col-md-4 mt-4">
 			<div class="card">
 				<div class="bg-primary text-white p-4">
 					<i class="fa fa-list-ul "></i>
-					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">{{ $products_count }}
+					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;"><%= products_count %>
 						<span class="d-block">Products</span></h2>
 				</div>
 				<div class="card-footer text-primary">
@@ -190,4 +174,81 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/angular.min.js') }}"></script>
+<script>
+	const app = angular.module('dashboard', []);
+	app.config(function($interpolateProvider){
+
+		$interpolateProvider.startSymbol('<%=');
+		$interpolateProvider.endSymbol('%>');
+	});
+
+	app.controller('DashboardCtrl', function($scope, $http) {
+		const initialization_url = '{{ route('admin.dashboard.initialize') }}';
+		$scope.message = "hello";
+		$scope.initializeDashboard = function () {
+			$("body").LoadingOverlay('show');
+			$http.post(initialization_url, '').then(
+				function(response) {
+					console.log(response);
+					const data = response.data;
+					$scope.month_sales = data.month_sales;
+					$scope.today_sales = data.today_sales;
+					$scope.no_today_invoices = data.no_today_invoices;
+					$scope.no_month_invoices = data.no_month_invoices;
+					$scope.products_count = data.products_count;
+					renderHighChart('products-by-cat-chart', 'No. of Products by Categories', 'Category', data.products_by_cat);
+				}
+			).catch(function(error) {
+
+			}).finally(function() {
+				$("body").LoadingOverlay('hide');
+			});
+		}
+
+		function renderHighChart(containerId, title, seriesName, data) {
+			Highcharts.chart(containerId, {
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+					text: title
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.y:.1f} products</b>'
+				},
+				accessibility: {
+					point: {
+						valueSuffix: '%'
+					}
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.y:.1f} products'
+						}
+					}
+				},
+				series: [{
+					name: seriesName,
+					colorByPoint: true,
+					data: data
+				}]
+			});
+		}
+	});
+
+	$(function() {
+		
+	});
+</script>
 @endsection

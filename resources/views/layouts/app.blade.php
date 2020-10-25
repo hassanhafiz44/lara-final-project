@@ -16,6 +16,7 @@
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
 	<script src="{{ asset('js/toastr.min.js') }}"></script>
 	<script src="{{ asset('js/loadingoverlay.min.js') }}"></script>
+	<script src="{{ asset('js/highcharts.js') }}"></script>
 
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
