@@ -24,7 +24,7 @@ class AdminInvoicesController extends Controller
     public function index()
     {
         //
-        $invoices = Invoice::all();
+        $invoices = Invoice::orderByDesc('created_at')->get();
         $data = [
             'title' => 'Invoices',
             'invoices' => $invoices
@@ -133,13 +133,15 @@ class AdminInvoicesController extends Controller
                 $transaction->type = 'income';
                 $transaction->description = 'customer_payment';
                 $transaction->invoice_id = $invoice->id;
-                $transaction->amount = $invoice->retail_price_total;
+                $transaction->amount = $invoice->price_total;
+                $transaction->retail_amount = $invoice->retail_price_total;
                 $transaction->save();
             } else {
                 $transaction->type = 'expense';
                 $transaction->description = 'customer_payment';
                 $transaction->invoice_id = $invoice->id;
-                $transaction->amount = $invoice->retail_price_total;
+                $transaction->amount = $invoice->price_total;
+                $transaction->retail_amount = $invoice->retail_price_total;
                 $transaction->save();
             }
             DB::commit();

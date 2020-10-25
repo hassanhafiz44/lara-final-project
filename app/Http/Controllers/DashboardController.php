@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Invoice;
 use App\Product;
 use App\ProductCategory;
+use App\Transaction;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 
@@ -40,6 +42,7 @@ class DashboardController extends Controller
     $first_date_of_month = $date->modify('first day of this month')->format("Y-m-d");
     
     $products = Product::all();
+    
     // Invoices
     $data['today_invoices'] = DB::table('invoices')->where(DB::raw('DATE(`created_at`)'), '=', date('Y-m-d'))->get();
     $data['today_sales'] = 0;
@@ -57,6 +60,8 @@ class DashboardController extends Controller
       $data['month_sales'] += $invoice->retail_price_total;
     }
 
+    // Charts
+    // Category chart
     $categories = ProductCategory::all();
     $products_by_cat = [];
     foreach($categories as $key => $category) {
@@ -67,7 +72,36 @@ class DashboardController extends Controller
       }
     }
     $data['products_by_cat'] = $products_by_cat;
+
+    // Income vs Expense Chart
+    $income = Transaction::where('type', 'income')->sum('amount');
+    $expense = Transaction::where('type', 'expense')->sum('amount');
+
+    $data['income_expense'] = [
+      ['name' => 'Income', 'y' => $income],
+      ['name' => 'Expense', 'y' => $expense]
+    ];
     
+    // Charts end
+
+    $recent_invoices = Invoice::orderBy('created_at', 'desc')
+      ->groupBy('customer_id')->take(10)->get();
+    $data['recent_buyers'] = [];
+    foreach($recent_invoices as $invoice) {
+      $data['recent_buyers'][] = $invoice->customer;
+    }
+
+    $current_stock_worth = 0;
+    $current_stock_retail_worth = 0;
+    
+    foreach($products as $product) {
+      $current_stock_worth += $product->quantity * $product->price;
+      $current_stock_retail_worth += $product->quantity * $product->retail_price;
+    }
+
+    $data['current_stock_worth'] = $current_stock_worth;
+    $data['current_stock_retail_worth'] = $current_stock_retail_worth;
+
     $data['products_count'] = count($products);
     //     echo "<pre>";
     //     var_export($data);

@@ -3,8 +3,8 @@
 @section('content')
 <div class="container-fluid" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()">
 <div class="container-fluid">
-	<div class="row mb-2">
-		<div class="col-lg-3 mt-2 mb-2">
+	<div class="row">
+		<div class="col-lg-3 mb-2">
 			<div class="card bg-primary">
 				<div class="card-body">
 					<h5 class="card-title">Today Invoices </h5>
@@ -12,7 +12,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mt-2 mb2">
+		<div class="col-lg-3 mb-2">
 			<div class="card bg-warning">
 				<div class="card-body">
 					<h5 class="card-title">Today Sales </h5>
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mt-2 mb2">
+		<div class="col-lg-3 mb-2">
 			<div class="card bg-info">
 				<div class="card-body">
 					<h5 class="card-title">Month Invoices </h5>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mt-2 mb2">
+		<div class="col-lg-3 mb-2">
 			<div class="card bg-success">
 				<div class="card-body">
 					<h5 class="card-title">Month Sales </h5>
@@ -38,142 +38,70 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-8">
-		<div class="card">
-			<div class="card-body">
-				<div id="products-by-cat-chart"></div>
-			</div>
-		</div>
-		</div>
-		<div class="col-md-4 mt-4">
+		<div class="col-lg-6 mb-2">
 			<div class="card">
-				<div class="bg-primary text-white p-4">
-					<i class="fa fa-list-ul "></i>
-					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;"><%= products_count %>
-						<span class="d-block">Products</span></h2>
-				</div>
-				<div class="card-footer text-primary">
-					<h6 class="text-center"><a href="{{ route('admin.products.index') }}">View Details</a></h6>
+				<div class="card-body">
+					<div id="products-by-cat-chart"></div>
 				</div>
 			</div>
-
-			<div class="card mt-3">
-				<div class="bg-primary text-white p-4">
-					<i class="fa fa-list-ul"></i>
-					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">
-						<span class="d-block">Sales</span></h2>
-				</div>
-				<div class="card-footer text-primary">
-					<h6 class="text-center"><a href="#">View Details</a></h6>
-				</div>
-			</div>
-
-			<div class="card mt-3">
-				<div class="bg-primary text-white p-4">
-					<i class="fa fa-list-ul "></i>
-					<h2 class="float-right font-weight-bold" style="font-size: 35px;text-align: center;">
-						<span class="d-block">Expenses</span></h2>
-				</div>
-				<div class="card-footer text-primary">
-					<h6 class="text-center"><a href="#">View Details</a></h6>
+		</div>
+		<div class="col-lg-6 mb-2">
+			<div class="card">
+				<div class="card-body">
+					<div id="expense-income-chart"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-	<!-- New User -->
-	<div class="modal fade" id="newuser">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<h2 class="text-center">Add New User</h2>
-					<form>
-						<div class="form-group">
-							<label class="col-form-label">Full Name:</label>
-							<input type="text" class="form-control">
-							<label class="col-form-label">Username:</label>
-							<input type="text" class="form-control">
-							<label class="col-form-label">Password:</label>
-							<input type="password" class="form-control">
-							<label class="col-form-label">Confirm Password:</label>
-							<input type="password" class="form-control">
-						</div>
-					</form>
-
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Add User</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Delet user -->
-	<div class="modal fade" id="deletuser">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<h2 class="text-center">Delet User</h2>
-					<table class="table mt-3">
-						<thead class="table-dark">
+	<div class="row">
+		<div class="col-lg-4 mb-2">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Recent Buyers</h5>
+					<table class="table table-striped" id="recent-buyers">
+						<thead>
 							<tr>
 								<th>#</th>
-								<th>ID</th>
-								<th>Username</th>
-								<th></th>
+								<th>Name</th>
+								<th>Email</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>2391</td>
-								<td>Ali Hassan</td>
-								<td><a href="#" class="btn btn-outline-danger btn-sm">Delet</a></td>
+							<tr ng-repeat="buyer in recent_buyers">
+								<td><%= $index + 1 %></td>
+								<td><%= buyer.name %></td>
+								<td><%= buyer.email %></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<div class="col-lg-8 mb-2">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Summary</h5>
+					<div class="row">
+						<div id="stock-worth-chart"></div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-lg-4 text-center">
+							<p class="card-text mb-0">Current Stock Worth</p>
+							<span class="text-primary"><%=  current_stock_worth | currency:"PKR" %></span>
+						</div>
+						<div class="col-lg-4 text-center">
+							<p class="card-text mb-0">Current Stock Retail Worth</p>
+							<span class="text-success"><%=  current_stock_retail_worth | currency:"PKR" %></span>
+						</div>
+						<div class="col-lg-4 text-center">
+							<p class="card-text mb-0">Current Profit Worth</p>
+							<span class="text-info"><%=  current_profit_worth | currency:"PKR" %></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<!-- Change Password -->
-
-<div class="modal fade" id="changepassword">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">
-				<h2 class="text-center">Change Password</h2>
-				<form>
-					<div class="form-group">
-						<label class="col-form-label">Old Password:</label>
-						<input type="text" class="form-control">
-						<label class="col-form-label">New Password:</label>
-						<input type="text" class="form-control">
-						<label class="col-form-label">Confirm New Password:</label>
-						<input type="text" class="form-control">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Change Password</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 @endsection
 
 @section('scripts')
@@ -189,9 +117,10 @@
 	app.controller('DashboardCtrl', function($scope, $http) {
 		const initialization_url = '{{ route('admin.dashboard.initialize') }}';
 		$scope.message = "hello";
+		$scope.recent_buyers = [];
 		$scope.initializeDashboard = function () {
 			$("body").LoadingOverlay('show');
-			$http.post(initialization_url, '').then(
+			$http.post(initialization_url, {_token: '{{ Session::token() }}'}).then(
 				function(response) {
 					console.log(response);
 					const data = response.data;
@@ -200,7 +129,13 @@
 					$scope.no_today_invoices = data.no_today_invoices;
 					$scope.no_month_invoices = data.no_month_invoices;
 					$scope.products_count = data.products_count;
-					renderHighChart('products-by-cat-chart', 'No. of Products by Categories', 'Category', data.products_by_cat);
+					$scope.recent_buyers = data.recent_buyers;
+					$scope.current_stock_worth = data.current_stock_worth;
+					$scope.current_stock_retail_worth = data.current_stock_retail_worth;
+					$scope.current_profit_worth = data.current_stock_retail_worth - data.current_stock_worth;
+					renderHighChart('products-by-cat-chart', 'No. of Products by Categories', 'Category', data.products_by_cat, "products");
+					renderHighChart('expense-income-chart', 'Income VS Expense (PKR)', 'E-I', data.income_expense, "PKR");
+					lineChart('stock-worth-chart', 'Summary', data.current_stock_worth, data.current_stock_retail_worth, $scope.current_profit_worth);
 				}
 			).catch(function(error) {
 
@@ -209,7 +144,14 @@
 			});
 		}
 
-		function renderHighChart(containerId, title, seriesName, data) {
+		function renderHighChart(containerId, title, seriesName, data, unit) {
+			{{-- let format = "";
+			if(unit === "PKR") {
+				format = '{series.name}: ' + unit +'<b>{point.y}</b>';
+			} else {
+				format = '{series.name}: <b>{point.y}</b> '+ unit;
+			}
+			console.log(format); --}}
 			Highcharts.chart(containerId, {
 				chart: {
 					plotBackgroundColor: null,
@@ -221,7 +163,7 @@
 					text: title
 				},
 				tooltip: {
-					pointFormat: '{series.name}: <b>{point.y:.1f} products</b>'
+					pointFormat: '{point.name}: <b>{point.y}</b>'
 				},
 				accessibility: {
 					point: {
@@ -234,7 +176,7 @@
 						cursor: 'pointer',
 						dataLabels: {
 							enabled: true,
-							format: '<b>{point.name}</b>: {point.y:.1f} products'
+							format: '{point.name}: <b>{point.y}</b>'
 						}
 					}
 				},
@@ -246,6 +188,70 @@
 			});
 		}
 	});
+
+	function lineChart(containerId, title, price, retail, profit) {
+		Highcharts.chart(containerId, {
+
+		title: {
+			text: title
+		},
+
+		subtitle: {
+			text: ''
+		},
+
+		yAxis: {
+			title: {
+				text: 'Amount'
+			}
+		},
+
+		xAxis: {
+			accessibility: {
+				rangeDescription: ''
+			}
+		},
+
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
+
+		plotOptions: {
+			series: {
+				label: {
+					connectorAllowed: false
+				},
+				pointStart: 0
+			}
+		},
+
+		series: [{
+			name: 'Price',
+			data: [0, price]
+		}, {
+			name: 'Retail',
+			data: [0, retail]
+		}, {
+			name: 'Profit',
+			data: [0, profit]
+		}],
+
+		responsive: {
+			rules: [{
+				chartOptions: {
+					legend: {
+						layout: 'horizontal',
+						align: 'center',
+						verticalAlign: 'bottom'
+					}
+				}
+			}]
+		}
+
+	});
+	}
 
 	$(function() {
 		

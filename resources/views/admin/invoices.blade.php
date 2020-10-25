@@ -11,7 +11,7 @@
                <th>Retail Price</th>
                <th>Payment Status</th>
                <th>Invoice Status</th>
-               <!-- <th>Quantity</th> -->
+               <th>Inovoice Date</th>
                {{-- <th></th> --}}
             </tr>
          </thead>
@@ -36,6 +36,7 @@
                      <option {!! ($invoice->payment_status === 'paid') ? "style='display: none;'": ""!!} {{ ($invoice->invoice_status === 'canceled') ? "selected" : "" }} value="canceled">Canceled</option>
                   </select>
                </td>
+               <td>{{ $invoice->created_at }}</td>
                <!-- <td>{{ $invoice->quantity }}</td> -->
                {{-- <td> --}}
                   {{-- <a class="btn btn-sm btn-secondary" href="{{ route('admin.invoices.edit', $invoice->id) }}"><i class="fa fa-edit"></i></a> --}}
