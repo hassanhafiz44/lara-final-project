@@ -4,32 +4,32 @@
 <div class="container-fluid" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()">
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-3 mb-2">
-			<div class="card bg-primary">
+		<div class="col-lg-3 mb-2 mt-2">
+			<div class="card bg-primary text-white">
 				<div class="card-body">
-					<h5 class="card-title">Today Invoices </h5>
+					<h5 class="card-title">Today Invoices</h5>
 					<span><%= no_today_invoices %></span>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mb-2">
-			<div class="card bg-warning">
+		<div class="col-lg-3 mb-2 mt-2">
+			<div class="card bg-warning text-white">
 				<div class="card-body">
 					<h5 class="card-title">Today Sales </h5>
 					<span><%= today_sales | currency:"PKR"  %></span>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mb-2">
-			<div class="card bg-info">
+		<div class="col-lg-3 mb-2 mt-2">
+			<div class="card bg-info text-white">
 				<div class="card-body">
 					<h5 class="card-title">Month Invoices </h5>
 					<span><%= no_month_invoices %></span>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 mb-2">
-			<div class="card bg-success">
+		<div class="col-lg-3 mb-2 mt-2">
+			<div class="card bg-success text-white">
 				<div class="card-body">
 					<h5 class="card-title">Month Sales </h5>
 					<span><%= month_sales | currency:"PKR" %></span>
@@ -38,14 +38,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6 mb-2">
+		<div class="col-lg-6 mb-2 mt-2">
 			<div class="card">
 				<div class="card-body">
 					<div id="products-by-cat-chart"></div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6 mb-2">
+		<div class="col-lg-6 mb-2 mt-2">
 			<div class="card">
 				<div class="card-body">
 					<div id="expense-income-chart"></div>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-4 mb-2">
+		<div class="col-lg-4 mb-2 mt-2">
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">Recent Buyers</h5>
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-8 mb-2">
+		<div class="col-lg-8 mb-2 mt-2">
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">Summary</h5>

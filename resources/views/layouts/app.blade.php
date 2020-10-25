@@ -12,6 +12,7 @@
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
+	<script src="{{ asset('js/popper.min.js') }}"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
 	<script src="{{ asset('js/toastr.min.js') }}"></script>
@@ -24,15 +25,22 @@
 	<link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
 	<!-- Styles -->
-	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/pixel.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+	<style>
+		body {
+			background-color: #e8e3fd;
+			background-image: linear-gradient(225deg, #e8e3fd 0%, #c6d6e2 70%, #bed0de 100%);
+			height: 100vH;
+		}
+	</style>
 	@yield('stylesheets')
 </head>
 
 <body>
 	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+		<nav class="navbar navbar-expand-md navbar-dark bg-info shadow-sm mb-4">
 			<div class="container">
 				<a class="navbar-brand" href="#">
 					{{ config('app.name', 'Laravel') }}
@@ -69,8 +77,11 @@
 						<li class="nav-item {{ url()->current() === route('admin.dashboard.index') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.dashboard.index') }}">Dashboard</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('admin.employees.index') ? 'active' : ''}}">
+						{{-- <li class="nav-item {{ url()->current() === route('admin.employees.index') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.employees.index') }}">Employees</a>
+						</li> --}}
+						<li class="nav-item {{ url()->current() === route('admin.crm.index') ? 'active' : ''}}">
+							<a class="nav-link" href="{{ route('admin.crm.index') }}">CRM</a>
 						</li>
 						<li class="nav-item {{ url()->current() === route('admin.products.index') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
@@ -114,12 +125,15 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
 						</li>
-						@if (Route::has('customers.register'))
-						<li class="nav-item">
-							<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
-						</li>
-						@endif
+							@if (Route::has('customers.register'))
+							<li class="nav-item">
+								<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
+							</li>
+							@endif
 						@elseif(Auth::guard('web')->check())
+						<li class="nav-item">
+							<a href="#" data-toggle="tooltip" data-placement="bottom" title="{{ is_unread_message() ? "You have unread messages" : "Customer feedback"}}" class="nav-link {{ is_unread_message() ? 'text-warning' : ''}}"><i class="fa fa-envelope"></i></a>
+						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 								{{ Auth::user()->name }} <span class="caret"></span>
@@ -157,14 +171,21 @@
 			</div>
 		</nav>
 
-		<main class="container-fluid">
-			<div class="jumbotron">
-				<h1>{{ $title ?? config('app.name', 'Laravel') }}</h1>
-			</div>
-			@yield('content')
-		</main>
 	</div>
+	
+	<main class="container-fluid">
+		@yield('content')
+	</main>
+
+	<footer class="mt-4">
+
+	</footer>
 	@yield('scripts')
+	<script>
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		});
+	</script>
 </body>
 
 </html>

@@ -78,6 +78,7 @@ Route::get('/', 'PagesController@index')->name('pages.index');
 Route::prefix('/admin')->name('admin.')->group(function () {
 
     Route::resource('employees', 'EmployeesController');
+    Route::resource('crm', 'CrmController');
     Route::resource('product_categories', 'ProductCategoriesController');
     Route::resource('products', 'ProductsController');
     Route::resource('invoices', 'AdminInvoicesController');
