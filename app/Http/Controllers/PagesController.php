@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
+	public function __construct()
+	{
+		// $this->middleware('auth:customers');
+	}
+
 	public function index()
 	{
 		$data = array('title' => 'Home');
@@ -52,10 +57,6 @@ class PagesController extends Controller
 
 	function contact()
     {
-		if(!Auth::guard("customers")->check()) {
-			return redirect(route('customers.login'));
-		}
-
 		$data = array('title' => 'Contract Us');
 		$data['customer'] = Auth::guard('customers')->user();
     	return view('pages.contactus')->with($data);

@@ -25,7 +25,7 @@
 	<link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
 	<!-- Styles -->
-	<link href="{{ asset('css/pixel.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
 	<style>
