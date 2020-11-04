@@ -14,8 +14,8 @@
 		<!-- Product  -->
 		<div class="col-lg-3">
 			<div class="card">
-				<img src="https://placekitten.com/300/300" class="card-img-top">
-					<div class="product card-body" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="https://placekitten.com/300/300" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
+				<img src="{{ asset('storage/product_images/' . $product->image_url) }}" class="card-img-top">
+					<div class="product card-body" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="{{ asset('storage/product_images/' . $product->image_url) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
 						<h5 class="card-title">{{ $product->title }}</h5>
 						<p class="card-text">Price: ${{ $product->price }}</p>
 						@if(Auth::guard('customers')->check())

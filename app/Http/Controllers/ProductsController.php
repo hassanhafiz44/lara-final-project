@@ -87,13 +87,8 @@ class ProductsController extends Controller
         $product->price = $request->price;
         $product->retail_price = $request->retail_price;
         $product->quantity = $request->quantity;
+        $product->image_url = $fileNameToStore;
         $product->save();
-
-        $product_image = new ProductImage;
-        $product_image->product_id = $product->id;
-        $product_image->image_uri = $fileNameToStore;
-
-        $product_image->save();
 
         return redirect(route('admin.products.index'));
     }
@@ -136,7 +131,6 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
