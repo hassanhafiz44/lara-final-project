@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\ProductCategory;
 use App\ProductImage;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -59,6 +60,7 @@ class ProductsController extends Controller
             'title' => 'required',
             'model' => 'required',
             'price' => 'required',
+            'retail_price' => 'required',
             'quantity' => 'required',
             'description' => 'required',
             'category_id' => 'required',
@@ -90,6 +92,15 @@ class ProductsController extends Controller
         $product->image_url = $fileNameToStore;
         $product->save();
 
+        $transasction = Transaction::create([
+            'type' => 'expense',
+            'description' => 'stock_import',
+            'amount' => $product->price * $product->quantity,
+            'retail_amount' => $product->retail_price * $product->quantity
+        ]);
+
+        $transasction->save();
+
         return redirect(route('admin.products.index'));
     }
 
@@ -102,6 +113,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
+        echo unlink(storage_path('app/public/product_images/WhatsApp Image 2020-10-31 at 13.59.04_1604514391.jpeg'));
     }
 
     /**
@@ -131,6 +143,78 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
+        $validated_data = $request->validate([
+            'title' => 'required',
+            'model' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('image_uri')) {
+            // Get filename with extension
+            $filenameWithExt = $request->file('image_uri')->getClientOriginalName();
+            // Get just file name
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just extension
+            $extension = $request->file('image_uri')->getClientOriginalExtension();
+            // File name to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload image
+            $request->file('image_uri')->storeAs('public/' . $this->image_folder_path, $fileNameToStore);
+        }
+
+        $product = Product::find($id);
+
+        $quantity = $request->input('quantity') - $product->quantity;
+
+        // Transaction logic
+        $add_transaction = FALSE;
+        if ($quantity < 0) {
+            $add_transaction = TRUE;
+            $description = 'stock_return';
+            $type = 'income';
+            $amount = abs($product->price * $quantity);
+            $retail_amount = abs($product->retail_price * $quantity);
+        } else if ($quantity > 0) {
+            $add_transaction = TRUE;
+            $description = 'stock_import';
+            $type = 'expense';
+            $amount = $request->price * $quantity;
+            $retail_amount = $request->retail_price * $quantity;
+        }
+
+        if ($add_transaction === TRUE) {
+            $transasction = Transaction::create([
+                'type' => $type,
+                'description' => $description,
+                'amount' => $amount,
+                'retail_amount' => $retail_amount
+            ]);
+
+            $transasction->save();
+        }
+
+        if ($product->image_url !== 'default.png' && isset($fileNameToStore))
+            unlink(storage_path('app/public/product_images/' . $product->image_url));
+        if (isset($fileNameToStore)) {
+            $product->image_url = $fileNameToStore;
+        }
+
+        $product->category_id = $request->category_id;
+        $product->title = $request->title;
+        $product->model = $request->model;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->retail_price = $request->retail_price;
+        $product->quantity = $request->quantity;
+
+        $product->save();
+
+        return redirect(route('admin.products.index'));
     }
 
     /**
@@ -142,8 +226,11 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+        $product = Product::find($id);
         $count = Product::destroy($id);
         if ($count > 0) {
+            if ($product->image_url !== 'default.png');
+            unlink(storage_path('app/public/product_images/' . $product->image_url));
             return response()->json(['message' => 'Product deleted successfully']);
         }
         return response()->json(['message' => 'Something went wrong']);

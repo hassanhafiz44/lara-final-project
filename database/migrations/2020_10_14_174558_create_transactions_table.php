@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['income', 'expense']);
-            $table->enum('description', ['salary', 'customer_payment', 'stock_import']);
+            $table->enum('description', ['salary', 'customer_payment', 'stock_import', 'stock_return', 'customer_return']);
             $table->bigInteger('invoice_id')->nullable(true);
             $table->bigInteger('employee_id')->nullable(true);
             $table->double('amount');
