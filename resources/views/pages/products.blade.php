@@ -17,7 +17,7 @@
 				<img src="{{ asset('storage/product_images/' . $product->image_url) }}" class="card-img-top">
 					<div class="product card-body" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="{{ asset('storage/product_images/' . $product->image_url) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
 						<h5 class="card-title">{{ $product->title }}</h5>
-						<p class="card-text">Price: ${{ $product->price }}</p>
+						<p class="card-text">Price: ${{ $product->retail_price }}</p>
 						@if(Auth::guard('customers')->check())
 							<button class="btn btn-primary btn-block btn-sm mb-2 buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
 						@endif

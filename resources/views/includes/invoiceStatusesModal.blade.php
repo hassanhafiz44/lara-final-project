@@ -8,6 +8,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="container">
+                    @if (Auth::guard('web')->check())
                     <div class="form-group">
                         <label for="payment-status">Payment Status</label>
                         <select ng-model="payment_status" class="form-control form-control-sm" id="payment-status" ng-change="onPaymentStatusChange()">
@@ -24,6 +25,25 @@
                             <option ng-if="payment_status !== 'paid'" value="canceled">Canceled</option>
                         </select>
                     </div>
+                    @endif
+                    @if (Auth::guard('customers')->check())
+                    <div class="form-group">
+                        <label for="payment-status">Payment Status</label>
+                        <select disabled ng-model="payment_status" class="form-control form-control-sm" id="payment-status" ng-change="onPaymentStatusChange()">
+                            <option ng-if="invoice_status !== 'canceled'" value="paid">Paid</option>
+                            <option ng-if="invoice_status !== 'delivered'" value="due">Due</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="invoice-status">Invoice Status</label>
+                        <select ng-model="invoice_status" class="form-control form-control-sm" id="invoice-status" ng-change="onInvoiceStatusChange()">
+                            <option value="ready">Ready</option>
+                            <option value="processing">Processing</option>
+                            <option ng-if="payment_status === 'paid'" value="delivered">Delivered</option>
+                            <option ng-if="payment_status !== 'paid'" value="canceled">Canceled</option>
+                        </select>
+                    </div>
+                    @endif
                 </div>
             </div>
 
