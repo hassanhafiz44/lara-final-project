@@ -7,21 +7,21 @@
          <thead>
             <tr>
                <!-- <th>Product</th> -->
+               <td>SN</td>
                <th>Customer</th>
                <th>Retail Price</th>
                <th>Payment Status</th>
                <th>Invoice Status</th>
                <th>Inovoice Date</th>
-               {{-- <th></th> --}}
+               <th></th>
             </tr>
          </thead>
          <tbody>
-            @foreach($invoices as $invoice)
+            @foreach($invoices as $key => $invoice)
             <tr data-id="{{ $invoice->id }}">
+               <td>{{ $key + 1 }}</td>
                <td>{{ $invoice->customer->name }}</td>
                <td>{{ $invoice->retail_price_total }}</td>
-               <!--<td>{{ $invoice->payment_status }}</td>-->
-               <!--<td>{{ $invoice->invoice_status }}</td>-->
                <td>
                   <select data-id="{{ $invoice->id }}" data-value="{{ $invoice->payment_status }}"name="payment_status" id="payment-status-{{ $invoice->id }}" class="form-control form-control-sm payment-status">
                      <option {{ $invoice->payment_status === 'paid' ? "selected" : ""}} value="paid">Paid</option>
@@ -37,12 +37,11 @@
                   </select>
                </td>
                <td>{{ $invoice->created_at }}</td>
-               <!-- <td>{{ $invoice->quantity }}</td> -->
-               {{-- <td> --}}
+               <td>
                   {{-- <a class="btn btn-sm btn-secondary" href="{{ route('admin.invoices.edit', $invoice->id) }}"><i class="fa fa-edit"></i></a> --}}
-                  {{-- <a class="btn btn-sm btn-warning" href="{{ route('admin.invoices.show', $invoice->id) }}"><i class="fa fa-eye"></i></a> --}}
+                  <a class="btn btn-sm btn-warning" href="{{ route('admin.invoices.show', $invoice->id) }}"><i class="fa fa-eye"></i></a>
                   <!-- <button class="btn btn-sm btn-danger delete-product"><i class="fa fa-trash"></i></button> -->
-               {{-- </td> --}}
+               </td>
             </tr>
             @endforeach
          </tbody>
@@ -118,5 +117,4 @@
       });
    });
 </script>
-<!-- <script src="{{ asset('js/products/products.js')}}"></script> -->
 @endsection
