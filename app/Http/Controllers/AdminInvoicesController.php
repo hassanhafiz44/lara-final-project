@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -21,14 +22,46 @@ class AdminInvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $invoices = Invoice::orderByDesc('created_at')->get();
-        $data = [
-            'title' => 'Invoices',
-            'invoices' => $invoices
-        ];
+        $data['customer_id'] = "";
+        $data['payment_status'] = "";
+        $data['invoice_status'] = "";
+        $data['start_date'] = date('Y-m-01');
+        $data['end_date'] = date('Y-m-t');
+
+        $customers_dropdown_data = Customer::where('status' , '=', 'active')->select(['id', 'name', 'email'])->get();
+        
+        $invoices = Invoice::orderByDesc('created_at');
+        if($request->filled('customer_id')) {
+            $invoices = $invoices->where('customer_id', '=', $request->customer_id);
+            $data['customer_id'] = $request->customer_id;
+        }
+        
+        if($request->filled('payment_status')) {
+            $invoices = $invoices->where('payment_status', '=', $request->payment_status);
+            $data['payment_status'] = $request->payment_status;
+        }
+
+        if($request->filled('start_date') && $request->filled('end_date')) {
+            $data['start_date'] = $request->start_date;
+            $data['end_date'] = $request->end_date;
+        }
+
+        if($request->filled('invoice_status')) {
+            $data['invoice_status'] = $request->invoice_status;
+            $invoices = $invoices->where('invoice_status', '=', $request->invoice_status);
+        }
+
+        // must include date filter in query
+        $invoices = $invoices->whereBetween('created_at', [$data['start_date'], $data['end_date']]);
+
+        $invoices = $invoices->get();
+
+        $data['title'] = 'Invoices';
+        $data['invoices'] = $invoices;
+        $data['customers_dropdown_data'] = $customers_dropdown_data;
 
         return view('admin.invoices')->with($data);
     }

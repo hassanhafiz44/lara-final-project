@@ -38,4 +38,14 @@ class Customer extends Authenticatable
     {
         return $this->hasMany('App\Invoice');
     }
+
+    public function paid_invoices() 
+    {
+        return $this->invoices()->where('payment_status', '=', 'paid');
+    }
+
+    public function unpaid_invoices()
+    {
+        return $this->invoices()->where('payment_status', '=', 'due');
+    }
 }
