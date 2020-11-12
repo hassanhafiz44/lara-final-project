@@ -76,7 +76,6 @@ Route::get('/', 'PagesController@index')->name('pages.index');
 //Auth::routes();
 
 Route::prefix('/admin')->name('admin.')->group(function () {
-
     Route::resource('employees', 'EmployeesController');
     Route::resource('crm', 'CrmController');
     Route::resource('product_categories', 'ProductCategoriesController');
@@ -86,4 +85,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::post('/dashboard/initialize', 'DashboardController@initialize_dashboard')->name('dashboard.initialize');
     Route::post('/invoices/change-payment-status', 'AdminInvoicesController@change_payment_status')->name('invoice.change.payment.status');
     Route::post('/invoices/change-invoice-status', 'AdminInvoicesController@change_invoice_status')->name('invoice.change.invoice.status');
+    Route::post('/crm/set_inactive', 'CrmController@set_inactive')->name('crm.set.inactive');
+    Route::post('/crm/set_active', 'CrmController@set_active')->name('crm.set.active');
 });
