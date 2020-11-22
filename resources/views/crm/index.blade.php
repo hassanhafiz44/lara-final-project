@@ -55,6 +55,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $customers->withQueryString()->links() }}
     </div>
 </div>
 @endsection
@@ -66,10 +67,5 @@
         $scope.isActiveFilter = '{{ $is_active }}';
         $scope.paymentStatusFilter = '{{ $payment_status }}';
     });
-
-    $(function() {
-        $("#customers-table").DataTable();
-    });
 </script>
-    
 @endsection

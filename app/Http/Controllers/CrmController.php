@@ -34,7 +34,7 @@ class CrmController extends Controller
             $customers = $customers->where('i.payment_status', '=', $request->payment_status);
             $data['payment_status'] = $request->payment_status;
         }
-        $customers = $customers->groupByRaw('c.id')->get();
+        $customers = $customers->groupByRaw('c.id')->paginate(10);
 
         $data['customers'] = $customers;
         return view('crm.index')->with($data);
