@@ -85,6 +85,7 @@
             </tbody>
          </table>
       </div>
+		{{$invoices->withQueryString()->links()}}
    </div>
 </div>
 @endsection
@@ -102,7 +103,6 @@
    });
    $(function() {
       const _token = "{{ csrf_token() }}";
-      $("#invoices-table").DataTable();
 
       $("#invoices-table").on("change", ".payment-status", function(event) {
          const selectedElem = $(this);

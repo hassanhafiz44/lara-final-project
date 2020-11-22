@@ -31,6 +31,7 @@ class AdminInvoicesController extends Controller
         $data['start_date'] = date('Y-m-01');
         $data['end_date'] = date('Y-m-t');
 
+        // To select customer for filteration
         $customers_dropdown_data = Customer::where('status' , '=', 'active')->select(['id', 'name', 'email'])->get();
         
         $invoices = Invoice::orderByDesc('created_at');
@@ -39,6 +40,7 @@ class AdminInvoicesController extends Controller
             $data['customer_id'] = $request->customer_id;
         }
         
+        // Filteration
         if($request->filled('payment_status')) {
             $invoices = $invoices->where('payment_status', '=', $request->payment_status);
             $data['payment_status'] = $request->payment_status;
@@ -57,7 +59,7 @@ class AdminInvoicesController extends Controller
         // must include date filter in query
         $invoices = $invoices->whereBetween('created_at', [$data['start_date'], $data['end_date']]);
 
-        $invoices = $invoices->get();
+        $invoices = $invoices->paginate(10);
 
         $data['title'] = 'Invoices';
         $data['invoices'] = $invoices;
