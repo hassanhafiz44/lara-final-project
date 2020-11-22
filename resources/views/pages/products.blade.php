@@ -6,8 +6,8 @@
 
 @section('content')
 <div class="container">
-	<h1 class="text-center">Our Products</h1>
-	<a href="#" data-toggle="modal" data-target="#cart-modal">Cart</a>
+	<h1 class="text-center">{{ __('labels.buy_products') }}</h1>
+	<a href="#" data-toggle="modal" data-target="#cart-modal">{{ __('labels.cart') }}</a>
 
 	<div class="row">
 		@foreach($products as $product)
@@ -19,10 +19,10 @@
 						<h5 class="card-title">{{ $product->title }}</h5>
 						<p class="card-text">Price: ${{ $product->retail_price }}</p>
 						@if(Auth::guard('customers')->check())
-							<button class="btn btn-primary btn-block btn-sm mb-2 buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>BUY</span></button>
+						<button class="btn btn-primary btn-block btn-sm mb-2 buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>{{ __('labels.add_to_cart') }}</span></button>
 						@endif
 						<span class="badge badge-info product-quantity">{{ $product->quantity }} </span>
-						<a href="#" class="product-link btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal1">View Details</a>
+						<a href="#" class="product-link btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal1">{{ __('labels.view_details') }}</a>
 						<button class="btn btn-danger btn-sm remove d-none"><i class="fa fa-trash"></i></button>
 					</div>
 			</div>
@@ -43,66 +43,11 @@
 								<img id="p-image" class="w-100">
 							</div>
 							<div class="col-lg-8">
-								<h2 class="text-center">Details</h2>
-								<p class="font-weight-bold">Name: <span id="name"></span><br>Price: <span id="price"></span><br>Description: <span id="description"></span><br></p>
+								<h2 class="text-center">{{ __('labels.details') }}</h2>
+								<p class="font-weight-bold">{{ __('labels.name') }}: <span id="name"></span><br>{{ __('labels.details') }}: <span id="price"></span><br>{{ __('labels.description') }}: <span id="description"></span><br></p>
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	<!-- Buy modal -->
-
-	<div class="modal fade" id="buymodal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label>First Name</label>
-								<input type="email" class="form-control" placeholder="First Name">
-							</div>
-							<div class="form-group col-md-6">
-								<label>Second Name</label>
-								<input type="password" class="form-control" placeholder="Second Name">
-							</div>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="text" class="form-control" placeholder="Enter your email address">
-						</div>
-						<div class="form-group">
-							<label>Address</label>
-							<input type="text" class="form-control" placeholder="Address for order delivery">
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputCity">City</label>
-								<input type="text" class="form-control">
-							</div>
-							<div class="form-group col-md-4">
-								<label>Quantity</label><br>
-								<input type="number" class="text-center" style="height: 2.2rem; width: 3rem;" min="1" value="10" max="100">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox">
-								<label class="form-check-label">Check me out</label>
-							</div>
-						</div>
-						<a href="#" data-toggle="modal" data-target="#vieworder" class="btn btn-primary" data-dismiss="modal">view order</a>
-					</form>
 				</div>
 
 				<!-- Modal footer -->
@@ -119,74 +64,21 @@
 
 @include('includes/cartModal')
 
-<div class="modal fade " id="vieworder">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-4">
-							<img src="images/apple-watch.jpg" class="w-100">
-						</div>
-						<div class="col-lg-8">
-							<h2 class="text-center">Your order info:</h2>
-							<p class="font-weight-bold">ID:<br>
-								Product:<br>
-								Customer's name:<br>
-								Address:<br>
-								Contact no:<br>
-								Address:<br>
-								Quantity:<br>
-								Grand total:</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<a href="#" data-toggle="modal" class="btn btn-secondary" data-target="#buymodal" data-dismiss="modal">Edit order</a>
-				<button class="btn btn-primary" data-dismiss="modal">Place order</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-
 <footer style="margin-top: 50px">
 
 </footer>
 <script>
 	function addProductToCart(product) {
-		// const productInput = `
-		// 	<div class="row cart-products" id="product-input-${product.id}" data-id="${product.id}">
-		// 		<div class="form-group col-md-4">
-		// 			<label for="product-${product.id}-${product.name}">Name</label>
-		// 			<input type="hidden" type="number" name="product_ids[]" id="product-${product.id}" value="${product.id}">
-		// 			<input id="product-${product.id}-${product.name}" readonly type="text" name="product_names[]" class="form-control" value="${product.name}">
-		// 		</div>
-		// 		<div class="form-group col-md-6">
-		// 			<label for="product-${product.id}-quantity">Quantity</label>
-		// 			<input type="number" name="product_quantities[]" id="product-${product.id}-quantity" class="form-control" min="1" max="${product.quantity}" value="1">
-		// 		</div>
-		// 		<div class="form-group col-md-2">
-		// 			<label>Remove</label>
-		// 			<button type="button" class="btn btn-danger fa fa-trash remove"></button>
-		// 		</div>
-		// 	</div>
-		// `;
 
 		const productInput = `
 			<div class="row cart-products" id="product-input-${product.id}" data-id="${product.id}">
 				<div class="form-group col-md-6">
-					<label for="product-${product.id}-${product.name}">Name</label>
+					<label for="product-${product.id}-${product.name}">{{ __('labels.name') }}</label>
 					<input type="hidden" type="number" name="product_ids[]" id="product-${product.id}" value="${product.id}">
 					<input id="product-${product.id}-${product.name}" readonly type="text" name="product_names[]" class="form-control" value="${product.name}">
 				</div>
 				<div class="form-group col-md-6">
-					<label for="product-${product.id}-quantity">Quantity</label>
+					<label for="product-${product.id}-quantity">{{ __('labels.quantity') }}</label>
 					<input type="number" name="product_quantities[]" id="product-${product.id}-quantity" class="form-control" min="1" max="${product.quantity}" value="1">
 				</div>
 			</div>
@@ -216,7 +108,7 @@
 			const removeBtn = product.children(".remove");
 
 			if (buyBtn.data().action === "buy") {
-				buyBtn.children("span").text("ADDED");
+				buyBtn.children("span").text("{{ __('labels.added_to_cart') }}");
 				buyBtn.data("action", "bought");
 				removeBtn.removeClass("d-none");
 
@@ -233,7 +125,7 @@
 			const removeBtn = product.children(".remove");
 
 			if (buyBtn.data().action === "bought") {
-				buyBtn.children("span").text("BUY");
+				buyBtn.children("span").text("{{ __('labels.add_to_cart') }}");
 				buyBtn.data("action", "buy");
 				removeBtn.addClass("d-none");
 
@@ -242,10 +134,6 @@
 				console.log("Product already removed.");
 			}
 		});
-
-		// $("#cart-form").on("click", ".cart-products .remove", function(event) {
-		// 	removeProductFromCart($(event.target).closest('.cart-products').data("id"));
-		// });
 
 		$("#submit-cart-form").on("click", function(event) {
 			const data = $("#cart-form").serialize();

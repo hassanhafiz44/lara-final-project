@@ -13,6 +13,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/testing', function() {
+    $string = "'active' => 'Active','add_product' => 'Add Product','address' => 'Address','cancelled' => 'Cancelled','cnic' => 'CNIC','customer' => 'Customer','customer_status' => 'Customer Status','delivered' => 'Delivered','due' => 'Due','email' => 'Email','image' => 'Image','inactive' => 'Inactive','invoice_date' => 'Invoice Date','invoice_status' => 'Invoice Status','model' => 'Model','month_invoices' => 'Month Invoices','month_sales' => 'Month Sales','name' => 'Name','paid' => 'Paid','payment_status' => 'Payment Status','phone' => 'Phone','price' => 'Price','processing' => 'Processing','quantity' => 'Quantity','ready' => 'Ready','retail_price' => 'Retail Price','serial_no' => 'Serial No.','serial_no_short' => 'SN','status' => 'Status','title' => 'Title','today_invoices' => 'Today Invoices','today_sales' => 'Today Sales',
+    'no_of_products_by_categories' => 'No. of Products by Categories',
+    'income_vs_expense_pkr' => 'Income VS Expense (PKR)',
+    'income' => 'Income',
+    'expense' => 'Expense',
+    'recent_buyers' => 'Recent Buyers',
+    'summary' => 'Summary',
+    'current_stock_worth' => 'Current Stock Worth',
+    'current_stock_retail_worth' => 'Current Stock Retail Worth',
+    'current_profit_worth' => 'Current Profit Worth',
+    'profit' => 'Profit',
+    'retail' => 'Retail',
+    'category' => 'Category',
+    'pkr' => 'PKR',
+    'products' => 'Products',
+    'set_active' => 'Set Active',
+    'set_inactive' => 'Set Inactive',
+    'paid_invoices' => 'Paid Invoices',
+    'unpaid_invoices' => 'Unpaid Invoices',
+    'add_category' => 'Add Category',
+    'submit' => 'Submit',
+    'description' => 'Description',
+    'close' => 'Close',
+    'update_invoice' => 'Update Invoice',
+    'product_name' => 'Product Name',
+    'total_price' => 'Total Price',
+    'total_retail_price' => 'Total Retail Price',
+    'grand_total' => 'Grand Total',
+    'change_invoice_status' => 'Change Invoice Status',
+    'company_details' => 'Company Details',
+    'customer_details' => 'Customer Details'";
+    $chunks = array_map('trim', explode(',', $string));
+    sort($chunks);
+    $string = implode(",", $chunks);
+    return $string;
+});
+
 // Customer authentication
 Route::prefix('/customers')->name('customers.')->namespace('Customers\Auth')->group(function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login');

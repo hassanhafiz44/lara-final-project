@@ -17,8 +17,8 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="submit-cart-form" class="btn btn-success">Confirm</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" id="submit-cart-form" class="btn btn-success">{{ __('labels.confirm') }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('labels.close') }}</button>
             </div>
 
         </div>
