@@ -25,7 +25,7 @@ class ProductsController extends Controller
     {
         //
         $data = array();
-        $data['products'] = Product::all();
+        $data['products'] = Product::paginate(10);
         $data['title'] = 'Products';
 
         return view('products.index')->with($data);
