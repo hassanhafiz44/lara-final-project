@@ -84,7 +84,7 @@ class CrmController extends Controller
             $data['amount_paid'] = $amount_paid;
 
 
-            return view('crm.viewcustomer', $data);
+            return view('crm.show', $data);
         } catch (ModelNotFoundException $e) {
             abort(404);
         }

@@ -4,7 +4,7 @@
 <div ng-app="myApp" ng-controller="InvoiceCtrl">
     <div class="invoice-header mb-2">
         <div class="btn-group" role="group" aria-label="Change Statuses">
-            <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">Update Invoice</button>
+            <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">@lang('labels.update_invoice')</button>
         </div>
     </div>
     <div class="pritable">
@@ -12,6 +12,9 @@
             <div class="col-sm-6">
                 <table>
                     <tbody>
+                        <tr>
+                            <td colspan="2"><b>@lang('labels.company_details')</b></td>
+                        </tr>
                         @foreach($company as $key => $value)
                         <tr>
                             <td><b>{{ucwords($key)}}:</b></td>
@@ -25,19 +28,22 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td><b>Name:</b></td>
+                            <td colspan="2"><b>@lang('labels.customer_details')</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>@lang('labels.name'):</b></td>
                             <td>{{$customer->name}}</td>
                         </tr>
                         <tr>
-                            <td><b>Email:</b></td>
+                            <td><b>@lang('labels.email'):</b></td>
                             <td>{{$customer->email}}</td>
                         </tr>
                         <tr>
-                            <td><b>Phone:</b></td>
+                            <td><b>@lang('labels.phone'):</b></td>
                             <td>{{$customer->phone}}</td>
                         </tr>
                         <tr>
-                            <td><b>Address:</b></td>
+                            <td><b>@lang('labels.address'):</b></td>
                             <td>{{$customer->address}}</td>
                         </tr>
                     </tbody>
@@ -49,15 +55,15 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-right">SL</th>
-                        <th class="text-right">Image</th>
-                        <th class="text-right">Product Name</th>
-                        <th class="text-right">Model</th>
-                        <th class="text-right">Qnty</th>
-                        <th class="text-right">Price</th>
-                        <th class="text-right">Retail Price</th>
-                        <th class="text-right">Total Price</th>
-                        <th class="text-right">Total Retail Price</th>
+                        <th class="text-right">@lang('labels.serial_no_short')</th>
+                        <th class="text-right">@lang('labels.image')</th>
+                        <th class="text-right">@lang('labels.product_name')</th>
+                        <th class="text-right">@lang('labels.model')</th>
+                        <th class="text-right">@lang('labels.quantity')</th>
+                        <th class="text-right">@lang('labels.price')</th>
+                        <th class="text-right">@lang('labels.retail_price')</th>
+                        <th class="text-right">@lang('labels.total_price')</th>
+                        <th class="text-right">@lang('labels.total_retail_price')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,7 +83,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <td colspan="4" class="text-right"><b>Grand Total</b></td>
+                    <td colspan="4" class="text-right"><b>@lang('labels.grand_total')</b></td>
                     <td class="text-right"><b>{{ number_format($total_quantity, 2) }}</b></td>
                     <td class="text-right"><b>{{ number_format($total_price, 2) }}</b></td>
                     <td class="text-right"><b>{{ number_format($total_retail_price, 2) }}</b></td>
@@ -93,11 +99,11 @@
                     <thead></thead>
                     <tbody>
                         <tr>
-                            <td><b>Payment Status</b></td>
+                            <td><b>@lang('labels.payment_status')</b></td>
                             <td><%= payment_status %></td>
                         </tr>
                         <tr>
-                            <td><b>ٰInvoice Status</b></td>
+                            <td><b>@lang('labels.invoice_status')</b></td>
                             <td><%= invoice_status %></td>
                         </tr>
                     </tbody>
