@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('home');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
-
-
-
+// Customer authentication
 Route::prefix('/customers')->name('customers.')->namespace('Customers\Auth')->group(function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
     Route::post('/login', 'LoginController@login')->name('login.attempt');
@@ -32,12 +22,13 @@ Route::prefix('/customers')->name('customers.')->namespace('Customers\Auth')->gr
     Route::post('/register', 'RegisterController@register');
 });
 
+// User authentication
 Route::prefix('/users')->name('users.')->namespace('Auth')->group(function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
     Route::post('/login', 'LoginController@login')->name('login.attempt');
     Route::post('/logout', 'LoginController@logout')->name('logout');
-    Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
-    Route::post('/register', 'RegisterController@register');
+    Route::get('/password/confirm', "ConfirmPasswordController@showConfirmForm")->name('password.confirm');
+    Route::post('/password/confirm', "ConfirmPasswordController@confirm");
 });
 
 // Pages Routes
@@ -50,31 +41,10 @@ Route::prefix('/pages')->name('pages.')->group(function () {
     Route::post('/submit-contact-us', 'PagesController@submit_contact_us')->name('submit.contact.us');
 });
 
+// Home when not logged in
 Route::get('/', 'PagesController@index')->name('pages.index');
 
-// Route::get('pages/contact', 'PagesController@contact')->name('pages.contact');
-// Route::get('pages/products', 'PagesController@products')->name('pages.products');
-// Route::get('pages/services', 'PagesController@services')->name('pages.services');
-// Route::get('pages/about', 'PagesController@about')->name('pages.about');
-
-// Route::get('/', 'HomeController')->name('home');
-// Route::get('/', 'PagesController@index')->name('pages.index');
-// Route::get('contact', 'PagesController@contact')->name('pages.contact');
-// Route::get('products', 'PagesController@products')->name('pages.products');
-// Route::get('services', 'PagesController@services')->name('pages.services');
-// Route::get('about', 'PagesController@about')->name('pages.about');
-
-// Route::get('profile','Employees@profile');
-// Route::post('loginsubmit','Employees@loginaction');
-// Route::get('login','Employees@adminlogin');
-// Route::get('inventory','Employees@inventory');
-// Route::get('dashboard','Employees@dashboard');
-// Route::get('orders','Employees@orders');
-
-
-
-//Auth::routes();
-
+// Admin routes
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('employees', 'EmployeesController');
     Route::resource('crm', 'CrmController');
