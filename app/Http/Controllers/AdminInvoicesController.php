@@ -57,7 +57,7 @@ class AdminInvoicesController extends Controller
         }
 
         // must include date filter in query
-        $invoices = $invoices->whereBetween('created_at', [$data['start_date'], $data['end_date']]);
+        $invoices = $invoices->whereBetween(DB::raw('DATE(created_at)'), [$data['start_date'], $data['end_date']]);
 
         $invoices = $invoices->paginate(10);
 
