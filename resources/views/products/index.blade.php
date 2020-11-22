@@ -3,21 +3,26 @@
 @section('content')
 <div>
 	<div class="container">
-		<a href="{{ route('admin.products.create') }}" class="float-right btn btn-primary btn">Add Product</a>
+		<a href="{{ route('admin.products.create') }}" class="float-right btn btn-primary btn">@lang('labels.add_product')</a>
 		<table id="products-table" class="table table-striped">
 			<thead>
 				<tr>
-					<th>SL</th>
-					<th>Image</th>
-					<th>Title</th>
-					<th>Model</th>
-					<th>Price</th>
-					<th>Retail Price</th>
-					<th>Quantity</th>
+					<th>@lang('labels.serial_no_short')</th>
+					<th>@lang('labels.image')</th>
+					<th>@lang('labels.title')</th>
+					<th>@lang('labels.model')</th>
+					<th>@lang('labels.price')</th>
+					<th>@lang('labels.retail_price')</th>
+					<th>@lang('labels.quantity')</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
+                @if (count($products) === 0)
+                    <tr>
+                        <td colspan="8">@lang('general.no_records_found')</td>
+                    </tr>
+                @endif
 				@foreach($products as $key => $product)
 				<tr data-pid="{{ $product->id }}">
 					<td>{{ $key + 1}}</td>

@@ -65,7 +65,7 @@ class AdminInvoicesController extends Controller
         $data['invoices'] = $invoices;
         $data['customers_dropdown_data'] = $customers_dropdown_data;
 
-        return view('admin.invoices')->with($data);
+        return view('admin.invoices.index')->with($data);
     }
 
     /**
@@ -108,7 +108,7 @@ class AdminInvoicesController extends Controller
             
             $company = DB::table('companies')->first(['title', 'email', 'phone', 'mobile', 'address']);
             $customer = $invoice->customer;
-            return view('admin.viewinvoice')->with([
+            return view('admin.invoices.show')->with([
                 'invoice'                       => $invoice, 
                 'total_quantity'                => $total_quantity,
                 'total_price'                   => $total_price,
