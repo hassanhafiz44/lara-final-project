@@ -56,6 +56,12 @@
                </tr>
             </thead>
             <tbody>
+               
+               @if (count($invoices) === 0)
+                  <tr>
+                     <td colspan="8">@lang('messages.no_records_found')</td>
+                  </tr>
+               @endif
                @foreach($invoices as $key => $invoice)
                <tr data-id="{{ $invoice->id }}">
                   <td>{{ $key + 1 }}</td>

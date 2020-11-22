@@ -20,7 +20,7 @@
 			<tbody>
                 @if (count($products) === 0)
                     <tr>
-                        <td colspan="8">@lang('general.no_records_found')</td>
+                        <td colspan="8">@lang('messages.no_records_found')</td>
                     </tr>
                 @endif
 				@foreach($products as $key => $product)
