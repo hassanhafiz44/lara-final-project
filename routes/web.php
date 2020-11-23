@@ -60,6 +60,22 @@ Route::prefix('/customers')->name('customers.')->namespace('Customers\Auth')->gr
     Route::post('/register', 'RegisterController@register');
 });
 
+
+// Customer password reset
+Route::prefix('/customers')->name('customers.')->group(function() {
+    Route::get('/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('showResetForm');
+    Route::get('/reset/email/{user_type}', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('showResetEmailForm');
+    Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+});
+
+// Password reset
+Route::prefix('/password')->name('password.')->group(function() {
+    Route::post('/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('email');
+    Route::get('/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('request');
+    Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('update');
+    Route::get('/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('reset');
+});
+
 // User authentication
 Route::prefix('/users')->name('users.')->namespace('Auth')->group(function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
