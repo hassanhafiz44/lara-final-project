@@ -45,6 +45,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                                @if (Route::has('customers.showResetEmailForm'))
+                                <a href="{{ route('customers.showResetEmailForm', ['user_type' => 'customers']) }}">Forgot password?</a>
+                                @endif
                             </div>
                         </div>
                     </form>

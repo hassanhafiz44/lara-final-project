@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Notifications\customPasswordResetNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Authenticatable
 {
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -47,5 +50,10 @@ class Customer extends Authenticatable
     public function unpaid_invoices()
     {
         return $this->invoices()->where('payment_status', '=', 'due');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new customPasswordResetNotification($token));
     }
 }
