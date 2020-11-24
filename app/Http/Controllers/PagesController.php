@@ -67,7 +67,13 @@ class PagesController extends Controller
 		$data = array('title' => 'Products');
 		$data['products'] = Product::all();
     	return view('pages.products')->with($data);
-    }
+	}
+	
+	public function initialize_products()
+	{
+		$products = Product::all();
+		return response()->json(['products' => $products]);
+	}
 
     function services()
     {

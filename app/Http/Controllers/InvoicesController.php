@@ -53,7 +53,6 @@ class InvoicesController extends Controller
 
             DB::beginTransaction();
             try {
-                $count_products = sizeof($request->product_ids);
 
                 $products = [];
                 $price_total = 0;
@@ -69,20 +68,20 @@ class InvoicesController extends Controller
                         'invoice_status' => 'processing',
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
-                        ]);
+                    ]);
                         
-                        if ($trans_success === TRUE)
-                        $invoice_id = DB::getPdo()->lastInsertId();
+                if ($trans_success === TRUE)
+                    $invoice_id = DB::getPdo()->lastInsertId();
 
-                        // Get products from database and prepare data to insert in invoice_products table
-                        for ($i = 0; $i < $count_products; $i++) {
+                // Get products from database and prepare data to insert in invoice_products table
+                foreach($request->data as $key => $p) {
                     
-                            $product = Product::find($request->product_ids[$i]);
+                    $product = Product::find($p['id']);
 
-                            $products[] = [
+                    $products[] = [
                         'product_id' => $product->id,
                         'invoice_id' => $invoice_id,
-                        'quantity' => $request->product_quantities[$i],
+                        'quantity' => $p['quantity'],
                         'price' => $product->price,
                         'retail_price' => $product->retail_price,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -90,11 +89,11 @@ class InvoicesController extends Controller
                     ];
 
                     // Prepare total prices to insert in invoices totals
-                    $price_total += ($product->price * $request->product_quantities[$i]);
-                    $retail_price_total += ($product->retail_price * $request->product_quantities[$i]);
+                    $price_total += ($product->price * $p['quantity']);
+                    $retail_price_total += ($product->retail_price * $p['quantity']);
 
                     // over quantity errors
-                    if ($product->quantity < $request->product_quantities[$i]) {
+                    if ($product->quantity < $p['quantity']) {
                         $quantity_errors[] = [
                             'product' => $product,
                             'msg' => 'quantity error'
@@ -103,7 +102,7 @@ class InvoicesController extends Controller
                     }
 
                     // manage inventory
-                    $product->quantity = $product->quantity - $request->product_quantities[$i];
+                    $product->quantity = $product->quantity - $p['quantity'];
                     $product->save();
                 }
 

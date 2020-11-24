@@ -1,34 +1,28 @@
 @extends('layouts.app')
 
-@section('stylesheets')
-{{-- <link rel="stylesheet" href="{{ asset('css/products.css') }}"> --}}
-@endsection
-
 @section('content')
-<div class="container">
-	<h1 class="text-center">{{ __('labels.buy_products') }}</h1>
-	<a href="#" data-toggle="modal" data-target="#cart-modal">{{ __('labels.cart') }}</a>
-
-	<div class="row">
-		@foreach($products as $product)
-		<!-- Product  -->
-		<div class="col-lg-3">
+<div class="container" ng-app="productsApp" ng-controller="productsCtrl" ng-init="initializeProducts()">
+	<div class="d-flex justify-content-between align-items-center">
+		<h1 class="text-center">{{ __('labels.buy_products') }}</h1>
+		<a href="#" class="btn btn-success" ng-if="cartProducts.length" data-toggle="modal" data-target="#cart-modal"><i class="fa fa-shopping-cart"></i> {{ __('labels.cart') }}</a>
+	</div>
+	
+	<div class="row mt-2">
+		<div class="col-lg-3" ng-repeat="product in products">
 			<div class="card">
-				<img src="{{ asset('storage/product_images/' . $product->image_url) }}" class="card-img-top">
-					<div class="product card-body" data-id="{{$product->id}}" data-quantity="{{ $product->quantity }}" data-image="{{ asset('storage/product_images/' . $product->image_url) }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-description="{{ $product->description }}">
-						<h5 class="card-title">{{ $product->title }}</h5>
-						<p class="card-text">Price: ${{ $product->retail_price }}</p>
-						@if(Auth::guard('customers')->check())
-						<button class="btn btn-primary btn-block btn-sm mb-2 buy" data-action="buy"><i class="fa fa-shopping-cart"></i> <span>{{ __('labels.add_to_cart') }}</span></button>
-						@endif
-						<span class="badge badge-info product-quantity">{{ $product->quantity }} </span>
-						<a href="#" class="product-link btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal1">{{ __('labels.view_details') }}</a>
-						<button class="btn btn-danger btn-sm remove d-none"><i class="fa fa-trash"></i></button>
-					</div>
+				<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top" width="200" height="200">
+				<div class="card-body">
+					<h5 class="card-title"><%= product.title %></h5>
+					<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR"  %></p>
+					@if(Auth::guard('customers')->check())
+					<button ng-if="product.quantity > 0" ng-click="addProductToCart(product)" ng-disabled="product.isAddedToCart" class="btn btn-primary btn-block btn-sm mb-2"><i class="fa fa-shopping-cart"> <span><%= product.isAddedToCart ? "{{ __('labels.added_to_cart') }}" : "{{ __('labels.add_to_cart') }}" %></span></i></button>
+					@endif
+					<span class="badge badge-info"><%= product.quantity %> </span>
+					<span class="text-danger" ng-if="product. quantity === 0">Out of Stock</span>
+					<button ng-click="deleteProductFromCart(product.id)" class="btn btn-danger btn-sm" ng-if="product.isAddedToCart"><i class="fa fa-trash"></i></button>
+				</div>
 			</div>
 		</div>
-		<!-- ./Product -->
-		@endforeach
 	</div>
 
 	<div class="modal fade" id="myModal1">
@@ -38,12 +32,12 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container">
+						<h2>{{ __('labels.details') }}</h2>
 						<div class="row">
 							<div class="col-lg-4">
 								<img id="p-image" class="w-100">
 							</div>
 							<div class="col-lg-8">
-								<h2 class="text-center">{{ __('labels.details') }}</h2>
 								<p class="font-weight-bold">{{ __('labels.name') }}: <span id="name"></span><br>{{ __('labels.details') }}: <span id="price"></span><br>{{ __('labels.description') }}: <span id="description"></span><br></p>
 							</div>
 						</div>
@@ -58,127 +52,101 @@
 			</div>
 		</div>
 	</div>
+	@include('includes/cartModal')
 </div>
-
-<!-- View Order -->
-
-@include('includes/cartModal')
 
 <footer style="margin-top: 50px">
 
 </footer>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/angular.min.js') }}"></script>
 <script>
-	function addProductToCart(product) {
+	const app = angular.module('productsApp', []);
+	app.config(function($interpolateProvider){
 
-		const productInput = `
-			<div class="row cart-products" id="product-input-${product.id}" data-id="${product.id}">
-				<div class="form-group col-md-6">
-					<label for="product-${product.id}-${product.name}">{{ __('labels.name') }}</label>
-					<input type="hidden" type="number" name="product_ids[]" id="product-${product.id}" value="${product.id}">
-					<input id="product-${product.id}-${product.name}" readonly type="text" name="product_names[]" class="form-control" value="${product.name}">
-				</div>
-				<div class="form-group col-md-6">
-					<label for="product-${product.id}-quantity">{{ __('labels.quantity') }}</label>
-					<input type="number" name="product_quantities[]" id="product-${product.id}-quantity" class="form-control" min="1" max="${product.quantity}" value="1">
-				</div>
-			</div>
-		`;
+		$interpolateProvider.startSymbol('<%=');
+		$interpolateProvider.endSymbol('%>');
+	});
 
-		$("#cart-form").append(productInput);
-	}
+	app.controller('productsCtrl', function($scope, $http) {
+		const images_path = "{{ asset('storage/product_images') }}/";
+		$scope.products = [];
+		// for backup
+		$scope.originalProducts = [];
+		$scope.cartProducts = [];
 
-	function removeProductFromCart(id) {
-		$(`#product-input-${id}`).remove();
-	}
-</script>
-<script>
-	$(function() {
-		$(".product-link").on('click', function(event) {
-			const product = $(event.target).closest('.product');
-			$("#name").text(product.data('name'));
-			$("#price").text(product.data('price'));
-			$("#description").text(product.data('description'));
-			$("#p-image").attr('src', product.data('image'));
-		});
-
-		// Add product to the cart.
-		$(".product .buy").on("click", function(event) {
-			const product = $(event.target).closest(".product");
-			const buyBtn = product.children(".buy");
-			const removeBtn = product.children(".remove");
-
-			if (buyBtn.data().action === "buy") {
-				buyBtn.children("span").text("{{ __('labels.added_to_cart') }}");
-				buyBtn.data("action", "bought");
-				removeBtn.removeClass("d-none");
-
-				addProductToCart(product.data());
-			} else {
-				console.log("Product already added.");
-			}
-		});
-
-		// Remove product from the cart.
-		$(".product .remove").on("click", function(event) {
-			const product = $(event.target).closest(".product");
-			const buyBtn = product.children(".buy");
-			const removeBtn = product.children(".remove");
-
-			if (buyBtn.data().action === "bought") {
-				buyBtn.children("span").text("{{ __('labels.add_to_cart') }}");
-				buyBtn.data("action", "buy");
-				removeBtn.addClass("d-none");
-
-				removeProductFromCart(product.data().id);
-			} else {
-				console.log("Product already removed.");
-			}
-		});
-
-		$("#submit-cart-form").on("click", function(event) {
-			const data = $("#cart-form").serialize();
-			const url = $("#cart-form [name='action_url']").val();
-			jQuery.ajax({
-				url: url,
-				method: 'POST',
-				data: data,
-				success: function(response) {
-					if (response.errors !== undefined) {
-						toastr.error('Quantity error', 'Error', 2000);
-					}
-					// console.log(response);
-					if (response.product_ids !== undefined) {
-						// Success
-
-						toastr.success('Transaction successful.', 'Success', 2000);
-						$("button[data-dismiss=\"modal\"]").click();
-
-						$.each(response.product_ids, function(index, id) {
-							removeProductFromCart(id);
-							const product = $(`.product[data-id="${id}"]`);
-							const buyBtn = product.children('.buy');
-							const removeBtn = product.children('.remove');
-
-							// UI Specific
-							buyBtn.children("span").text("BUY");
-							buyBtn.data('action', 'buy');
-							removeBtn.addClass('d-none');
-
-							// Change the quantity
-							product.data('quantity', product.data("quantity") - response.product_quantities[index]);
-							product.children('.product-quantity').text(product.data('quantity'));
-						});
-					}
-				},
-				error: function(error) {
-					if (error.status === 500) {
-						toastr.error('Server down', 'Error', 2000);
-					} else {
-						toastr.error(error.responseJSON.msg, 'Error', 2000);
-					}
+		$scope.initializeProducts = function() {
+			const initialization_url = '{{ route('pages.products.initialize') }}';
+			$("body").LoadingOverlay('show');
+			$http.post(initialization_url, {_token: '{{ Session::token() }}'}).then(
+				function(response) {
+					const data = response.data;
+					// console.log(data.products);
+					$scope.products = data.products.map(product => {
+						return {
+							...product,
+							imageLink: `${images_path}${product.image_url}`,
+							isAddedToCart: false,
+						}
+					});
+					$scope.originalProducts = angular.copy($scope.products);
+					$scope.cartProducts = [];
+					$('#cart-modal').modal('hide');
 				}
+			).catch(function(error) {
+
+			}).finally(function() {
+				$("body").LoadingOverlay('hide');
 			});
-		});
+		}
+
+		$scope.addProductToCart = function(product) {
+			if(!product.isAddedToCart) {
+				const originalProduct = {...$scope.originalProducts.filter(p => p.id === product.id)[0]};
+				product.isAddedToCart = true;
+				product.quantity--;
+				$scope.cartProducts.push({
+					id: product.id,
+					name: product.title,
+					quantity: 1,
+					total_quantity: originalProduct.quantity,
+					image_link: product.imageLink,
+					description: product.description,
+				});
+			}
+		}
+
+		$scope.deleteProductFromCart = function(id) {
+			// Replace the product element with original element
+			const originalProduct = {...$scope.originalProducts.filter(p => p.id === id)[0]};
+			const index = $scope.products.findIndex(p => p.id === id);
+			$scope.products[index] = originalProduct;
+
+			// Remove product from the cart
+			$scope.cartProducts = $scope.cartProducts.filter(p => p.id !== id);
+
+			// Hide cart modal
+			if($scope.cartProducts.length === 0)
+				$('#cart-modal').modal('hide');
+		}
+
+		$scope.onCompleteOrder = function() {
+			$("body").LoadingOverlay('show');
+			$http.post("{{ route('pages.invoices.store') }}", {_token: '{{ Session::token() }}', data: $scope.cartProducts}).then(
+				function(response) {
+					const data = response.data;
+					console.log(data);
+					toastr.success('Success', 'Invoice created', 'success');
+					$scope.initializeProducts();
+				}
+			).catch(function(error) {
+
+			}).finally(function() {
+				$("body").LoadingOverlay('hide');
+			});
+		}
 	});
 </script>
 @endsection
