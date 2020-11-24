@@ -8,7 +8,7 @@
 	</div>
 	
 	<div class="row mt-2">
-		<div class="col-lg-3" ng-repeat="product in products">
+		<div class=" col-sm-6 col-md-4 col-lg-3 mb-2" ng-repeat="product in products">
 			<div class="card">
 				<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top" width="200" height="200">
 				<div class="card-body">
