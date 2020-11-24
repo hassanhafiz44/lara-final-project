@@ -177,8 +177,10 @@
 		@yield('content')
 	</main>
 
-	<footer class="mt-4">
-
+	<footer class="mt-4 bg-dark fixed-bottom" >
+		<div class="d-flex">
+			<span>All Rights Reserved</span>
+		</div>
 	</footer>
 	@yield('scripts')
 	<script>
