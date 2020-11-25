@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('stylesheets')
+<link href="{{ asset('css/tailwind.min.css') }}" rel="stylesheet">
+
 <style>
     .carousel img {
       height: 80vh;
@@ -8,10 +10,6 @@
       object-fit: cover;
     }
 </style>
-@endsection
-
-@section('stylesheets')
-{{-- <link rel="stylesheet" type="text/css" href="{{asset('css/home.css')}}"> --}}
 @endsection
 
 @section('content')
@@ -64,19 +62,40 @@
     </div>
   </div>
   @endif
-  <div id="main-carousel" class="carousel slide w-75 mx-auto overflow-hidden vh-100" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="{{ asset('storage/static/main-carousel/01.jpg') }}" alt="First slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="{{ asset('storage/static/main-carousel/02.jpg') }}" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="{{ asset('storage/static/main-carousel/03.jpg') }}" alt="Third slide">
+  <section class="text-gray-700 body-font">
+	<div class="container mx-auto flex px-5 py-12 flex-col md:flex-row items-center">
+		<div class="flex flex-col mb-16 items-center text-center md:w-1/2 md:pr-16 md:items-start md:text-left md:mb-0 lg:flex-grow">
+			<p class="title-font text-3xl mb-4 font-medium text-gray-900 sm:text-4xl">Before they sold out
+				<br class="hidden lg:inline-block">readymade by gluten
+      </p>
+			<p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray</p>
+		</div>
+		<div class="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
+			<img class="object-cover object-center rounded" src="{{ asset('storage/static/home/04.jpg') }}">
+		</div>
+	</div>
+</section>
+
+<section class="text-gray-700 body-font">
+	<div class="container mx-auto flex px-5 py-12 flex-col md:flex-row items-start">
+    <div class="flex flex-col mb-16 items-center text-center md:w-1/2 md:pr-16 md:items-end md:text-right md:mb-0 lg:flex-grow">
+      <p class="title-font text-3xl mb-4 font-medium text-gray-900 sm:text-4xl">Gallery</p>
+    </div>
+    <div id="main-carousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100 rounded" src="{{ asset('storage/static/main-carousel/01.jpg') }}" alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100 rounded" src="{{ asset('storage/static/main-carousel/02.jpg') }}" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100 rounded" src="{{ asset('storage/static/main-carousel/03.jpg') }}" alt="Third slide">
+        </div>
       </div>
     </div>
-  </div>
+	</div>
+</section>
 </div>
 
 @endsection
