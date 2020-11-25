@@ -93,6 +93,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
     Route::get('/contact', 'PagesController@contact')->name('contact')->middleware('auth:customers');
     Route::resource('invoices', 'InvoicesController')->middleware('auth:customers');
     Route::post('/submit-contact-us', 'PagesController@submit_contact_us')->name('submit.contact.us');
+    Route::post('/products/initialize', 'PagesController@initialize_products')->name('products.initialize');
 });
 
 // Home when not logged in
