@@ -79,6 +79,13 @@ class LoginController extends Controller
         if (Auth::guard('customers')->attempt($request->only('email', 'password'), $request->filled('remember'))) {
             //Authenticated, redirect to the intended route
             //if available else customers dashboard.
+            // If customer is inactive don't allow login
+            $customer = Auth::guard('customers')->user();
+            if($customer->status === 'inactive') {
+                Auth::guard('customers')->logout();
+
+                return $this->loginFailed('Please contact admin, you have been blocked from the system');
+            }
             return redirect()
                 ->intended(route('pages.index'))
                 ->with('status', 'You are Logged in as Customers!');
@@ -86,7 +93,7 @@ class LoginController extends Controller
         //keep track of login attempts from the user.
         $this->incrementLoginAttempts($request);
         //Authentication failed, redirect back with input.
-        return $this->loginFailed();
+        return $this->loginFailed('Login failed, please try again!');
     }
 
     /**
@@ -127,12 +134,12 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function loginFailed()
+    private function loginFailed($message)
     {
         return redirect()
             ->back()
             ->withInput()
-            ->with('error', 'Login failed, please try again!');
+            ->with('error', $message);
     }
 
     /**
