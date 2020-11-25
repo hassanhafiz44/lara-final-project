@@ -28,6 +28,7 @@
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+
 	<style>
 		body {
 			background-color: #e8e3fd;
@@ -103,31 +104,6 @@
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto">
 						<!-- Authentication Links -->
-						<!-- @guest
-						<li class="nav-item">
-							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
-						</li>
-						@if (Route::has('customers.register'))
-						<li class="nav-item">
-							<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
-						</li>
-						@endif
-						@else
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								{{ Auth::user()->name }} <span class="caret"></span>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
-											document.getElementById('logout-form').submit();">
-									{{ __('Logout') }}
-								</a>
-
-								<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">@csrf</form>
-							</div>
-						</li>
-						@endguest -->
 						@if(!Auth::guard('web')->check() && !Auth::guard('customers')->check())
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
@@ -143,7 +119,7 @@
 						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								{{ Auth::user()->name }} <span class="caret"></span>
+								Welcome {{ ucwords(Auth::user()->name) }} <span class="caret"></span>
 							</a>
 
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -158,7 +134,7 @@
 						@elseif(Auth::guard('customers')->check())
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								{{ Auth::guard('customers')->user()->name }} <span class="caret"></span>
+								Welcome {{ ucwords(Auth::guard('customers')->user()->name) }} <span class="caret"></span>
 							</a>
 
 
