@@ -173,14 +173,17 @@
 
 	</div>
 	
-	<main class="container-fluid">
+	<main class="container-fluid" style="min-height:100vh">
 		@yield('content')
 	</main>
-
-	<footer class="mt-4 bg-dark fixed-bottom" >
-		<div class="d-flex">
-			<span>All Rights Reserved</span>
-		</div>
+		<footer>
+			<div style="background-color: #17a2b8;">
+			  <div class="py-4 px-5 flex flex-wrap flex-col flex-sm-row">
+				<p class="text-white text-center text-sm-left">© 2020 All Rights Reserved</p>
+				<span class="ml-sm-auto mt-sm-0 mt-2 w-sm-auto w-100 text-sm-left text-center text-white">Happy Shopping</span>
+			  </div>
+			</div>
+		  </footer>
 	</footer>
 	@yield('scripts')
 	<script>
