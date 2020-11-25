@@ -5,6 +5,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login as Customer') }}</div>
+                
                 <div class="card-body">
                     <form method="POST" action="{{ route('customers.login.attempt') }}">
                         @csrf
@@ -56,4 +57,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(function() {
+        @if(session('error'))
+            showNotification("{{ session('error')}}", 'Error', 'error');
+        @endif;
+    });
+</script>
 @endsection
