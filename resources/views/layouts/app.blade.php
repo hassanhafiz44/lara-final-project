@@ -19,6 +19,33 @@
 	<script src="{{ asset('js/loadingoverlay.min.js') }}"></script>
 	<script src="{{ asset('js/highcharts.js') }}"></script>
 
+	<script>
+		toastr.options = {
+			"stack": 10,
+			"debug": false,
+			"positionClass": "toast-bottom-right",
+			"onclick": null,
+			"fadeIn": 300,
+			"fadeOut": 1000,
+			"timeOut": 5000,
+			"extendedTimeOut": 1000,
+			"closeButton": true,
+			"progressBar": true,
+		}
+
+		function showNotification(message, heading, type) {
+			if(type === "error") {
+				toastr.error(message, heading);
+			} else if(type === 'success') {
+				toastr.success(message, heading);
+			} else if(type === "warning") {
+				toastr.warning(message, heading);
+			} else if(type === "info") {
+				toastr.info(message, heading);
+			}
+		}
+	</script>
+
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -170,7 +197,7 @@
 	@yield('scripts')
 	<script>
 		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
+			$('[data-toggle="tooltip"]').tooltip();
 		});
 	</script>
 </body>
