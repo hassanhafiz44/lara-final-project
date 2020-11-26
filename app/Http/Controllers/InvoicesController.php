@@ -145,7 +145,12 @@ class InvoicesController extends Controller
     {
         //
         try {
-            $invoice = Invoice::findOrFail($id);
+            $invoice = Invoice::where('id', '=', $id)->where('customer_id', '=', auth('customers')->id())->first();
+
+            // If 
+            if(is_null($invoice))
+                throw new ModelNotFoundException("Error Processing Request", 1);
+                
             $total_quantity = DB::table('invoice_products')->where('invoice_id', '=', $id)->sum('quantity');
             // retail price included only
             $total_retail_price = DB::table('invoice_products')->where('invoice_id', '=', $id)->sum('retail_price');
