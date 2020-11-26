@@ -62,3 +62,11 @@
 
 </section>
 @endsection
+
+@section('scripts')
+<script>
+    @if(session('message'))
+        showNotification("{{session('message')}}", 'Success', 'success');
+    @endif
+</script>
+@endsection
