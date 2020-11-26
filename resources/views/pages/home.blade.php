@@ -14,7 +14,7 @@
 
 @section('content')
 <div class="container">
-  @if(Auth::guard('customers')->check())
+  @auth('customers')
   <div class="row text-white">
     <div class="col-12 col-lg-3 mt-2 mb-2">
       <div class="card bg-primary">
@@ -28,7 +28,7 @@
       <div class="card bg-primary">
         <div class="card-body d-flex justify-content-between align-items-center">
           <span class="card-text">{{ __('labels.due_amount') }}</span>
-          <span class="card-text">{{ $due_total ?? 0 }}</span>
+          <span class="card-text">{{ convert_to_currency($due_total) ?? 0 }}</span>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div class="card bg-primary">
         <div class="card-body d-flex justify-content-between align-items-center">
           <span class="card-text">{{ __('labels.paid_amount') }}</span>
-          <span class="card-text">{{ $paid_total ?? 0 }}</span>
+          <span class="card-text">{{ convert_to_currency($paid_total) ?? 0 }}</span>
         </div>
       </div>
     </div>
@@ -67,12 +67,15 @@
       </div>
     </div>
   </div>
-  @endif
+  @endauth
   <section class="text-gray-700 body-font">
 	<div class="container mx-auto flex px-5 py-12 flex-col md:flex-row items-center">
 		<div class="flex flex-col mb-16 items-center text-center md:w-1/2 md:pr-16 md:items-start md:text-left md:mb-0 lg:flex-grow">
 			<p class="title-font text-3xl mb-4 font-medium text-gray-900 sm:text-4xl">Bilal Computers</p>
-			<p class="mb-8 leading-relaxed">Selling devices in a low price. Heavy in performance but light on pocket. Login and start shopping.</p>
+			<p class="mb-8 leading-relaxed">Selling devices in a low price. Heavy in performance but light on pocket. 
+        @guest('customers')
+        Login and start shopping. 
+        @endguest</p>
 		</div>
 		<div class="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
 			<img class="object-cover object-center rounded" src="{{ asset('storage/static/home/04.jpg') }}">
@@ -101,7 +104,6 @@
 	</div>
 </section>
 </div>
-
 @endsection
 
 @section('scripts')
