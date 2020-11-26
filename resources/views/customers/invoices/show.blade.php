@@ -73,10 +73,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <td colspan="4" class="text-right"><b>Grand Total</b></td>
-                    <td class="text-right"><b>{{ number_format($total_quantity, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($total_retail_price, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($grand_retail_price, 2) }}</b></td>
+                        <td class="text-right"><b>{{ convert_to_currency($invoice->retail_price_total) }}</b></td>
                 </tfoot>
             </table>
         </div>
