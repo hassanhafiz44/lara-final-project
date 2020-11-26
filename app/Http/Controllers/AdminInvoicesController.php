@@ -32,7 +32,7 @@ class AdminInvoicesController extends Controller
         $data['end_date'] = date('Y-m-t');
 
         // To select customer for filteration
-        $customers_dropdown_data = Customer::where('status' , '=', 'active')->select(['id', 'name', 'email'])->get();
+        $customers_dropdown_data = Customer::select(['id', 'name', 'email'])->get();
         
         $invoices = Invoice::orderByDesc('created_at');
         if($request->filled('customer_id')) {
