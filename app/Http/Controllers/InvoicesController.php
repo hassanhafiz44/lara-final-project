@@ -21,12 +21,12 @@ class InvoicesController extends Controller
     {
         //
         $customer_id = auth('customers')->id();
-        $invoices = Invoice::where('customer_id', $customer_id)->get();
+        $invoices = Invoice::where('customer_id', $customer_id)->paginate(10);
         $data = [
             'title' => 'Customer Invoices',
             'invoices' => $invoices
         ];
-        return view('customers.invoices')->with($data);
+        return view('customers.invoices.index')->with($data);
     }
 
     /**
@@ -153,7 +153,7 @@ class InvoicesController extends Controller
             
             $company = DB::table('companies')->first(['title', 'email', 'phone', 'mobile', 'address']);
             $customer = $invoice->customer;
-            return view('customers.viewinvoice')->with([
+            return view('customers.invoices.show')->with([
                 'invoice'                       => $invoice, 
                 'total_quantity'                => $total_quantity,
                 'total_retail_price'            => $total_retail_price,
