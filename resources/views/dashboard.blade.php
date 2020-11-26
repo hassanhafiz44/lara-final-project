@@ -222,10 +222,10 @@
 				name: "{{ __('labels.price') }}",
 				data: [0, price]
 			}, {
-				name: "{{ __('labels.price') }}",
+				name: "{{ __('labels.retail') }}",
 				data: [0, retail]
 			}, {
-				name: "{{ __('labels.retail') }}",
+				name: "{{ __('labels.profit') }}",
 				data: [0, profit]
 			}],
 
