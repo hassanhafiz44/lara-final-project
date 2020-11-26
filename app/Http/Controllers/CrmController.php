@@ -135,9 +135,7 @@ class CrmController extends Controller
           ], 200);
        } catch (ModelNotFoundException $e) {
           return response()->json([
-             'error' => [
                 'message' => 'Customer not found'
-             ]
           ],404);
        }
     }
@@ -148,14 +146,12 @@ class CrmController extends Controller
           $customer = Customer::findOrFail($request->id);
           $customer->status = 'active';
           $customer->save();
-          return response()->json(['message' => 'Status changed to inactive',
+          return response()->json(['message' => 'Status changed to active',
              'status' => $customer->status
           ], 200);
        } catch (ModelNotFoundException $e) {
           return response()->json([
-             'error' => [
                 'message' => 'Customer not found'
-             ]
           ],404);
        }
     }

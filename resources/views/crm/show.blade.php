@@ -70,17 +70,27 @@
         $scope.isActive = '{{ $customer->status }}';
 
         $scope.setInactive = function() {
-            console.log('set inactive');
+			$("body").LoadingOverlay('show');
             $http.post("{{ route('admin.crm.set.inactive')}}", {id: customerId}).then(function(success) {
                 $scope.isActive = success.data.status;
-            }, function(error) {})
+                showNotification(success.data.message, 'Success', 'success');
+            }, function(error) {
+                showNotification(error.data.message, 'Error', 'error');
+            }).finally(function(){
+				$("body").LoadingOverlay('hide');
+            });
         }
                 
         $scope.setActive = function() {
-            console.log('set active');
+			$("body").LoadingOverlay('show');
             $http.post("{{ route('admin.crm.set.active')}}", {id: customerId}).then(function(success) {
                 $scope.isActive = success.data.status;
-            }, function(error) {})
+                showNotification(success.data.message, 'Success', 'success');
+            }, function(error) {
+                showNotification(error.data.message, 'Error', 'error');
+            }).finally(function() {
+				$("body").LoadingOverlay('hide');
+            })
         }
     });
 </script>
