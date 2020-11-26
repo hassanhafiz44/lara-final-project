@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container-fluid" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()">
-<div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-3 mb-2 mt-2">
 			<div class="card bg-primary text-white">
@@ -102,6 +101,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 @endsection
 
 @section('scripts')
