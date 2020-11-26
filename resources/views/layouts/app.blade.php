@@ -59,8 +59,8 @@
 	<style>
 		body {
 			background-color: #e8e3fd;
-			background-image: linear-gradient(225deg, #e8e3fd 0%, #c6d6e2 70%, #bed0de 100%);
-			height: 100vH;
+			background-image: linear-gradient(225deg, #e8e3fd 0%, #c6d6e2 70%, #054575 100%);
+			min-height: 100vH;
 		}
 	</style>
 	@yield('stylesheets')
@@ -183,7 +183,7 @@
 
 	</div>
 	
-	<main class="container-fluid" style="min-height:100vh">
+	<main style="min-height: 100vh">
 		@yield('content')
 	</main>
 	<footer class="mt-4">
