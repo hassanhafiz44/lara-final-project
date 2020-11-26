@@ -15,4 +15,8 @@ return [
     'view_details' => 'View Details',
     'open_cart' => 'Open Cart',
     'confirm' => 'Confirm',
+    'unpaid' => 'Unpaid',
+    'invoices' => 'Invoices',
+    'about_us' => 'About Us',
+    'contact_us' => 'Contact Us',
 ];

@@ -5,7 +5,7 @@
     <div class="container py-5">
         <div class="card">
             <div class="card-body">
-                <h2 class="font-weight-light text-center py-3">Contact Us</h2>
+                <h1 class="font-weight-bold text-center py-3">{{ __('labels.contact_us') }}</h1>
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                         <div class="row pt-3">
