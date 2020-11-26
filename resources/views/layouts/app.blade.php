@@ -186,7 +186,7 @@
 	<main class="container-fluid" style="min-height:100vh">
 		@yield('content')
 	</main>
-	<footer>
+	<footer class="mt-4">
 		<div style="background-color: #17a2b8;">
 			<div class="py-4 px-5 flex flex-wrap flex-col flex-sm-row">
 				<p class="text-white text-center text-sm-left">© 2020 All Rights Reserved</p>

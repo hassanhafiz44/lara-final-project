@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" ng-app="productsApp" ng-controller="productsCtrl" ng-init="initializeProducts()">
+<div class="container d-none"  ng-app="productsApp" ng-controller="productsCtrl" ng-init="initializeProducts()" ng-class="{'d-block': isLoaded}">
 	<div class="d-flex justify-content-between align-items-center">
 		<h1 class="text-center">{{ __('labels.buy_products') }}</h1>
 		<a href="#" class="btn btn-success" ng-if="cartProducts.length" data-toggle="modal" data-target="#cart-modal"><i class="fa fa-shopping-cart"></i> {{ __('labels.cart') }}</a>
@@ -12,20 +12,21 @@
 			<div class="card">
 				<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top" width="200" height="200">
 				<div class="card-body">
-					<h5 class="card-title"><%= product.title %></h5>
+					<h5 class="card-title text-capitalize"><%= product.title %></h5>
 					<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR"  %></p>
 					@if(Auth::guard('customers')->check())
 					<button ng-if="product.quantity > 0" ng-click="addProductToCart(product)" ng-disabled="product.isAddedToCart" class="btn btn-primary btn-block btn-sm mb-2"><i class="fa fa-shopping-cart"> <span><%= product.isAddedToCart ? "{{ __('labels.added_to_cart') }}" : "{{ __('labels.add_to_cart') }}" %></span></i></button>
 					@endif
 					<span class="badge badge-info"><%= product.quantity %> </span>
-					<span class="text-danger" ng-if="product. quantity === 0">Out of Stock</span>
+					<span class="text-danger" ng-if="product.quantity === 0">Out of Stock</span>
+					<button class="btn btn-sm btn-primary" ng-click="onShowProductDetails(product.id)">View Details</button>
 					<button ng-click="deleteProductFromCart(product.id)" class="btn btn-danger btn-sm" ng-if="product.isAddedToCart"><i class="fa fa-trash"></i></button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="modal fade" id="myModal1">
+	<div class="modal fade" id="product-details-modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -35,10 +36,10 @@
 						<h2>{{ __('labels.details') }}</h2>
 						<div class="row">
 							<div class="col-lg-4">
-								<img id="p-image" class="w-100">
+								<img ng-src="<%= productDetails.imageLink %>" class="w-100">
 							</div>
 							<div class="col-lg-8">
-								<p class="font-weight-bold">{{ __('labels.name') }}: <span id="name"></span><br>{{ __('labels.details') }}: <span id="price"></span><br>{{ __('labels.description') }}: <span id="description"></span><br></p>
+								<p class="font-weight-bold">{{ __('labels.name') }}: <span class="text-capitalize"><%= productDetails.title %></span><br>{{ __('labels.retail_price') }}: <span><%= productDetails.retail_price | currency : "PKR" %></span><br>{{ __('labels.description') }}: <span><%= productDetails.description %></span><br>{{ __('labels.model') }}: <span><%= productDetails.model %></span><br></p>
 							</div>
 						</div>
 					</div>
@@ -54,10 +55,6 @@
 	</div>
 	@include('includes/cartModal')
 </div>
-
-<footer style="margin-top: 50px">
-
-</footer>
 @endsection
 
 @section('scripts')
@@ -75,7 +72,9 @@
 		$scope.products = [];
 		// for backup
 		$scope.originalProducts = [];
+
 		$scope.cartProducts = [];
+		$scope.productDetails = {}
 
 		$scope.initializeProducts = function() {
 			const initialization_url = '{{ route('pages.products.initialize') }}';
@@ -96,9 +95,10 @@
 					$('#cart-modal').modal('hide');
 				}
 			).catch(function(error) {
-
+				showNotification('Products could not be initialized', 'error', 'error');
 			}).finally(function() {
 				$("body").LoadingOverlay('hide');
+				$scope.isLoaded = true;
 			});
 		}
 
@@ -138,14 +138,19 @@
 				function(response) {
 					const data = response.data;
 					console.log(data);
-					toastr.success('Success', 'Invoice created', 'success');
+					showNotification('Invoice created', 'Success', 'success');
 					$scope.initializeProducts();
 				}
 			).catch(function(error) {
-
+				showNotification('Something went wrong', 'Error', 'error');
 			}).finally(function() {
 				$("body").LoadingOverlay('hide');
 			});
+		}
+
+		$scope.onShowProductDetails = function(id) {
+			$scope.productDetails = {...$scope.originalProducts.filter(p => p.id === id)[0]};
+			$("#product-details-modal").modal('show');
 		}
 	});
 </script>

@@ -16,7 +16,7 @@
                                             <div class="d-flex justify-content-between flex-column">
                                                 <div class="d-flex justify-content-between">
                                                     <div class="form-group">
-                                                        <input id="product-<%= product.id %>" readonly type="text" class="form-control" ng-model="product.name">
+                                                        <input id="product-<%= product.id %>" readonly type="text" class="form-control text-capitalize" ng-model="product.name">
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="number" id="product-<%= product.id %>-quantity"" class="form-control" min="1" max="<%= product.total_quantity %>" ng-model="product.quantity" required>
