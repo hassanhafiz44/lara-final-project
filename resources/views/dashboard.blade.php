@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()">
+<div class="container-fluid d-none" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()" ng-class="{'d-block': isLoaded}">
 	<div class="row">
 		<div class="col-lg-3 mb-2 mt-2">
 			<div class="card bg-primary text-white">
@@ -117,29 +117,28 @@
 	app.controller('DashboardCtrl', function($scope, $http) {
 		const initialization_url = '{{ route('admin.dashboard.initialize') }}';
 		$scope.recent_buyers = [];
+
 		$scope.initializeDashboard = function () {
 			$("body").LoadingOverlay('show');
-			$http.post(initialization_url, {_token: '{{ Session::token() }}'}).then(
-				function(response) {
-					console.log(response);
-					const data = response.data;
-					$scope.month_sales = data.month_sales;
-					$scope.today_sales = data.today_sales;
-					$scope.no_today_invoices = data.no_today_invoices;
-					$scope.no_month_invoices = data.no_month_invoices;
-					$scope.products_count = data.products_count;
-					$scope.recent_buyers = data.recent_buyers;
-					$scope.current_stock_worth = data.current_stock_worth;
-					$scope.current_stock_retail_worth = data.current_stock_retail_worth;
-					$scope.current_profit_worth = data.current_stock_retail_worth - data.current_stock_worth;
-					renderHighChart('products-by-cat-chart', "{{ __('labels.no_of_products_by_categories') }}", "{{ __('labels.category') }}", data.products_by_cat, "{{ __('labels.products') }}");
-					renderHighChart('expense-income-chart', "{{ __('labels.income_vs_expense_pkr') }}", 'E-I', data.income_expense, "{{ __('labels.pkr') }}");
-					lineChart('stock-worth-chart', "{{ __('labels.summary') }}", data.current_stock_worth, data.current_stock_retail_worth, $scope.current_profit_worth);
-				}
-			).catch(function(error) {
-
+			$http.post(initialization_url, {_token: '{{ Session::token() }}'}).then(function(response) {
+				const data = response.data;
+				$scope.month_sales = data.month_sales;
+				$scope.today_sales = data.today_sales;
+				$scope.no_today_invoices = data.no_today_invoices;
+				$scope.no_month_invoices = data.no_month_invoices;
+				$scope.products_count = data.products_count;
+				$scope.recent_buyers = data.recent_buyers;
+				$scope.current_stock_worth = data.current_stock_worth;
+				$scope.current_stock_retail_worth = data.current_stock_retail_worth;
+				$scope.current_profit_worth = data.current_stock_retail_worth - data.current_stock_worth;
+				renderHighChart('products-by-cat-chart', "{{ __('labels.no_of_products_by_categories') }}", "{{ __('labels.category') }}", data.products_by_cat, "{{ __('labels.products') }}");
+				renderHighChart('expense-income-chart', "{{ __('labels.income_vs_expense_pkr') }}", 'E-I', data.income_expense, "{{ __('labels.pkr') }}");
+				lineChart('stock-worth-chart', "{{ __('labels.summary') }}", data.current_stock_worth, data.current_stock_retail_worth, $scope.current_profit_worth);
+			}).catch(function(error) {
+				console.log('Hello');
 			}).finally(function() {
 				$("body").LoadingOverlay('hide');
+				$scope.isLoaded = true;
 			});
 		}
 
@@ -184,65 +183,66 @@
 	function lineChart(containerId, title, price, retail, profit) {
 		Highcharts.chart(containerId, {
 
-		title: {
-			text: title
-		},
-
-		subtitle: {
-			text: ''
-		},
-
-		yAxis: {
 			title: {
+				text: title
+			},
+
+			subtitle: {
+				text: ''
+			},
+
+			yAxis: {
+				title: {
 				text: 'Amount'
-			}
-		},
+				}
+			},
 
-		xAxis: {
-			accessibility: {
-				rangeDescription: ''
-			}
-		},
+			xAxis: {
+				accessibility: {
+					rangeDescription: ''
+				}
+			},
 
-		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'middle'
-		},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle'
+			},
 
-		plotOptions: {
-			series: {
+			plotOptions: {
+				series: {
 				label: {
 					connectorAllowed: false
 				},
 				pointStart: 0
-			}
-		},
-
-		series: [{
-			name: "{{ __('labels.price') }}",
-			data: [0, price]
-		}, {
-			name: "{{ __('labels.retail') }}",
-			data: [0, retail]
-		}, {
-			name: "{{ __('labels.profit') }}",
-			data: [0, profit]
-		}],
-
-		responsive: {
-			rules: [{
-				chartOptions: {
-					legend: {
-						layout: 'horizontal',
-						align: 'center',
-						verticalAlign: 'bottom'
-					}
 				}
-			}]
-		}
+			},
 
-	});
+			series: [{
+				name: "{{ __('labels.price') }}",
+				data: [0, price]
+			}, {
+				name: "{{ __('labels.price') }}",
+				data: [0, retail]
+			}, {
+				name: "{{ __('labels.retail') }}",
+				data: [0, profit]
+			}],
+
+			responsive: {
+				rules: [{
+					condition: {
+					},
+					chartOptions: {
+							legend: {
+							layout: 'horizontal',
+							align: 'center',
+							verticalAlign: 'bottom'
+						}
+					}
+				}]
+			}
+		});
 }
 </script>
 @endsection
