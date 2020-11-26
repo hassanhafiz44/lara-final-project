@@ -22,3 +22,15 @@ if( ! function_exists('is_unread_message')) {
         return false;
     }
 }
+
+if( ! function_exists('convert_to_currency')) {
+    /**
+     * @param double Number to convert to currency string
+     * 
+     * @return string Number converted to string
+     */
+    function convert_to_currency($number) : string {
+        $fmt = new NumberFormatter('en_PK ', NumberFormatter::CURRENCY );
+        return $fmt->formatCurrency($number, 'PKR');
+    }
+}
