@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div ng-app="myApp" ng-controller="InvoiceCtrl">
+<div class="container-fluid" ng-app="myApp" ng-controller="InvoiceCtrl">
     <div class="invoice-header mb-2">
         <div class="btn-group" role="group" aria-label="Change Statuses">
             <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">@lang('labels.update_invoice')</button>
@@ -32,7 +32,7 @@
                         </tr>
                         <tr>
                             <td><b>@lang('labels.name'):</b></td>
-                            <td>{{$customer->name}}</td>
+                            <td>{{ucwords($customer->name)}}</td>
                         </tr>
                         <tr>
                             <td><b>@lang('labels.email'):</b></td>
@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <td><b>@lang('labels.address'):</b></td>
-                            <td>{{$customer->address}}</td>
+                            <td>{{ucwords($customer->address)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,24 +71,26 @@
                     {{-- each of those invoice_products->product refers to original product --}}
                     {{-- which is used to get title, model and image --}}
                     @foreach($invoice->products as $key => $product)
-                    <td class="text-right">{{ $key + 1 }}</td>
-                    <td class="text-right"><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->product->image_url) }}"></td>
-                    <td class="text-right">{{ $product->product->title }}</td>
-                    <td class="text-right">{{ $product->product->model }}</td>
-                    <td class="text-right">{{ $product->quantity }}</td>
-                    <td class="text-right">{{ number_format($product->price, 2) }}</td>
-                    <td class="text-right">{{ number_format($product->retail_price, 2) }}</td>
-                    <td class="text-right">{{ number_format(($product->price * $product->quantity), 2) }}</td>
-                    <td class="text-right">{{ number_format(($product->retail_price * $product->quantity), 2) }}</td>
+                    <tr>
+                        <td class="text-right">{{ $key + 1 }}</td>
+                        <td class="text-right"><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->product->image_url) }}"></td>
+                        <td class="text-right">{{ ucwords($product->product->title) }}</td>
+                        <td class="text-right">{{ $product->product->model }}</td>
+                        <td class="text-right">{{ $product->quantity }}</td>
+                        <td class="text-right">{{ number_format($product->price, 2) }}</td>
+                        <td class="text-right">{{ number_format($product->retail_price, 2) }}</td>
+                        <td class="text-right">{{ number_format(($product->price * $product->quantity), 2) }}</td>
+                        <td class="text-right">{{ number_format(($product->retail_price * $product->quantity), 2) }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <td colspan="4" class="text-right"><b>@lang('labels.grand_total')</b></td>
-                    <td class="text-right"><b>{{ number_format($total_quantity, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($total_price, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($total_retail_price, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($grand_price, 2) }}</b></td>
-                    <td class="text-right"><b>{{ number_format($grand_retail_price, 2) }}</b></td>
+                    <td class="text-right"><b>{{ $total_quantity }}</b></td>
+                    <td class="text-right"><b>{{ convert_to_currency($total_price) }}</b></td>
+                    <td class="text-right"><b>{{ convert_to_currency($total_retail_price) }}</b></td>
+                    <td class="text-right"><b>{{ convert_to_currency($invoice->price_total) }}</b></td>
+                    <td class="text-right"><b>{{ convert_to_currency($invoice->retail_price_total) }}</b></td>
                 </tfoot>
             </table>
         </div>
@@ -100,11 +102,11 @@
                     <tbody>
                         <tr>
                             <td><b>@lang('labels.payment_status')</b></td>
-                            <td><%= payment_status %></td>
+                            <td class="text-capitalize"><%= payment_status %></td>
                         </tr>
                         <tr>
                             <td><b>@lang('labels.invoice_status')</b></td>
-                            <td><%= invoice_status %></td>
+                            <td class="text-capitalize"><%= invoice_status %></td>
                         </tr>
                     </tbody>
                 </table>

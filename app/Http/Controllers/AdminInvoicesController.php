@@ -103,8 +103,6 @@ class AdminInvoicesController extends Controller
             $total_quantity = DB::table('invoice_products')->where('invoice_id', '=', $id)->sum('quantity');
             $total_price = DB::table('invoice_products')->where('invoice_id', '=', $id)->sum('price');
             $total_retail_price = DB::table('invoice_products')->where('invoice_id', '=', $id)->sum('retail_price');
-            $grand_price = $total_quantity * $total_price;
-            $grand_retail_price = $total_quantity * $total_retail_price;
             
             $company = DB::table('companies')->first(['title', 'email', 'phone', 'mobile', 'address']);
             $customer = $invoice->customer;
@@ -113,8 +111,6 @@ class AdminInvoicesController extends Controller
                 'total_quantity'                => $total_quantity,
                 'total_price'                   => $total_price,
                 'total_retail_price'            => $total_retail_price,
-                'grand_price'                   => $grand_price,
-                'grand_retail_price'            => $grand_retail_price,
                 'company'                       => $company,
                 'customer'                      => $customer,
             ]);
@@ -241,6 +237,10 @@ class AdminInvoicesController extends Controller
             }
 
             $invoice->invoice_status = $request->invoice_status;
+            $invoice->cancelled_by = NULL;
+
+            if($request->invoice_status === 'canceled') $invoice->cancelled_by = 'user';
+
             $invoice->save();
             return response()->json([
                 'invoice_status' => $invoice->invoice_status
