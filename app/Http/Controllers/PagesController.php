@@ -22,7 +22,7 @@ class PagesController extends Controller
 		if(Auth::guard('customers')->check()) {
 			$data['due_invoices'] = DB::table('invoices')
 				->where('customer_id', '=', Auth::guard('customers')->id())
-				->where('payment_status','=', 'due')->get();
+				->where('payment_status','=', 'due')->where('invoice_status', '!=', 'canceled')->get();
 			$data['paid_invoices'] = DB::table('invoices')
 				->where('customer_id', '=', Auth::guard('customers')->id())
 				->where('payment_status', '=', 'paid')->get();
