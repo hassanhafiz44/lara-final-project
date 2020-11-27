@@ -11,7 +11,7 @@
 
   </head>
   <body>
-    <div class="bg-indigo-700 p-4 flex justify-between items-center">
+    <div class="bg-indigo-700 p-4 flex flex-col md:flex-row justify-between items-center">
       <div class="flex items-center">
         <img width="50" src="{{ asset('favicon.svg') }}" alt="Logo">
         <a href="{{ route('pages.index') }}" class="inline-block p-2 text-indigo-100 mr-1 text-xs sm:text-base">Home</a>
@@ -19,8 +19,18 @@
         <a href="{{ route('pages.services') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Services</a>
         <a href="{{ route('pages.about') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">About Us</a>
         <a href="{{ route('pages.contact') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Contact Us</a>
-
       </div>
+      @auth('customers')
+      <div class="flex items-center">
+        <a href="{{ route('pages.invoices.index') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">{{ __('labels.invoices') }}</a>
+        <a class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
+          {{ __('Logout') }}
+        </a>
+
+        <form id="logout-form" action="{{ route('customers.logout') }}" method="POST" style="display: none;">@csrf</form>
+      </div>
+      @endauth
     </div>
 
     <div class="md:flex justify-between py-20 px-10 bg-indigo-600 text-indigo-200">
@@ -47,15 +57,15 @@
       </div>
       
       <div class="md:mr-2 mb-2 md:mt-8">
-        <img src="{{ asset('storage/static/home/feature-02.jpg') }}" alt="a desktop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
+        <img src="{{ asset('storage/static/home/feature-02.jpg') }}" alt="a keyboard" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
       <div class="md:mr-2 mb-2">
-        <img src="{{ asset('storage/static/home/feature-03.jpg') }}" alt="a girl working on laptop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
+        <img src="{{ asset('storage/static/home/feature-03.jpg') }}" alt="a ram" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
       <div class="md:mr-2 mb-2 md:mt-8">
-        <img src="{{ asset('storage/static/home/feature-04.jpg') }}" alt="video editing on desktop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
+        <img src="{{ asset('storage/static/home/feature-04.jpg') }}" alt="a processor" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
     </div>
 
