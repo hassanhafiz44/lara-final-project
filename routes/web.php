@@ -101,8 +101,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
 Route::get('/', 'PagesController@index')->name('pages.index');
 
 // Admin routes
-Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::resource('employees', 'EmployeesController');
+Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::resource('crm', 'CrmController');
     Route::resource('product_categories', 'ProductCategoriesController');
     Route::resource('products', 'ProductsController');

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductCategory;
-use App\ProductImage;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -17,10 +16,6 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
         //
@@ -101,7 +96,7 @@ class ProductsController extends Controller
 
         $transasction->save();
 
-        return redirect(route('admin.products.index'));
+        return redirect(route('admin.products.index'))->with('message', 'Product saved successfully');
     }
 
     /**
@@ -113,7 +108,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
-        echo unlink(storage_path('app/public/product_images/WhatsApp Image 2020-10-31 at 13.59.04_1604514391.jpeg'));
+        abort(404);
     }
 
     /**
@@ -214,7 +209,7 @@ class ProductsController extends Controller
 
         $product->save();
 
-        return redirect(route('admin.products.index'));
+        return redirect(route('admin.products.index'))->with('message', 'Product updated successfully');
     }
 
     /**
