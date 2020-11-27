@@ -34,3 +34,14 @@ if( ! function_exists('convert_to_currency')) {
         return $fmt->formatCurrency($number, 'PKR');
     }
 }
+
+if( ! function_exists('get_company_details')) {
+    /**
+     * Details of the company
+     * 
+     * @return 
+     */
+    function get_company_details() {
+        return DB::table('companies')->first();
+    }
+}

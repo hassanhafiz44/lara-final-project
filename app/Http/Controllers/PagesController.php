@@ -51,6 +51,7 @@ class PagesController extends Controller
 			$data['due_total'] = $due_total;
 
 		}
+		$data['company'] = get_company_details();
 		// var_dump($data); die();
 		return view('pages.home')->with($data);
 	}
