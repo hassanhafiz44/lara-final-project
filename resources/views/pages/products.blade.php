@@ -13,7 +13,7 @@
 				<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top" width="200" height="200">
 				<div class="card-body">
 					<h5 class="card-title text-capitalize"><%= product.title %></h5>
-					<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR"  %></p>
+					<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR "  %></p>
 					@if(Auth::guard('customers')->check())
 					<button ng-if="product.quantity > 0" ng-click="addProductToCart(product)" ng-disabled="product.isAddedToCart" class="btn btn-primary btn-block btn-sm mb-2"><i class="fa fa-shopping-cart"> <span><%= product.isAddedToCart ? "{{ __('labels.added_to_cart') }}" : "{{ __('labels.add_to_cart') }}" %></span></i></button>
 					@endif
@@ -39,7 +39,7 @@
 								<img ng-src="<%= productDetails.imageLink %>" class="w-100">
 							</div>
 							<div class="col-lg-8">
-								<p class="font-weight-bold">{{ __('labels.name') }}: <span class="text-capitalize"><%= productDetails.title %></span><br>{{ __('labels.retail_price') }}: <span><%= productDetails.retail_price | currency : "PKR" %></span><br>{{ __('labels.description') }}: <span><%= productDetails.description %></span><br>{{ __('labels.model') }}: <span><%= productDetails.model %></span><br></p>
+								<p class="font-weight-bold">{{ __('labels.name') }}: <span class="text-capitalize"><%= productDetails.title %></span><br>{{ __('labels.retail_price') }}: <span><%= productDetails.retail_price | currency : "PKR " %></span><br>{{ __('labels.description') }}: <span><%= productDetails.description %></span><br>{{ __('labels.model') }}: <span><%= productDetails.model %></span><br></p>
 							</div>
 						</div>
 					</div>

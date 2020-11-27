@@ -15,7 +15,7 @@
 			<div class="card bg-warning text-white">
 				<div class="card-body">
 					<h5 class="card-title">@lang('labels.today_sales')</h5>
-					<span><%= today_sales | currency:"PKR"  %></span>
+					<span><%= today_sales | currency:"PKR "  %></span>
 				</div>
 			</div>
 		</div>
@@ -31,7 +31,7 @@
 			<div class="card bg-success text-white">
 				<div class="card-body">
 					<h5 class="card-title">@lang('labels.month_sales')</h5>
-					<span><%= month_sales | currency:"PKR" %></span>
+					<span><%= month_sales | currency:"PKR " %></span>
 				</div>
 			</div>
 		</div>
@@ -86,15 +86,15 @@
 					<div class="row mt-4">
 						<div class="col-lg-4 text-center">
 							<p class="card-text mb-0">@lang('labels.current_stock_worth')</p>
-							<span class="text-primary"><%=  current_stock_worth | currency:"PKR" %></span>
+							<span class="text-primary"><%=  current_stock_worth | currency:"PKR " %></span>
 						</div>
 						<div class="col-lg-4 text-center">
 							<p class="card-text mb-0">@lang('labels.current_stock_retail_worth')</p>
-							<span class="text-success"><%=  current_stock_retail_worth | currency:"PKR" %></span>
+							<span class="text-success"><%=  current_stock_retail_worth | currency:"PKR " %></span>
 						</div>
 						<div class="col-lg-4 text-center">
 							<p class="card-text mb-0">@lang('labels.current_profit_worth')</p>
-							<span class="text-info"><%=  current_profit_worth | currency:"PKR" %></span>
+							<span class="text-info"><%=  current_profit_worth | currency:"PKR " %></span>
 						</div>
 					</div>
 				</div>

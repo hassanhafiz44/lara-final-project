@@ -21,7 +21,7 @@
             @foreach($invoices as $key => $invoice)
             <tr data-id="{{ $invoice->id }}">
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $invoice->retail_price_total }}</td>
+                <td>{{ convert_to_currency($invoice->retail_price_total) }}</td>
                 <td class="text-capitalize">{{ $invoice->payment_status }}</td>
                 <td class="text-capitalize">{{ $invoice->invoice_status }}</td>
                 <td>
