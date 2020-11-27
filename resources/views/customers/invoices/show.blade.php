@@ -67,7 +67,7 @@
                     <tr>
                         <td class="text-right">{{ $key + 1 }}</td>
                         <td class="text-right"><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->product->image_url) }}"></td>
-                        <td class="text-right">{{ $product->product->title }}</td>
+                        <td class="text-right">{{ ucwords($product->product->title) }}</td>
                         <td class="text-right">{{ $product->product->model }}</td>
                         <td class="text-right">{{ $product->quantity }}</td>
                         <td class="text-right">{{ number_format($product->retail_price, 2) }}</td>
