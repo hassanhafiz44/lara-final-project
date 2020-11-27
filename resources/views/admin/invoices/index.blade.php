@@ -109,6 +109,7 @@
       $scope.startDateFilter = new Date('{{ $start_date }}');
       $scope.endDateFilter = new Date('{{ $end_date }}');
    });
+
    $(function() {
       const _token = "{{ csrf_token() }}";
 
@@ -135,9 +136,11 @@
                   $("#invoice-status-" + invoiceId).find('option[value="canceled"]').show();
                   $("#invoice-status-" + invoiceId).find('option[value="delivered"]').hide();
                }
+               showNotification(response.message, 'Success', 'success');
             },
             error: function(error) {
                selectedElem.find('option[value="' + oldPaymentStatus + '"]').prop('selected', true);
+               showNotification(error.message, 'Error', 'error');
             },
             complete: function() {
                $('body').LoadingOverlay("hide");
@@ -162,9 +165,11 @@
             },
             success: function(response) {
                selectedElem.data('value', response.invoice_status);
+               showNotification(response.message, 'Success', 'success');
             },
             error: function(error) {
                selectedElem.find('option[value="' + oldInvoiceStatus + '"]').prop('selected', true);
+               showNotification(error.message, 'Error', 'error');
             },
             complete: function() {
                $("body").LoadingOverlay("hide");

@@ -159,9 +159,7 @@ class AdminInvoicesController extends Controller
             $invoice = Invoice::findOrFail($request->invoice_id);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => [
                     'message' => "Invoice not found"
-                ]
             ], 404);
         }
 
@@ -169,9 +167,7 @@ class AdminInvoicesController extends Controller
             if($invoice->invoice_status === "delivered") {
                 if($request->payment_status === "due") {
                     return response()->json([
-                        'error' => [
                             'message' => "Cannot change status to due. Products are delivered."
-                        ]
                     ], 400);
                 }
             }
@@ -202,15 +198,14 @@ class AdminInvoicesController extends Controller
 
             return response()->json([
                 'type' => $transaction->type,
-                'payment_status' => $invoice->payment_status
+                'payment_status' => $invoice->payment_status,
+                'message' => 'Changed payment status',
             ], 200);
         } catch(Exception $e) {
             DB::rollBack();
             return response()->json([
-                'error' => [
-                    'message' => "Something went wrong"
-                ]
-            ],500);
+                'message' => "Something went wrong"
+            ], 500);
         }
     }
 
@@ -220,9 +215,7 @@ class AdminInvoicesController extends Controller
             $invoice = Invoice::findOrFail($request->invoice_id);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => [
                     'message' => "Invoice not found"
-                ]
             ], 404);
         }
 
@@ -230,9 +223,7 @@ class AdminInvoicesController extends Controller
             if($invoice->payment_status === 'due') {
                 if($request->invoice_status === 'delivered')
                     return response()->json([
-                        'error' => [
                             'message' => "Cannot changed status to delivered. Make payment first"
-                        ]
                     ], 400);
             }
 
@@ -243,13 +234,12 @@ class AdminInvoicesController extends Controller
 
             $invoice->save();
             return response()->json([
-                'invoice_status' => $invoice->invoice_status
+                'invoice_status' => $invoice->invoice_status,
+                'message' => 'Changed invoice status',
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'error' => [
-                    'message' => "Something went wrong"
-                ]
+                'message' => "Something went wrong"
             ],500);
         }
     }
