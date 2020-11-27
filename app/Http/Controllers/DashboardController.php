@@ -47,6 +47,7 @@ class DashboardController extends Controller
     $data['today_invoices'] = DB::table('invoices')->where(DB::raw('DATE(`created_at`)'), '=', date('Y-m-d'))->get();
     $data['today_sales'] = 0;
     foreach($data['today_invoices'] as $invoice) {
+      if($invoice->payment_status === 'due' && $invoice->invoice_status === 'canceled') continue;
       $data['today_sales'] += $invoice->retail_price_total;
     }
     $data['no_today_invoices'] = count($data['today_invoices']);
@@ -57,6 +58,7 @@ class DashboardController extends Controller
     $data['month_sales'] = 0;
 
     foreach($data['month_invoices'] as $invoice) {
+      if($invoice->payment_status === 'due' && $invoice->invoice_status === 'canceled') continue;
       $data['month_sales'] += $invoice->retail_price_total;
     }
 
@@ -103,11 +105,7 @@ class DashboardController extends Controller
     $data['current_stock_retail_worth'] = $current_stock_retail_worth;
 
     $data['products_count'] = count($products);
-    //     echo "<pre>";
-    //     var_export($data);
-    //     echo "</pre>";
-    
-    // die();
+
     return response()->json($data, 200);
   }
 }
