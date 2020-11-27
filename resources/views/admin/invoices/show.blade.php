@@ -134,27 +134,32 @@
         $scope.payment_status = '{{ $invoice->payment_status }}';
 
         $scope.onPaymentStatusChange = function() {
+            $('body').LoadingOverlay("show");
             const data = {
                 invoice_id: invoiceId,
                 payment_status: $scope.payment_status,
             }
-            $http.post("{{ route('admin.invoice.change.payment.status') }}", data).then(function(success) {
-                console.log(success);
-            }, function(error) {
-                $scope.payment_status = error.data.error.payment_status;
+            $http.post("{{ route('admin.invoice.change.payment.status') }}", data).then(function(response) {
+                showNotification(response.data.message, 'Success', 'success');
+            }).catch(function(error) {
+                showNotification(error.data.message, 'Error', 'error');
+            }).finally(function(){
+               $('body').LoadingOverlay("hide");
             });
         }
 
         $scope.onInvoiceStatusChange = function() {
+            $('body').LoadingOverlay("show");
             const data = {
                 invoice_id: invoiceId,
                 invoice_status: $scope.invoice_status,
             }
-            $http.post("{{ route('admin.invoice.change.invoice.status') }}", data).then(function(success) {
-                console.log(success);
-
-            }, function(error) {
-                console.log(error);
+            $http.post("{{ route('admin.invoice.change.invoice.status') }}", data).then(function(response) {
+                showNotification(response.data.message, 'Success', 'success');
+            }).catch(function(error) {
+                showNotification(error.data.message, 'Error', 'error');
+            }).finally(function(){
+               $('body').LoadingOverlay("hide");
             });
         }
     });
