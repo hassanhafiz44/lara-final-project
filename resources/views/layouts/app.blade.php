@@ -46,6 +46,8 @@
 		}
 	</script>
 
+	<!-- Icon -->
+	<link rel="icon" href="{{ asset('favicon.svg') }}">
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -71,13 +73,15 @@
 		<nav class="navbar navbar-expand-md navbar-dark bg-info shadow-sm mb-4">
 			<div class="container">
 				@auth
-				<a class="navbar-brand" href="{{ route('admin.dashboard.index') }}">
-					{{ config('app.name', 'Laravel') }}
+				<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('admin.dashboard.index') }}">
+					<img height="50" width="50" src="{{ asset('favicon.svg') }}">
+					<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
 				</a>
 				@endauth
 				@guest
-				<a class="navbar-brand" href="{{ route('pages.index') }}">
-					{{ config('app.name', 'Laravel') }}
+				<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('pages.index') }}">
+					<img height="50" width="50" src="{{ asset('favicon.svg') }}">
+					<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
 				</a>
 				@endguest
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
