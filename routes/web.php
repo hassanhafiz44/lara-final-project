@@ -92,6 +92,7 @@ Route::prefix('/pages')->name('pages.')->group(function () {
     Route::get('/about', 'PagesController@about')->name('about');
     Route::get('/contact', 'PagesController@contact')->name('contact')->middleware('auth:customers');
     Route::resource('invoices', 'InvoicesController')->middleware('auth:customers');
+    Route::post('/invoices/change-invoice-status', 'InvoicesController@change_invoice_status')->name('invoices.change.invoice.status')->middleware('auth:customers');
     Route::post('/submit-contact-us', 'PagesController@submit_contact_us')->name('submit.contact.us');
     Route::post('/products/initialize', 'PagesController@initialize_products')->name('products.initialize');
 });

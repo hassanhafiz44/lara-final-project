@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div ng-app="myApp" ng-controller="InvoiceCtrl">
+<div class="container-fluid" ng-app="myApp" ng-controller="InvoiceCtrl">
     <div class="invoice-header mb-2">
         <div class="btn-group" role="group" aria-label="Change Statuses">
-            <button ng-disabled="invoice_status === 'delivered' && payment_status === 'paid'" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">Update Invoice</button>
+            <button ng-hide="shouldDisplayUpdate()" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">{{ __('labels.update_invoice') }}</button>
+            <button ng-show="shouldDisplayCancelled()" disabled class="btn btn-danger btn-sm mr-2">{{ __('labels.invoice_cancelled') }}</button>
         </div>
     </div>
     <div class="pritable">
@@ -25,20 +26,20 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td><b>Name:</b></td>
-                            <td>{{$customer->name}}</td>
+                            <td><b>{{ __('labels.name') }}:</b></td>
+                            <td>{{ ucwords($customer->name) }}</td>
                         </tr>
                         <tr>
-                            <td><b>Email:</b></td>
+                            <td><b>{{ __('labels.email') }}:</b></td>
                             <td>{{$customer->email}}</td>
                         </tr>
                         <tr>
-                            <td><b>Phone:</b></td>
+                            <td><b>{{ __('labels.phone') }}:</b></td>
                             <td>{{$customer->phone}}</td>
                         </tr>
                         <tr>
-                            <td><b>Address:</b></td>
-                            <td>{{$customer->address}}</td>
+                            <td><b>{{ __('labels.address') }}:</b></td>
+                            <td>{{ ucwords($customer->address) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -49,13 +50,13 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-right">SL</th>
-                        <th class="text-right">Image</th>
-                        <th class="text-right">Product Name</th>
-                        <th class="text-right">Model</th>
-                        <th class="text-right">Qnty</th>
-                        <th class="text-right">Retail Price</th>
-                        <th class="text-right">Total Retail Price</th>
+                        <th class="text-right">{{ __('labels.serial_no_short') }}</th>
+                        <th class="text-right">{{ __('labels.image') }}</th>
+                        <th class="text-right">{{ __('labels.product_name') }}</th>
+                        <th class="text-right">{{ __('labels.model') }}</th>
+                        <th class="text-right">{{ __('labels.quantity') }}</th>
+                        <th class="text-right">{{ __('labels.retail_price') }}</th>
+                        <th class="text-right">{{ __('labels.total_retail_price') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,17 +64,24 @@
                     {{-- each of those invoice_products->product refers to original product --}}
                     {{-- which is used to get title, model and image --}}
                     @foreach($invoice->products as $key => $product)
-                    <td class="text-right">{{ $key + 1 }}</td>
-                    <td class="text-right"><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->product->image_url) }}"></td>
-                    <td class="text-right">{{ $product->product->title }}</td>
-                    <td class="text-right">{{ $product->product->model }}</td>
-                    <td class="text-right">{{ $product->quantity }}</td>
-                    <td class="text-right">{{ number_format($product->retail_price, 2) }}</td>
-                    <td class="text-right">{{ number_format(($product->retail_price * $product->quantity), 2) }}</td>
+                    <tr>
+                        <td class="text-right">{{ $key + 1 }}</td>
+                        <td class="text-right"><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->product->image_url) }}"></td>
+                        <td class="text-right">{{ $product->product->title }}</td>
+                        <td class="text-right">{{ $product->product->model }}</td>
+                        <td class="text-right">{{ $product->quantity }}</td>
+                        <td class="text-right">{{ number_format($product->retail_price, 2) }}</td>
+                        <td class="text-right">{{ number_format(($product->retail_price * $product->quantity), 2) }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right"><b>{{ __('labels.grand_total') }}</b></td>
+                        <td class="text-right"><b>{{ $total_quantity }}</b></td>
+                        <td class="text-right"><b>{{ convert_to_currency($total_retail_price) }}</b></td>
                         <td class="text-right"><b>{{ convert_to_currency($invoice->retail_price_total) }}</b></td>
+                    <tr>
                 </tfoot>
             </table>
         </div>
@@ -84,19 +92,19 @@
                     <thead></thead>
                     <tbody>
                         <tr>
-                            <td><b>Payment Status</b></td>
-                            <td><%= payment_status %></td>
+                            <td><b>{{ __('labels.payment_status') }}</b></td>
+                            <td class="text-capitalize"><%= payment_status %></td>
                         </tr>
                         <tr>
-                            <td><b>ٰInvoice Status</b></td>
-                            <td><%= invoice_status %></td>
+                            <td><b>{{ __('labels.invoice_status') }}</b></td>
+                            <td class="text-capitalize"><%= invoice_status %></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    @include('includes.invoiceStatusesModal', ['invoice' => $invoice])
+    @include('includes.customers.invoiceStatusModal', ['invoice' => $invoice])
 
 </div>
 @endsection
@@ -115,30 +123,50 @@
         
         $scope.invoice_status = '{{ $invoice->invoice_status }}';
         $scope.payment_status = '{{ $invoice->payment_status }}';
+        $scope.cancelled_by = '{{ $invoice->cancelled_by }}';
 
-        $scope.onPaymentStatusChange = function() {
-            const data = {
-                invoice_id: invoiceId,
-                payment_status: $scope.payment_status,
-            }
-            $http.post("{{ route('admin.invoice.change.payment.status') }}", data).then(function(success) {
-                console.log(success);
-            }, function(error) {
-                $scope.payment_status = error.data.error.payment_status;
-            });
+        
+        $scope.invoice_status_input = ($scope.invoice_status === 'canceled') ? 'canceled' : '';
+
+        $scope.shouldDisplayUpdate = function () 
+        {
+            if($scope.invoice_status === 'canceled')
+                return true;
+
+            if($scope.payment_status === 'paid')
+                return true
         }
 
-        $scope.onInvoiceStatusChange = function() {
+        $scope.shouldDisplayCancelled = function()
+        {
+            return ($scope.invoice_status === 'canceled') ? true : false;
+        }
+
+
+        $scope.onStatusChangeSubmit = function() {
             const data = {
                 invoice_id: invoiceId,
-                invoice_status: $scope.invoice_status,
-            }
-            $http.post("{{ route('admin.invoice.change.invoice.status') }}", data).then(function(success) {
-                console.log(success);
+                invoice_status: $scope.invoice_status_input,
+                _token: _token,
+            };
 
-            }, function(error) {
-                console.log(error);
-            });
+			$("body").LoadingOverlay('show');
+            $http.post("{{route('pages.invoices.change.invoice.status') }}", data)
+                .then(function(response) {
+                    // Set statues
+                    $scope.invoice_status = response.data.invoice.invoice_status;
+                    $scope.invoice_status_input = $scope.invoice_status;
+                    // update UI
+                    $scope.shouldDisplayCancelled();
+                    $scope.shouldDisplayUpdate();
+                    showNotification(response.data.message, 'Success', 'success');
+                    $("#invoice-statuses-modal").modal('hide');
+                }).catch(function(error) {
+                    $scope.invoice_status_input = '';
+                    showNotification(error.data.message, 'Error', 'error');
+                }).finally(function() {
+                    $("body").LoadingOverlay('hide');
+                });
         }
     });
 </script>

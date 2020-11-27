@@ -202,4 +202,28 @@ class InvoicesController extends Controller
     {
         //
     }
+
+    public function change_invoice_status(Request $request)
+    {
+        try {
+            $invoice = Invoice::where('id', '=', $request->invoice_id)->where('customer_id', '=', auth('customers')->id())->first();
+
+            if($invoice->invoice_status === 'canceled') 
+                return response()->json([
+                    'message' => 'Invoice is already cancelled',
+                ], 400);
+
+            if(is_null($invoice))
+                throw new ModelNotFoundException("Invoice not found", 1);
+            $invoice->invoice_status = $request->invoice_status;
+            $invoice->cancelled_by = 'customer';
+
+            $invoice->save();
+            return response()->json(['invoice' => $invoice, 'message' => 'Invoice cancelled']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                    'message' => "Invoice not found"
+            ], 404);
+        }
+    }
 }
