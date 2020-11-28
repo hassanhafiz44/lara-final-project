@@ -17,15 +17,40 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $data['payment_status'] = "";
+        $data['invoice_status'] = "";
+        $data['start_date'] = date('Y-m-01');
+        $data['end_date'] = date('Y-m-t');
+
+        $invoices = Invoice::orderByDesc('created_at');
+        // Filteration
+        if($request->filled('payment_status')) {
+            $invoices = $invoices->where('payment_status', '=', $request->payment_status);
+            $data['payment_status'] = $request->payment_status;
+        }
+
+        if($request->filled('start_date') && $request->filled('end_date')) {
+            $data['start_date'] = $request->start_date;
+            $data['end_date'] = $request->end_date;
+        }
+
+        if($request->filled('invoice_status')) {
+            $data['invoice_status'] = $request->invoice_status;
+            $invoices = $invoices->where('invoice_status', '=', $request->invoice_status);
+        }
+
+        // must include date filter in query
+        $invoices = $invoices->whereBetween(DB::raw('DATE(created_at)'), [$data['start_date'], $data['end_date']]);
+
         $customer_id = auth('customers')->id();
-        $invoices = Invoice::where('customer_id', $customer_id)->paginate(10);
-        $data = [
-            'title' => 'Customer Invoices',
-            'invoices' => $invoices
-        ];
+
+        $invoices = $invoices->where('customer_id', $customer_id)->paginate(10);
+        $data['title'] = 'Customer Invoices';
+        $data['invoices'] = $invoices;
+
         return view('customers.invoices.index')->with($data);
     }
 
