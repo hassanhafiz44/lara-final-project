@@ -8,6 +8,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/tailwind.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
 
   </head>
   <body>
@@ -34,7 +35,7 @@
     </div>
 
     <div class="md:flex justify-between py-20 px-10 bg-indigo-600 text-indigo-200">
-      <div class="md:w-1/2 mb-10 md:mb-0">
+      <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-duration="1000">
         <h2 class="text-2xl md:text-4xl lg:text-6xl text-white mb-5">Welcome to {{ ucwords($company->title) }}</h2>
         <p class="mb-6">{{ ucwords( $company->slogan ?? "This is company slogan") }}</p>
         @guest('customers')
@@ -45,26 +46,26 @@
         <a href="{{ route('pages.products') }}" class="inline-block py-3 px-6 text-lg bg-pink-400 text-pink-800 hover:bg-pink-300 rounded transition ease-in duration-150">Go Shopping</a>
         @endauth
       </div>
-      <div class="md:w-1/2">
+      <div class="md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
         <img src="{{ asset('storage/static/home/hero.jpg') }}" alt="Computer" class="w-full rounded shadow-2xl">	
       </div>
     </div>
     <!-- features -->
     <div class="md:flex py-16 px-10 bg-indigo-800 text-indigo-200 text-center">
       
-      <div class="md:mr-2 mb-2">
-      <img src="{{ asset('storage/static/home/feature-01.jpg') }}" alt="laptop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
+      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
+        <img src="{{ asset('storage/static/home/feature-01.jpg') }}" alt="laptop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2 md:mt-8">
+      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
         <img src="{{ asset('storage/static/home/feature-02.jpg') }}" alt="a keyboard" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2">
+      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
         <img src="{{ asset('storage/static/home/feature-03.jpg') }}" alt="a ram" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2 md:mt-8">
+      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
         <img src="{{ asset('storage/static/home/feature-04.jpg') }}" alt="a processor" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
     </div>
@@ -75,5 +76,9 @@
         Copyright &copy; Computers 2020 - infinity
       </div>
     </div>
+    <script src="{{ asset('js/aos.js') }}"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>
