@@ -168,13 +168,16 @@ class ProductsController extends Controller
 
         // Transaction logic
         $add_transaction = FALSE;
+
         if ($quantity < 0) {
+            // For stock return, save old price in transaction
             $add_transaction = TRUE;
             $description = 'stock_return';
             $type = 'income';
-            $amount = abs($product->price * $quantity);
+            $amount = abs($product->price * $quantity); // Notice product->quantity and price
             $retail_amount = abs($product->retail_price * $quantity);
         } else if ($quantity > 0) {
+            // For stock import, save new price in transaction
             $add_transaction = TRUE;
             $description = 'stock_import';
             $type = 'expense';
