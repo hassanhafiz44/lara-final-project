@@ -46,7 +46,7 @@
         @endauth
       </div>
       <div class="md:w-1/2">
-        <img src="{{ asset('storage/static/home/04.jpg') }}" alt="Computer" class="w-full rounded shadow-2xl">	
+        <img src="{{ asset('storage/static/home/hero.jpg') }}" alt="Computer" class="w-full rounded shadow-2xl">	
       </div>
     </div>
     <!-- features -->
