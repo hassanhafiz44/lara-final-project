@@ -20,4 +20,5 @@ return [
     'about_us' => 'About Us',
     'contact_us' => 'Contact Us',
     'invoice_cancelled' => 'Invoice Cancelled',
+    'id' => 'ID',
 ];

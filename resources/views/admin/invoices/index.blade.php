@@ -46,6 +46,7 @@
                <tr>
                   <!-- <th>Product</th> -->
                   <th>@lang('labels.serial_no_short')</th>
+                  <th>@lang('labels.id')</th>
                   <th>@lang('labels.customer')</th>
                   <th>@lang('labels.price')</th>
                   <th>@lang('labels.retail_price')</th>
@@ -65,6 +66,7 @@
                @foreach($invoices as $key => $invoice)
                <tr data-id="{{ $invoice->id }}">
                   <td>{{ $key + 1 }}</td>
+                  <td>{{ $invoice->id }}</td>
                   <td>{{ ucwords($invoice->customer->name) }}</td>
                   <td>{{ $invoice->price_total }}</td>
                   <td>{{ $invoice->retail_price_total }}</td>
