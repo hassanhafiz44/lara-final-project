@@ -19,13 +19,14 @@ $(function() {
 			data: data,
 			success: function(response){
 				title: $("#add-product-form").find('[name="category_id"]')
-				.append(`<option value='${response.id}'>${response.title}</option>`);
+				.append(`<option value='${response.category.id}'>${response.category.title}</option>`);
 				$(form).find('[name="cat_title"]').val("");
-				showNotification("Category added successfully", "Success", "success");
+				showNotification(response.message, "Success", "success");
 			},
 			error: function(error){
-				console.log(error);
-				showNotification("Something went wrong", "Success", "success");
+				if(error.status === 422)
+					// had to use responseJSON object because response is sent by laravel
+					showNotification(error.responseJSON.message, "Error", "error");
 			}
 		});
 	});

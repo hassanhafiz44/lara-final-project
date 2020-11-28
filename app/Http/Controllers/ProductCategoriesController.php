@@ -37,20 +37,16 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-			$validated_data = $request->validate([
-				'title' => 'required'
-			]);
+        $validated_data = $request->validate([
+            'title' => 'required|unique:product_categories'
+        ]);
 
-			$category = new ProductCategory;
-			$category->title = $request->title;
-			$is_saved = $category->save();
+        $product_category = ProductCategory::create($request->all());
 
-			if($is_saved) {
-				return response($category);
-			} else {
-				return response('not done', 500);
-			}
-
+        return response()->json([
+            'message' => 'Category created successfully',
+            'category' => $product_category,
+        ]);
     }
 
     /**
