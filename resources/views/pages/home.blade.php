@@ -53,19 +53,19 @@
     <!-- features -->
     <div class="md:flex py-16 px-10 bg-indigo-800 text-indigo-200 text-center">
       
-      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
+      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200">
         <img src="{{ asset('storage/static/home/feature-01.jpg') }}" alt="laptop" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
+      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200">
         <img src="{{ asset('storage/static/home/feature-02.jpg') }}" alt="a keyboard" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
+      <div class="md:mr-2 mb-2" data-aos="fade-up" data-aos-offset="200">
         <img src="{{ asset('storage/static/home/feature-03.jpg') }}" alt="a ram" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
       
-      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200" data-aos-duration="1000">
+      <div class="md:mr-2 mb-2 md:mt-8" data-aos="fade-up" data-aos-offset="200">
         <img src="{{ asset('storage/static/home/feature-04.jpg') }}" alt="a processor" class="w-full rounded mb-4 border-solid border-2 border-indigo-400">
       </div>
     </div>
@@ -78,7 +78,9 @@
     </div>
     <script src="{{ asset('js/aos.js') }}"></script>
     <script>
-      AOS.init();
+      AOS.init({
+        duration: 1000,
+      });
     </script>
   </body>
 </html>
