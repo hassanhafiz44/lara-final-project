@@ -78,7 +78,7 @@
         @endguest</p>
 		</div>
 		<div class="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
-			<img class="object-cover object-center rounded" src="{{ asset('storage/static/home/04.jpg') }}">
+			<img class="object-cover object-center rounded" src="{{ asset('storage/static/home/hero.jpg') }}">
 		</div>
 	</div>
 </section>
