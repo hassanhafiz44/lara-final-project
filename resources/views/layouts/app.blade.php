@@ -57,6 +57,7 @@
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('css/aos.css') }}">
 
 	<style>
 		body {
@@ -195,8 +196,12 @@
 		</div>
 	</footer>
 	@yield('scripts')
+	<script src="{{ asset('js/aos.js') }}"></script>
 	<script>
 		$(function () {
+			AOS.init({
+				duration: 1000,
+			});
 			$('[data-toggle="tooltip"]').tooltip();
 		});
 	</script>
