@@ -90,42 +90,38 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<!-- Showing only if PagesController is serving the request -->
-					@if( explode("\\", explode("@", Route::currentRouteAction())[0])[3] === 'PagesController'
-					OR explode("\\", explode("@", Route::currentRouteAction())[0])[3] === 'InvoicesController')
+					@if(request()->routeIs('pages.*'))
 					<!-- Left Side Of Navbar -->
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ url()->current() === route('pages.index') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('pages.index') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('pages.index') }}">Home</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('pages.products') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('pages.products') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('pages.products') }}">Products</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('pages.services') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('pages.services') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('pages.services') }}">Services</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('pages.about') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('pages.about') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('pages.contact') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('pages.contact') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('pages.contact') }}">Contact Us</a>
 						</li>
 					</ul>
 					@else
 					@if(Auth::user())
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ url()->current() === route('admin.dashboard.index') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('admin.dashboard.*') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.dashboard.index') }}">Dashboard</a>
 						</li>
-						{{-- <li class="nav-item {{ url()->current() === route('admin.employees.index') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('admin.employees.index') }}">Employees</a>
-						</li> --}}
-						<li class="nav-item {{ url()->current() === route('admin.crm.index') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('admin.crm.*') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.crm.index') }}">CRM</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('admin.products.index') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
 						</li>
-						<li class="nav-item {{ url()->current() === route('admin.invoices.index') ? 'active' : ''}}">
+						<li class="nav-item {{ request()->routeIs('admin.invoices.*') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.invoices.index') }}">Invoices</a>
 						</li>
 					</ul>
@@ -193,7 +189,7 @@
 	<footer class="mt-4">
 		<div style="background-color: #17a2b8;">
 			<div class="py-4 px-5 flex flex-wrap flex-col flex-sm-row">
-				<p class="text-white text-center text-sm-left">© 2020 All Rights Reserved</p>
+				<p class="text-white text-center text-sm-left">&copy; 2020 All Rights Reserved</p>
 				<span class="ml-sm-auto mt-sm-0 mt-2 w-sm-auto w-100 text-sm-left text-center text-white">Happy Shopping</span>
 			</div>
 		</div>
