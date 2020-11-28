@@ -10,6 +10,7 @@
 					<th>@lang('labels.serial_no_short')</th>
 					<th>@lang('labels.image')</th>
 					<th>@lang('labels.title')</th>
+					<th>@lang('labels.category')</th>
 					<th>@lang('labels.model')</th>
 					<th>@lang('labels.price')</th>
 					<th>@lang('labels.retail_price')</th>
@@ -28,13 +29,13 @@
 					<td>{{ $key + 1}}</td>
                     <td><img width="100px" height="100px" src="{{ asset('storage/product_images/' . $product->image_url) }}"></td>
 					<td>{{ ucwords($product->title) }}</td>
+					<td>{{ ucwords($product->category->title) }}</td>
 					<td>{{ $product->model }}</td>
 					<td>{{ $product->retail_price }}</td>
 					<td>{{ $product->price }}</td>
 					<td>{{ $product->quantity }}</td>
 					<td>
 						<a class="btn btn-sm btn-secondary" href="{{ route('admin.products.edit', $product->id) }}"><i class="fa fa-edit"></i></a>
-						<a class="btn btn-sm btn-warning" href="{{ route('admin.products.show', $product->id) }}"><i class="fa fa-eye"></i></a>
 					</td>
 				</tr>
 				@endforeach
