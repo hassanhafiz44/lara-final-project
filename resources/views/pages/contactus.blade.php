@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="head pb-5">
+<section class="head pb-5" data-aos="fade-left">
     <div class="container py-5">
         <div class="card">
             <div class="card-body">
