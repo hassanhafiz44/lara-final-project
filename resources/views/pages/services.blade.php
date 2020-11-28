@@ -1,6 +1,6 @@
 @extends('layouts.app')
 	@section('content')
-		<section class="services" data-aos="fade-left">
+		<section class="services" data-aos="fade-right">
 		<div class="container text-center py-5">
 			<div class="row">
 				<div class="col-lg-4 col-md-6 mb-4">
