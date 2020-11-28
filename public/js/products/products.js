@@ -21,9 +21,11 @@ $(function() {
 				title: $("#add-product-form").find('[name="category_id"]')
 				.append(`<option value='${response.id}'>${response.title}</option>`);
 				$(form).find('[name="cat_title"]').val("");
+				showNotification("Category added successfully", "Success", "success");
 			},
 			error: function(error){
 				console.log(error);
+				showNotification("Something went wrong", "Success", "success");
 			}
 		});
 	});
