@@ -19,7 +19,7 @@
                                                         <input id="product-<%= product.id %>" readonly type="text" class="form-control text-capitalize" ng-model="product.name">
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="number" id="product-<%= product.id %>-quantity"" class="form-control" min="1" max="<%= product.total_quantity %>" ng-model="product.quantity" required>
+                                                        <input type="number" id="product-<%= product.id %>-quantity" class="form-control" min="1" max="<%= product.total_quantity %>" ng-model="product.quantity" required ng-change="onCartProductQuantityChange(product)">
                                                     </div>
                                                     <div>
                                                         <button ng-click="deleteProductFromCart(product.id)" class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button>

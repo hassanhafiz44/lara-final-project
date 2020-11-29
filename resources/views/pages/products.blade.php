@@ -119,10 +119,11 @@
 		}
 
 		$scope.deleteProductFromCart = function(id) {
-			// Replace the product element with original element
+			// Reset quantity and added to cart check
 			const originalProduct = {...$scope.originalProducts.filter(p => p.id === id)[0]};
 			const index = $scope.products.findIndex(p => p.id === id);
-			$scope.products[index] = originalProduct;
+			$scope.products[index].quantity = originalProduct.quantity;
+			$scope.products[index].isAddedToCart = false;
 
 			// Remove product from the cart
 			$scope.cartProducts = $scope.cartProducts.filter(p => p.id !== id);
@@ -151,6 +152,12 @@
 		$scope.onShowProductDetails = function(id) {
 			$scope.productDetails = {...$scope.originalProducts.filter(p => p.id === id)[0]};
 			$("#product-details-modal").modal('show');
+		}
+
+		$scope.onCartProductQuantityChange = function(product) {
+			const originalProduct = {...$scope.originalProducts.filter(p => p.id === product.id)[0]};
+			const index = $scope.products.findIndex(p => p.id === product.id);
+			$scope.products[index].quantity = originalProduct.quantity - product.quantity;
 		}
 	});
 </script>
