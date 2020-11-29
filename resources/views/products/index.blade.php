@@ -31,8 +31,8 @@
 					<td>{{ ucwords($product->title) }}</td>
 					<td>{{ ucwords($product->category->title) }}</td>
 					<td>{{ $product->model }}</td>
-					<td>{{ $product->retail_price }}</td>
-					<td>{{ $product->price }}</td>
+					<td>{{ convert_to_currency($product->price) }}</td>
+					<td>{{ convert_to_currency($product->retail_price) }}</td>
 					<td>{{ $product->quantity }}</td>
 					<td>
 						<a class="btn btn-sm btn-secondary" href="{{ route('admin.products.edit', $product->id) }}"><i class="fa fa-edit"></i></a>
