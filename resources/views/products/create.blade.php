@@ -40,7 +40,7 @@
 			</div>
 			<div class="form-group col-md-6">
 				<label for="image_uri">@lang('labels.image')</label>
-				<input class="form-control" type="file" name="image_uri" id="image_uri" required>
+				<input class="form-control" type="file" name="image_uri" id="image_uri">
 			</div>
 		</div>
 		<input class="btn btn-primary" type="submit" name="submit" id="submit" value="@lang('labels.submit')"/>

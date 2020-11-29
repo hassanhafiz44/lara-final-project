@@ -16,4 +16,9 @@ class Product extends Model
 	{
 		return $this->belongsTo('App\ProductCategory');
 	}
+
+	protected $fillable = [
+		'category_id', 'title', 'model', 'description', 'price', 'quantity', 
+		'retail_price', 'image_url'
+	];
 }

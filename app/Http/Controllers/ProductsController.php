@@ -59,9 +59,10 @@ class ProductsController extends Controller
             'quantity' => 'required',
             'description' => 'required',
             'category_id' => 'required',
-            'image_uri' => 'image|required|max:1999'
+            'image_uri' => 'image|max:1999',
         ]);
 
+        $request->image_url = "default.png";
         // Handle file upload
         if ($request->hasFile('image_uri')) {
             // Get filename with extension
@@ -74,18 +75,13 @@ class ProductsController extends Controller
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload image
             $request->file('image_uri')->storeAs('public/' . $this->image_folder_path, $fileNameToStore);
+
+            $request->image_url = $fileNameToStore;
+
+            unset($request->image_uri);
         }
 
-        $product = new Product;
-        $product->category_id = $request->category_id;
-        $product->title = $request->title;
-        $product->model = $request->model;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->retail_price = $request->retail_price;
-        $product->quantity = $request->quantity;
-        $product->image_url = $fileNameToStore;
-        $product->save();
+        $product = Product::create($request->all());
 
         $transasction = Transaction::create([
             'type' => 'expense',
@@ -93,8 +89,6 @@ class ProductsController extends Controller
             'amount' => $product->price * $product->quantity,
             'retail_amount' => $product->retail_price * $product->quantity
         ]);
-
-        $transasction->save();
 
         return redirect(route('admin.products.index'))->with('message', 'Product saved successfully');
     }
@@ -146,6 +140,7 @@ class ProductsController extends Controller
             'quantity' => 'required',
             'description' => 'required',
             'category_id' => 'required',
+            'image_uri' => 'image|max:1999',
         ]);
 
         // Handle file upload
