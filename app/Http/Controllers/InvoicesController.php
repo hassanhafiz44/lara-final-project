@@ -240,10 +240,19 @@ class InvoicesController extends Controller
 
             if(is_null($invoice))
                 throw new ModelNotFoundException("Invoice not found", 1);
+
             $invoice->invoice_status = $request->invoice_status;
             $invoice->cancelled_by = 'customer';
 
             $invoice->save();
+
+            // Return the stock to the inventory
+            foreach($invoice->products as $product) {
+                $original_product = Product::find($product->product_id);
+                $original_product->quantity += $product->quantity;
+                $original_product->save();
+            }
+
             return response()->json(['invoice' => $invoice, 'message' => 'Invoice cancelled']);
         } catch (ModelNotFoundException $e) {
             return response()->json([
