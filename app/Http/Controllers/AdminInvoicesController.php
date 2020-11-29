@@ -162,6 +162,11 @@ class AdminInvoicesController extends Controller
 
         try {
 
+            if($invoice->payment_status === 'paid' && $request->payment_status === 'paid') 
+                return response()->json([
+                    'message' => 'Invoice is already paid',
+                ], 400);
+
             if($invoice->invoice_status === 'canceled') {
                 if($request->payment_status === 'paid') {
                     return response()->json([
