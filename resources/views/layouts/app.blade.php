@@ -125,6 +125,12 @@
 						<li class="nav-item {{ request()->routeIs('admin.invoices.*') ? 'active' : ''}}">
 							<a class="nav-link" href="{{ route('admin.invoices.index') }}">Invoices</a>
 						</li>
+						<li class="nav-item dropdown">
+							<a href="#" id="reports-dropdown" class="nav-link dropdown-toggle {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" data-toggle="dropdown">Reports</a>
+							<div class="dropdown-menu" aria-labelledby="reports-dropdown">
+								<a href="{{ route('admin.reports.low.stock') }}" class="dropdown-item {{ request()->routeIs('admin.reports.low.stock') ? 'active' : '' }}">Low Stock</a>
+							</div>
+						</li>
 					</ul>
 					@endif
 					@endif
