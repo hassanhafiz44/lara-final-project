@@ -83,7 +83,7 @@
 				function(response) {
 					const data = response.data;
 					// console.log(data.products);
-					$scope.products = data.products.map(product => {
+					$scope.products = data.map(product => {
 						return {
 							...product,
 							imageLink: `${images_path}${product.image_url}`,
