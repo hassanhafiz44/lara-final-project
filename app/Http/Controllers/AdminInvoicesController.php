@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Invoice;
 use App\Transaction;
+use App\Product;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -160,6 +161,15 @@ class AdminInvoicesController extends Controller
         }
 
         try {
+
+            if($invoice->invoice_status === 'canceled') {
+                if($request->payment_status === 'paid') {
+                    return response()->json([
+                        'message' => 'Invoice is cancelled cannot set payment status to paid',
+                    ], 400);
+                }
+            }
+
             if($invoice->invoice_status === "delivered") {
                 if($request->payment_status === "due") {
                     return response()->json([
@@ -173,27 +183,22 @@ class AdminInvoicesController extends Controller
             $invoice->payment_status = $request->payment_status;
             $invoice->save();
 
-            $transaction = new Transaction();
             if($invoice->payment_status === "paid")
             {
-                $transaction->type = 'income';
-                $transaction->description = 'customer_payment';
-                $transaction->invoice_id = $invoice->id;
-                $transaction->amount = $invoice->price_total;
-                $transaction->retail_amount = $invoice->retail_price_total;
-                $transaction->save();
+                $transaction = Transaction::create([
+                    'type' => 'income',
+                    'description' => 'customer_payment',
+                    'invoice_id' => $invoice->id,
+                    'amount' => $invoice->price_total,
+                    'retail_amount' => $invoice->retail_price_total,
+                ]);
             } else {
-                $transaction->type = 'expense';
-                $transaction->description = 'customer_payment';
-                $transaction->invoice_id = $invoice->id;
-                $transaction->amount = $invoice->price_total;
-                $transaction->retail_amount = $invoice->retail_price_total;
-                $transaction->save();
+                $deltedRows = Transaction::where('invoice_id', $invoice->id)->delete();
             }
+
             DB::commit();
 
             return response()->json([
-                'type' => $transaction->type,
                 'payment_status' => $invoice->payment_status,
                 'message' => 'Changed payment status',
             ], 200);
@@ -216,6 +221,13 @@ class AdminInvoicesController extends Controller
         }
 
         try {
+
+            if($invoice->invoice_status === 'canceled') {
+                return response()->json([
+                    'message' => 'Invoice is cancelled, cannot change its status',
+                ], 400);
+            }
+
             if($invoice->payment_status === 'due') {
                 if($request->invoice_status === 'delivered')
                     return response()->json([
@@ -226,7 +238,16 @@ class AdminInvoicesController extends Controller
             $invoice->invoice_status = $request->invoice_status;
             $invoice->cancelled_by = NULL;
 
-            if($request->invoice_status === 'canceled') $invoice->cancelled_by = 'user';
+            if($request->invoice_status === 'canceled') {
+                $invoice->cancelled_by = 'user';
+
+                // Return stock to the inventory
+                foreach($invoice->products as $product) {
+                    $original_product = Product::find($product->product_id);
+                    $original_product->quantity += $product->quantity;
+                    $original_product->save();
+                }
+            }
 
             $invoice->save();
             return response()->json([

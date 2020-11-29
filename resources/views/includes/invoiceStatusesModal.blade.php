@@ -18,9 +18,9 @@
                     <div class="form-group">
                         <label for="invoice-status">@lang('labels.invoice_status')</label>
                         <select ng-model="invoice_status" class="form-control form-control-sm" id="invoice-status" ng-change="onInvoiceStatusChange()">
-                            <option value="ready">@lang('labels.ready')</option>
-                            <option value="processing">@lang('labels.processing')</option>
-                            <option ng-if="payment_status === 'paid'" value="delivered">@lang('labels.delivered')</option>
+                            <option ng-if="invoice_status !== 'canceled'" value="ready">@lang('labels.ready')</option>
+                            <option ng-if="invoice_status !== 'canceled'" value="processing">@lang('labels.processing')</option>
+                            <option ng-if="payment_status === 'paid'" ng-if="invoice_status !== 'canceled'" value="delivered">@lang('labels.delivered')</option>
                             <option ng-if="payment_status !== 'paid'" value="canceled">@lang('labels.cancelled')</option>
                         </select>
                     </div>

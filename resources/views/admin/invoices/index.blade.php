@@ -142,7 +142,7 @@
             },
             error: function(error) {
                selectedElem.find('option[value="' + oldPaymentStatus + '"]').prop('selected', true);
-               showNotification(error.message, 'Error', 'error');
+               showNotification(error.responseJSON.message, 'Error', 'error');
             },
             complete: function() {
                $('body').LoadingOverlay("hide");
@@ -171,7 +171,7 @@
             },
             error: function(error) {
                selectedElem.find('option[value="' + oldInvoiceStatus + '"]').prop('selected', true);
-               showNotification(error.message, 'Error', 'error');
+               showNotification(error.responseJSON.message, 'Error', 'error');
             },
             complete: function() {
                $("body").LoadingOverlay("hide");
