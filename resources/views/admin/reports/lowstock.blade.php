@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+    <h2>{{ __('labels.low_stock') }}</h2>
     <div class="d-flex my-3">
         <div class="card bg-primary text-white w-100 mr-1">
             <div class="card-body">

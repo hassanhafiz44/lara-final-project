@@ -39,4 +39,5 @@ return [
     'difference' => 'Difference',
     'remarks' => 'Remarks',
     'stock_in_hand' => 'Stock in Hand',
+    'low_stock' => 'Low Stock',
 ];
