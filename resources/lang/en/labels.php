@@ -38,4 +38,5 @@ return [
     'difference_summary' => 'Difference Summary',
     'difference' => 'Difference',
     'remarks' => 'Remarks',
+    'stock_in_hand' => 'Stock in Hand',
 ];

@@ -3,12 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Product;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
     //
+    public function stock_in_hand()
+    {
+        $products = Product::paginate(10);
+        $stock_quantity = Product::sum('quantity');
+        $stock_retail_worth = Product::sum('retail_price');
+        $stock_worth = Product::sum('price');
+        $stock_profit = Product::sum(DB::raw('retail_price - price'));
+
+
+        $data = [
+            'products' => $products,
+            'stock_quantity' => $stock_quantity,
+            'stock_worth' => $stock_worth,
+            'stock_retail_worth' => $stock_retail_worth,
+            'stock_profit' => $stock_profit,
+        ];
+
+        return view('admin.reports.stockinhand', $data);
+    }
+
 
     public function low_stock()
     {

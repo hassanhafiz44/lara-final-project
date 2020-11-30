@@ -112,6 +112,7 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::post('/invoices/change-invoice-status', 'AdminInvoicesController@change_invoice_status')->name('invoice.change.invoice.status');
     Route::post('/crm/set_inactive', 'CrmController@set_inactive')->name('crm.set.inactive');
     Route::post('/crm/set_active', 'CrmController@set_active')->name('crm.set.active');
+    Route::get('/reports/stock-in-hand', 'ReportsController@stock_in_hand')->name('reports.stock.in.hand');
     Route::get('/reports/low-stock', 'ReportsController@low_stock')->name('reports.low.stock');
     Route::get('/reports/sales-summary', 'ReportsController@sales_summary')->name('reports.sales.summary');
 });
