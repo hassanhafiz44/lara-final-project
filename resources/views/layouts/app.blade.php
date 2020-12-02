@@ -128,6 +128,7 @@
 						<li class="nav-item dropdown">
 							<a href="#" id="reports-dropdown" class="nav-link dropdown-toggle {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" data-toggle="dropdown">Reports</a>
 							<div class="dropdown-menu" aria-labelledby="reports-dropdown">
+								<a href="{{ route('admin.reports.stock.in.hand') }}" class="dropdown-item {{ request()->routeIs('admin.reports.stock.in.hand') ? 'active' : '' }}">Stock In Hand</a>
 								<a href="{{ route('admin.reports.low.stock') }}" class="dropdown-item {{ request()->routeIs('admin.reports.low.stock') ? 'active' : '' }}">Low Stock</a>
 								<a href="{{ route('admin.reports.sales.summary') }}" class="dropdown-item {{ request()->routeIs('admin.reports.sales.summary') ? 'active' : '' }}">Sales Summary</a>
 							</div>
