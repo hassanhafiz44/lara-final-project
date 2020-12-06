@@ -72,7 +72,7 @@
 <body>
 	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-dark bg-info shadow-sm mb-4">
-			<div class="container">
+			<div class="container-fluid">
 				@auth
 				<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('admin.dashboard.index') }}">
 					<img height="50" width="50" src="{{ asset('favicon.svg') }}">
