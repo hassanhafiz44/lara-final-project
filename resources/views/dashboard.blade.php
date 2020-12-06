@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid d-none" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()" ng-class="{'d-block': isLoaded}">
+<div class="d-none" ng-app="dashboard" ng-controller="DashboardCtrl" ng-init="initializeDashboard()" ng-class="{'d-block': isLoaded}">
 	<div class="row">
 		<div class="col-lg-3 mb-2 mt-2">
 			<div class="card bg-primary text-white">

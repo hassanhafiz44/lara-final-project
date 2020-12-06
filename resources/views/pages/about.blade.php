@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5" data-aos="fade-left">
+<div class="my-5" data-aos="fade-left">
     <div class="row">
         <div class="card col-12 col-md-6 offset-md-6">
             <div class="card-body text-justify">
