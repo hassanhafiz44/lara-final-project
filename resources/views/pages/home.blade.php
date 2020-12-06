@@ -18,16 +18,19 @@
           <img  class="mr-4" width="50" src="{{ asset('favicon.svg') }}" alt="Logo">
           <span class="mr-4">{{ config('app.name', 'Laravel') }}</span>
         </a>
-        <a href="{{ route('pages.index') }}" class="inline-block p-2 text-indigo-100 mr-1 text-xs sm:text-base">Home</a>
-        <a href="{{ route('pages.products') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Products</a>
-        <a href="{{ route('pages.services') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Services</a>
-        <a href="{{ route('pages.about') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">About Us</a>
-        <a href="{{ route('pages.contact') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Contact Us</a>
+        <a href="{{ route('pages.index') }}" class="inline-block p-2 text-indigo-100 mr-1 text-xs md:text-base">Home</a>
+        <a href="{{ route('pages.products') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100">Products</a>
+        <a href="{{ route('pages.services') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100">Services</a>
+        <a href="{{ route('pages.about') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100">About Us</a>
+        <a href="{{ route('pages.contact') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100">Contact Us</a>
       </div>
       @auth('customers')
       <div class="flex items-center">
-        <a href="{{ route('pages.invoices.index') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">{{ __('labels.invoices') }}</a>
-        <a class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
+        <a href="{{ route('pages.invoices.index') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100">{{ __('labels.invoices') }}</a>
+        <a class="inline-block p-2 text-indigo-200 mr-1 text-xs md:text-base hover:text-indigo-100" href="{{ route('customers.logout') }}" 
+          onclick="
+            event.preventDefault();
+            if(window.confirm('Are you sure to logout?'))
               document.getElementById('logout-form').submit();">
           {{ __('Logout') }}
         </a>
@@ -76,7 +79,7 @@
     <div class="p-10 bg-indigo-900 text-indigo-400 flex justify-end items-center">
       <!-- right -->
       <div>
-        Copyright &copy; Computers 2020 - infinity
+        Copyright &copy; Computers 2020 - 2021
       </div>
     </div>
     <script src="{{ asset('js/aos.js') }}"></script>

@@ -155,8 +155,10 @@
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
-										document.getElementById('logout-form').submit();">
+							<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="
+								event.preventDefault();
+								if(window.confirm('Are you sure to logout?')) 
+									document.getElementById('logout-form').submit();">
 								{{ __('Logout') }}
 							</a>
 
@@ -172,8 +174,10 @@
 
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 							<a href="{{ route('pages.invoices.index') }}" class="dropdown-item">Invoices</a>
-							<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
-										document.getElementById('logout-form').submit();">
+							<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="
+								event.preventDefault();
+								if(window.confirm('Are you sure to logout?'))
+									document.getElementById('logout-form').submit();">
 								{{ __('Logout') }}
 							</a>
 
