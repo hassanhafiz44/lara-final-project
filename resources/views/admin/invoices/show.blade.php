@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid" ng-app="myApp" ng-controller="InvoiceCtrl">
+<div ng-app="myApp" ng-controller="InvoiceCtrl">
     <div class="invoice-header mb-2">
         <div class="btn-group" role="group" aria-label="Change Statuses">
             <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#invoice-statuses-modal">@lang('labels.update_invoice')</button>

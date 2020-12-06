@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" ng-app="invoiceApp" ng-controller="InvoicesCtrl">
+<div ng-app="invoiceApp" ng-controller="InvoicesCtrl">
     <form action="{{ route('pages.invoices.index') }}" method="get">
         <div class="row">
             <div class="form-group col-sm-4 col-md-4">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" ng-app="customerApp" ng-controller="CustomerCtrl">
+    <div ng-app="customerApp" ng-controller="CustomerCtrl">
         <div class="row">
             <div class="col-md-6">
                 <table class="table">

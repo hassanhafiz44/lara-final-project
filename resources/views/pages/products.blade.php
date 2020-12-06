@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-none"  ng-app="productsApp" ng-controller="productsCtrl" ng-init="initializeProducts()" ng-class="{'d-block': isLoaded}">
+<div class="d-none"  ng-app="productsApp" ng-controller="productsCtrl" ng-init="initializeProducts()" ng-class="{'d-block': isLoaded}">
 	<div class="d-flex justify-content-between align-items-center">
 		<h1 class="text-center">{{ __('labels.buy_products') }}</h1>
 		<a href="#" class="btn btn-success" ng-if="cartProducts.length" data-toggle="modal" data-target="#cart-modal"><i class="fa fa-shopping-cart"></i> {{ __('labels.cart') }}</a>

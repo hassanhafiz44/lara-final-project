@@ -70,126 +70,120 @@
 </head>
 
 <body>
-	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-dark bg-info shadow-sm mb-4">
-			<div class="container-fluid">
-				@auth
-				<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('admin.dashboard.index') }}">
-					<img height="50" width="50" src="{{ asset('favicon.svg') }}">
-					<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
-				</a>
-				@endauth
-				@guest
-				<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('pages.index') }}">
-					<img height="50" width="50" src="{{ asset('favicon.svg') }}">
-					<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
-				</a>
-				@endguest
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+	<nav class="navbar navbar-expand-md navbar-dark bg-info shadow-sm mb-4">
+		<div class="container-fluid">
+			@auth
+			<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('admin.dashboard.index') }}">
+				<img height="50" width="50" src="{{ asset('favicon.svg') }}">
+				<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
+			</a>
+			@endauth
+			@guest
+			<a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('pages.index') }}">
+				<img height="50" width="50" src="{{ asset('favicon.svg') }}">
+				<span class="ml-2">{{ config('app.name', 'Laravel') }}</span>
+			</a>
+			@endguest
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<!-- Showing only if PagesController is serving the request -->
-					@if(request()->routeIs('pages.*'))
-					<!-- Left Side Of Navbar -->
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ request()->routeIs('pages.index') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('pages.index') }}">Home</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('pages.products') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('pages.products') }}">Products</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('pages.services') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('pages.services') }}">Services</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('pages.about') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('pages.contact') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('pages.contact') }}">Contact Us</a>
-						</li>
-					</ul>
-					@else
-					@if(Auth::user())
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ request()->routeIs('admin.dashboard.*') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('admin.dashboard.index') }}">Dashboard</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('admin.crm.*') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('admin.crm.index') }}">CRM</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('admin.invoices.*') ? 'active' : ''}}">
-							<a class="nav-link" href="{{ route('admin.invoices.index') }}">Invoices</a>
-						</li>
-					</ul>
-					@endif
-					@endif
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!-- Showing only if PagesController is serving the request -->
+				@if(request()->routeIs('pages.*'))
+				<!-- Left Side Of Navbar -->
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item {{ request()->routeIs('pages.index') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('pages.index') }}">Home</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('pages.products') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('pages.products') }}">Products</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('pages.services') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('pages.services') }}">Services</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('pages.about') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('pages.contact') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('pages.contact') }}">Contact Us</a>
+					</li>
+				</ul>
+				@else
+				@if(Auth::user())
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item {{ request()->routeIs('admin.dashboard.*') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('admin.dashboard.index') }}">Dashboard</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('admin.crm.*') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('admin.crm.index') }}">CRM</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+					</li>
+					<li class="nav-item {{ request()->routeIs('admin.invoices.*') ? 'active' : ''}}">
+						<a class="nav-link" href="{{ route('admin.invoices.index') }}">Invoices</a>
+					</li>
+				</ul>
+				@endif
+				@endif
 
-					<!-- Right Side Of Navbar -->
-					<ul class="navbar-nav ml-auto">
-						<!-- Authentication Links -->
-						@if(!Auth::guard('web')->check() && !Auth::guard('customers')->check())
+				<!-- Right Side Of Navbar -->
+				<ul class="navbar-nav ml-auto">
+					<!-- Authentication Links -->
+					@if(!Auth::guard('web')->check() && !Auth::guard('customers')->check())
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
+					</li>
+						@if (Route::has('customers.register'))
 						<li class="nav-item">
-							<a class="nav-link" href="{{ route('customers.login') }}">{{ __('Login') }}</a>
-						</li>
-							@if (Route::has('customers.register'))
-							<li class="nav-item">
-								<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
-							</li>
-							@endif
-						@elseif(Auth::guard('web')->check())
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								Welcome {{ ucwords(Auth::user()->name) }} <span class="caret"></span>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
-											document.getElementById('logout-form').submit();">
-									{{ __('Logout') }}
-								</a>
-
-								<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">@csrf</form>
-							</div>
-						</li>
-						@elseif(Auth::guard('customers')->check())
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								Welcome {{ ucwords(Auth::guard('customers')->user()->name) }} <span class="caret"></span>
-							</a>
-
-
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a href="{{ route('pages.invoices.index') }}" class="dropdown-item">Invoices</a>
-								<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
-											document.getElementById('logout-form').submit();">
-									{{ __('Logout') }}
-								</a>
-
-								<form id="logout-form" action="{{ route('customers.logout') }}" method="POST" style="display: none;">@csrf</form>
-							</div>
+							<a class="nav-link" href="{{ route('customers.register') }}">{{ __('Register') }}</a>
 						</li>
 						@endif
-					</ul>
-				</div>
-			</div>
-		</nav>
+					@elseif(Auth::guard('web')->check())
+					<li class="nav-item dropdown">
+						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+							Welcome {{ ucwords(Auth::user()->name) }} <span class="caret"></span>
+						</a>
 
-	</div>
-	
-	<main style="min-height: 100vh">
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{ route('users.logout') }}" onclick="event.preventDefault();
+										document.getElementById('logout-form').submit();">
+								{{ __('Logout') }}
+							</a>
+
+							<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">@csrf</form>
+						</div>
+					</li>
+					@elseif(Auth::guard('customers')->check())
+					<li class="nav-item dropdown">
+						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+							Welcome {{ ucwords(Auth::guard('customers')->user()->name) }} <span class="caret"></span>
+						</a>
+
+
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<a href="{{ route('pages.invoices.index') }}" class="dropdown-item">Invoices</a>
+							<a class="dropdown-item" href="{{ route('customers.logout') }}" onclick="event.preventDefault();
+										document.getElementById('logout-form').submit();">
+								{{ __('Logout') }}
+							</a>
+
+							<form id="logout-form" action="{{ route('customers.logout') }}" method="POST" style="display: none;">@csrf</form>
+						</div>
+					</li>
+					@endif
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<main style="min-height: 100vh" class="container">
 		@yield('content')
 	</main>
-	<footer class="mt-4">
-		<div style="background-color: #17a2b8;">
-			<div class="py-4 px-5 flex flex-wrap flex-col flex-sm-row">
-				<p class="text-white text-center text-sm-left">&copy; 2020 All Rights Reserved</p>
-				<span class="ml-sm-auto mt-sm-0 mt-2 w-sm-auto w-100 text-sm-left text-center text-white">Happy Shopping</span>
-			</div>
+	<footer class="mt-4 bg-info p-4">
+		<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center text-white">
+			<span>&copy; 2020 All Rights Reserved</span>
+			<span>Happy Shopping</span>
 		</div>
 	</footer>
 	@yield('scripts')
