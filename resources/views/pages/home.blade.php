@@ -14,7 +14,10 @@
   <body>
     <div class="bg-indigo-700 p-4 flex flex-col md:flex-row justify-between items-center">
       <div class="flex items-center">
-        <img width="50" src="{{ asset('favicon.svg') }}" alt="Logo">
+        <a href="{{ route('pages.index') }}" class="flex justify-center items-center text-lg text-white text-indigo-100 font-medium">
+          <img  class="mr-4" width="50" src="{{ asset('favicon.svg') }}" alt="Logo">
+          <span class="mr-4">{{ config('app.name', 'Laravel') }}</span>
+        </a>
         <a href="{{ route('pages.index') }}" class="inline-block p-2 text-indigo-100 mr-1 text-xs sm:text-base">Home</a>
         <a href="{{ route('pages.products') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Products</a>
         <a href="{{ route('pages.services') }}" class="inline-block p-2 text-indigo-200 mr-1 text-xs sm:text-base hover:text-indigo-100">Services</a>
