@@ -37,67 +37,59 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6 mb-2 mt-2">
-			<div class="card">
-				<div class="card-body">
-					<div id="products-by-cat-chart"></div>
-				</div>
+		<div class="card col-lg-6 my-2">
+			<div class="card-body">
+				<div id="products-by-cat-chart"></div>
 			</div>
 		</div>
-		<div class="col-lg-6 mb-2 mt-2">
-			<div class="card">
-				<div class="card-body">
-					<div id="expense-income-chart"></div>
-				</div>
+		<div class="card col-lg-6 my-2">
+			<div class="card-body">
+				<div id="expense-income-chart"></div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-4 mb-2 mt-2">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">@lang('labels.recent_buyers')</h5>
-					<div class="table-responsive">
-						<table class="table table-striped" id="recent-buyers">
-							<thead>
-								<tr>
-									<th>@lang('labels.serial_no_short')</th>
-									<th>@lang('labels.name')</th>
-									<th>@lang('labels.email')</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="buyer in recent_buyers">
-									<td><%= $index + 1 %></td>
-									<td><%= buyer.name %></td>
-									<td><%= buyer.email %></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+		<div class="card col-lg-4 my-2">
+			<div class="card-body">
+				<h5 class="card-title">@lang('labels.recent_buyers')</h5>
+				<div class="table-responsive">
+					<table class="table table-striped" id="recent-buyers">
+						<thead>
+							<tr>
+								<th>@lang('labels.serial_no_short')</th>
+								<th>@lang('labels.name')</th>
+								<th>@lang('labels.email')</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="buyer in recent_buyers">
+								<td><%= $index + 1 %></td>
+								<td><%= buyer.name %></td>
+								<td><%= buyer.email %></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-8 mb-2 mt-2">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">@lang('labels.summary')</h5>
-					<div class="row">
-						<div id="stock-worth-chart"></div>
+		<div class="card col-lg-8 mb-2 mt-2">
+			<div class="card-body">
+				<h5 class="card-title">@lang('labels.summary')</h5>
+				<div class="row">
+					<div id="stock-worth-chart"></div>
+				</div>
+				<div class="row mt-4">
+					<div class="col-lg-4 text-center">
+						<p class="card-text mb-0">@lang('labels.current_stock_worth')</p>
+						<span class="text-primary"><%=  current_stock_worth | currency:"PKR " %></span>
 					</div>
-					<div class="row mt-4">
-						<div class="col-lg-4 text-center">
-							<p class="card-text mb-0">@lang('labels.current_stock_worth')</p>
-							<span class="text-primary"><%=  current_stock_worth | currency:"PKR " %></span>
-						</div>
-						<div class="col-lg-4 text-center">
-							<p class="card-text mb-0">@lang('labels.current_stock_retail_worth')</p>
-							<span class="text-success"><%=  current_stock_retail_worth | currency:"PKR " %></span>
-						</div>
-						<div class="col-lg-4 text-center">
-							<p class="card-text mb-0">@lang('labels.current_profit_worth')</p>
-							<span class="text-info"><%=  current_profit_worth | currency:"PKR " %></span>
-						</div>
+					<div class="col-lg-4 text-center">
+						<p class="card-text mb-0">@lang('labels.current_stock_retail_worth')</p>
+						<span class="text-success"><%=  current_stock_retail_worth | currency:"PKR " %></span>
+					</div>
+					<div class="col-lg-4 text-center">
+						<p class="card-text mb-0">@lang('labels.current_profit_worth')</p>
+						<span class="text-info"><%=  current_profit_worth | currency:"PKR " %></span>
 					</div>
 				</div>
 			</div>
