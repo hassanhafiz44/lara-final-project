@@ -57,22 +57,24 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">@lang('labels.recent_buyers')</h5>
-					<table class="table table-striped" id="recent-buyers">
-						<thead>
-							<tr>
-								<th>@lang('labels.serial_no_short')</th>
-								<th>@lang('labels.name')</th>
-								<th>@lang('labels.email')</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="buyer in recent_buyers">
-								<td><%= $index + 1 %></td>
-								<td><%= buyer.name %></td>
-								<td><%= buyer.email %></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="table-responsive">
+						<table class="table table-striped" id="recent-buyers">
+							<thead>
+								<tr>
+									<th>@lang('labels.serial_no_short')</th>
+									<th>@lang('labels.name')</th>
+									<th>@lang('labels.email')</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="buyer in recent_buyers">
+									<td><%= $index + 1 %></td>
+									<td><%= buyer.name %></td>
+									<td><%= buyer.email %></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
