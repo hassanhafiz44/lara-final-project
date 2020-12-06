@@ -8,21 +8,19 @@
 	</div>
 	
 	<div class="row mt-2">
-		<div class="col-6 col-md-4 col-lg-3 mb-2" ng-repeat="product in products" data-aos="fade-left">
-			<div class="card">
-				<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top" width="200" height="200">
-				<div class="card-body">
-					<h5 class="card-title text-capitalize"><%= product.title %></h5>
-					<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR "  %></p>
-					@if(Auth::guard('customers')->check())
-					<button ng-if="product.quantity > 0" ng-click="addProductToCart(product)" ng-disabled="product.isAddedToCart" class="btn btn-primary btn-block btn-sm mb-2"><i class="fa fa-shopping-cart"> <span><%= product.isAddedToCart ? "{{ __('labels.added_to_cart') }}" : "{{ __('labels.add_to_cart') }}" %></span></i></button>
-					@endif
-					<button ng-if="product.quantity === 0" disabled class="btn btn-danger btn-block btn-sm mb-2"><i class="fa fa-battery-empty"> <span>{{ __('labels.out_of_stock') }}</span></i></button>
-					<div class="d-flex justify-content-center align-items-center">
-						<span class="badge badge-info mr-1"><%= product.quantity %> </span>
-						<button class="btn btn-sm btn-primary mr-1" ng-click="onShowProductDetails(product.id)">View Details</button>
-						<button ng-click="deleteProductFromCart(product.id)" class="btn btn-danger btn-sm" ng-if="product.isAddedToCart"><i class="fa fa-trash"></i></button>
-					</div>
+		<div class="card col-8 offset-2 col-md-3 offset-md-1 mb-2" ng-repeat="product in products" data-aos="fade-left">
+			<img ng-src="<%= product.imageLink %>" alt="Product image" class="card-img-top">
+			<div class="card-body">
+				<h5 class="card-title text-capitalize"><%= product.title %></h5>
+				<p class="card-text">{{ __('labels.price') }}: <%= product.retail_price | currency:"PKR "  %></p>
+				@if(Auth::guard('customers')->check())
+				<button ng-if="product.quantity > 0" ng-click="addProductToCart(product)" ng-disabled="product.isAddedToCart" class="btn btn-primary btn-block btn-sm mb-2"><i class="fa fa-shopping-cart"> <span><%= product.isAddedToCart ? "{{ __('labels.added_to_cart') }}" : "{{ __('labels.add_to_cart') }}" %></span></i></button>
+				@endif
+				<button ng-if="product.quantity === 0" disabled class="btn btn-danger btn-block btn-sm mb-2"><i class="fa fa-battery-empty"> <span>{{ __('labels.out_of_stock') }}</span></i></button>
+				<div class="d-flex justify-content-center align-items-center">
+					<span class="badge badge-info mr-1"><%= product.quantity %> </span>
+					<button class="btn btn-sm btn-primary mr-1" ng-click="onShowProductDetails(product.id)">View Details</button>
+					<button ng-click="deleteProductFromCart(product.id)" class="btn btn-danger btn-sm" ng-if="product.isAddedToCart"><i class="fa fa-trash"></i></button>
 				</div>
 			</div>
 		</div>
