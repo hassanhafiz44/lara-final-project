@@ -62,7 +62,7 @@ class ProductsController extends Controller
             'image_uri' => 'image|max:1999',
         ]);
 
-        $request->image_url = "default.png";
+        $request->request->add(['image_url' => 'default.png']);
         // Handle file upload
         if ($request->hasFile('image_uri')) {
             // Get filename with extension
@@ -76,9 +76,7 @@ class ProductsController extends Controller
             // Upload image
             $request->file('image_uri')->storeAs('public/' . $this->image_folder_path, $fileNameToStore);
 
-            $request->image_url = $fileNameToStore;
-
-            unset($request->image_uri);
+            $request->request->add(['image_url' => $fileNameToStore]);
         }
 
         $product = Product::create($request->all());
