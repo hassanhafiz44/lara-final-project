@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerFeedback extends Model
+class CustomerFeedbacks extends Model
 {
     //
-    public function user()
+    public function customer()
     {
         return $this->belongsTo('App\Customer', 'id');
     }
