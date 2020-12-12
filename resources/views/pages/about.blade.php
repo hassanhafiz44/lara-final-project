@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+<div class="row" data-aos="fade-left">
     <div class="card col-12 col-md-6 offset-md-6">
         <div class="card-body text-justify">
             <h1 class="card-title">{{ __('labels.about_us') }}</h1>
