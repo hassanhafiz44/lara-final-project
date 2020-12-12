@@ -119,6 +119,7 @@
 		}
 
 		$scope.deleteProductFromCart = function(id) {
+			if( ! confirm('Sure to delete product from cart')) return;
 			// Reset quantity and added to cart check
 			const originalProduct = {...$scope.originalProducts.filter(p => p.id === id)[0]};
 			const index = $scope.products.findIndex(p => p.id === id);
@@ -134,6 +135,7 @@
 		}
 
 		$scope.onCompleteOrder = function() {
+			if(!confirm('Sure to complete order?')) return;
 			$("body").LoadingOverlay('show');
 			$http.post("{{ route('pages.invoices.store') }}", {_token: '{{ Session::token() }}', data: $scope.cartProducts}).then(
 				function(response) {
