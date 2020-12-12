@@ -44,4 +44,8 @@ return [
     'all' => 'All',
     'unread' => 'Unread',
     'read' => 'Read',
+    'received_at' => 'Received At',
+    'customer_feedbacks' => 'Customer Feedbacks',
+    'customer_info' => 'Customer Info',
+    'mark_unread' => 'Mark Unread',
 ];

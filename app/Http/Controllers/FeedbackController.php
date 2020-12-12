@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\CustomerFeedbacks;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,8 +12,8 @@ class FeedbackController extends Controller
 {
     //
     /**
-     * 
      * @param Illuminate\Http\Request
+     * 
      * @return Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -42,12 +44,42 @@ class FeedbackController extends Controller
         return view('admin.feedbacks.index')->with($data);
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return Illuminate\Http\Request
+     */
     public function get_customer_feedbacks($id)
     {
-        $data = ['title' => 'Customer Feedbacks'];
-        $data['feedbacks'] = CustomerFeedbacks::where('customer_id', '=', $id)
-            ->orderByDesc('created_at')
-            ->get();
-        return view('admin.feedbacks.customer')->with($data);
+        try {
+            $customer = Customer::findOrFail($id);
+
+            // Marks all feedbacks as read
+            CustomerFeedbacks::where('customer_id', '=', $id)
+                ->update(['status' => 'read']);
+            
+            $data = ['title' => "$customer->name's Feedbacks"];
+            $data['customer'] = $customer;
+            $data['feedbacks'] = CustomerFeedbacks::where('customer_id', '=', $id)
+                ->orderByDesc('created_at')
+                ->get();
+
+            return view('admin.feedbacks.customer')->with($data);
+        } catch(ModelNotFoundException $e) {
+            abort(404, $e->getMessage());
+        }
+    }
+
+    public function mark_unread_by_customer($id) 
+    {
+        try {
+            $customer = Customer::findOrFail($id);
+            CustomerFeedbacks::where('customer_id', '=', $id)
+                ->update(['status' => 'unread']);
+
+            return redirect()->route('admin.feedback.index')->with('message', "Marked all feedbacks unread for $customer->email");
+        } catch (ModelNotFoundException $e) {
+            abort(404, $e->getMessage());
+        }
     }
 }

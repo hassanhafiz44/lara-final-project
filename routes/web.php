@@ -116,4 +116,6 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::get('/reports/low-stock', 'ReportsController@low_stock')->name('reports.low.stock');
     Route::get('/reports/sales-summary', 'ReportsController@sales_summary')->name('reports.sales.summary');
     Route::get('feedback', 'FeedbackController@index')->name('feedback.index');
+    Route::get('feedback/{customerId}/customer', 'FeedbackController@get_customer_feedbacks')->name('feedback.customer');
+    Route::get('feedback/{customerId}/customer/mark-unread', 'FeedbackController@mark_unread_by_customer')->name('feedback.customer.mark.unread');
 });

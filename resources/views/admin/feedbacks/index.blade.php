@@ -2,6 +2,7 @@
 
 @section('content')
 <div ng-app="app" ng-controller="MainCtrl">
+	<h2>{{ __('labels.customer_feedbacks') }}</h2>
 	<form action="{{ route('admin.feedback.index') }}" method="get">
 		<div class="row">
 			<div class="form-group col-sm-4 col-md-4">
@@ -22,35 +23,39 @@
 			</div>
 		</div>
 	</form>
-	<table id="feedbacks-table" class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ __('labels.serial_no_short') }}</th>
-				<th>{{ __('labels.message') }}</th>
-				<th>{{ __('labels.email') }}</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@forelse($feedbacks as $key => $feedback)
-			<tr>
-				<td>{{ $key + 1}}</td>
-				<td>{{ $feedback->message }}</td>
-				<td>{{ $feedback->customer->email }}</td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="#" data-toggle="tooltip" data-placement="left" title="View {{ $feedback->customer->name }}'s all messages"><i class="fa fa-eye"></i></a>
-					@if($feedback->status === 'unread')
-					<button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="left" title="Unread message"><i class="fa fa-exclamation-triangle"></i></button>
-					@endif
-				</td>
-			</tr>
-			@empty
-			<tr>
-				<td colspan="8">@lang('messages.no_records_found')</td>
-			</tr>
-			@endforelse
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table id="feedbacks-table" class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ __('labels.serial_no_short') }}</th>
+					<th>{{ __('labels.message') }}</th>
+					<th>{{ __('labels.email') }}</th>
+					<th>{{ __('labels.received_at') }}</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@forelse($feedbacks as $key => $feedback)
+				<tr>
+					<td>{{ $key + 1}}</td>
+					<td>{{ $feedback->message }}</td>
+					<td>{{ $feedback->customer->email }}</td>
+					<td>{{ $feedback->created_at }}</td>
+					<td>
+						<a class="btn btn-sm btn-primary" href="{{ route('admin.feedback.customer', $feedback->customer->id) }}" data-toggle="tooltip" data-placement="left" title="View {{ $feedback->customer->name }}'s all messages"><i class="fa fa-eye"></i></a>
+						@if($feedback->status === 'unread')
+						<button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="left" title="Unread message"><i class="fa fa-exclamation-triangle"></i></button>
+						@endif
+					</td>
+				</tr>
+				@empty
+				<tr>
+					<td colspan="8">@lang('messages.no_records_found')</td>
+				</tr>
+				@endforelse
+			</tbody>
+		</table>
+	</div>
 </div>
 @endsection
 
@@ -62,6 +67,12 @@
       $scope.statusFilter = '{{ $status }}';
       $scope.startDateFilter = new Date('{{ $start_date }}');
       $scope.endDateFilter = new Date('{{ $end_date }}');
+   });
+
+   $(function() {
+		@if(session('message'))
+			showNotification("{{session('message')}}", 'Success', 'success');
+		@endif
    });
 </script>
 @endsection
