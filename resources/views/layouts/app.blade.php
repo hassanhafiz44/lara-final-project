@@ -150,7 +150,7 @@
 						@endif
 					@elseif(Auth::guard('web')->check())
 					<li class="nav-item">
-						<a href="#" data-toggle="tooltip" data-placement="bottom" title="{{ is_unread_message() ? "You have unread messages" : "Customer feedback"}}" class="nav-link {{ is_unread_message() ? 'text-warning' : ''}}"><i class="fa fa-envelope"></i></a>
+						<a href="{{ route('admin.feedback.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ is_unread_message() ? "You have unread messages" : "Customer feedback"}}" class="nav-link {{ is_unread_message() ? 'text-warning' : ''}}"><i class="fa fa-envelope"></i></a>
 					</li>
 					<li class="nav-item dropdown">
 						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

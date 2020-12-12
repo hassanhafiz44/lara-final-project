@@ -42,6 +42,11 @@ class Customer extends Authenticatable
         return $this->hasMany('App\Invoice');
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany('App\CustomerFeedbacks');
+    }
+
     public function paid_invoices() 
     {
         return $this->invoices()->where('payment_status', '=', 'paid');
@@ -50,6 +55,11 @@ class Customer extends Authenticatable
     public function unpaid_invoices()
     {
         return $this->invoices()->where('payment_status', '=', 'due');
+    }
+
+    public function unread_messages()
+    {
+        return $this->feedbacks()->where('status', '=', 'unread');
     }
 
     public function sendPasswordResetNotification($token)

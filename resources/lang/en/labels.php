@@ -40,4 +40,8 @@ return [
     'remarks' => 'Remarks',
     'stock_in_hand' => 'Stock in Hand',
     'low_stock' => 'Low Stock',
+    'message' => 'Message',
+    'all' => 'All',
+    'unread' => 'Unread',
+    'read' => 'Read',
 ];

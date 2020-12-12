@@ -115,4 +115,5 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::get('/reports/stock-in-hand', 'ReportsController@stock_in_hand')->name('reports.stock.in.hand');
     Route::get('/reports/low-stock', 'ReportsController@low_stock')->name('reports.low.stock');
     Route::get('/reports/sales-summary', 'ReportsController@sales_summary')->name('reports.sales.summary');
+    Route::get('feedback', 'FeedbackController@index')->name('feedback.index');
 });
