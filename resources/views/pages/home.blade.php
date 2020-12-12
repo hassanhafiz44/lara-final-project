@@ -43,7 +43,6 @@
     <div class="md:flex justify-between py-20 px-10 bg-indigo-600 text-indigo-200">
       <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-duration="1000">
         <h2 class="text-2xl md:text-4xl lg:text-6xl text-white mb-5">Welcome to {{ ucwords($company->title) }}</h2>
-        <p class="mb-6">{{ ucwords( $company->slogan ?? "This is company slogan") }}</p>
         @guest('customers')
         <a href="{{ route('customers.login') }}" class="inline-block py-3 px-6 text-lg bg-gray-400 hover:bg-gray-300 text-gray-800 mr-2 rounded transition ease-in duration-150">Login</a>
         <a href="{{ route('customers.register') }}" class="inline-block py-3 px-6 text-lg bg-purple-400 text-purple-800 hover:bg-purple-300 rounded transition ease-in duration-150">Signup</a>

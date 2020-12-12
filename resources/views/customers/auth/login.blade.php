@@ -49,6 +49,8 @@
                                 @if (Route::has('customers.showResetEmailForm'))
                                 <a href="{{ route('customers.showResetEmailForm', ['user_type' => 'customers']) }}">Forgot password?</a>
                                 @endif
+                                <br><br>
+                                <a href="{{ route('users.login')}}">Login as Admin</a>
                             </div>
                         </div>
                     </form>
